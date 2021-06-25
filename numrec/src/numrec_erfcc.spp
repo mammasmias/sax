@@ -1,0 +1,16 @@
+> include -s numrec_config.sh
+> for kind in $kinds ; do
+function numrec_erfcc_$kind(x) result(res)
+  use numrec_kinds
+  implicit none
+  real($kind)             :: res
+  real($kind), intent(in) :: x
+  real($kind) :: t,z
+  z=abs(x)
+  t=1.0_$kind/(1.0_$kind+0.5_$kind*z)
+  res=t*exp(-z*z-1.26551223_$kind+t*(1.00002368_$kind+t*(.37409196_$kind+t* &
+  (.09678418_$kind+t*(-.18628806_$kind+t*(.27886807_$kind+t*(-1.13520398_$kind+t* &
+  (1.48851587_$kind+t*(-.82215223_$kind+t*.17087277_$kind)))))))))
+  if (x<0.0_$kind) res=2.0_$kind-res
+end function numrec_erfcc_$kind
+> done

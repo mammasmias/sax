@@ -1,0 +1,45 @@
+
+<input>
+<sax_options
+  calculation_kind = "RPA"
+  start_from = "DFT"
+  local_fields_effects="F"
+  convert_from_pwscf="T"
+  just_project_on_q_direction="F"
+  convert_from_pwscf_file="Sibulk.export/index.xml"
+  nbandmin = "1"
+  nbandmax = "36"
+  system_kind = "3D"
+  q = "0 1 0"
+  lorentzian_broadening="0.007"
+  imaginary_axis = "F"
+  omegamax = "2.2"
+  nomega = "400"
+  emax_polarizability = "0.6"
+  nelec="8.0"
+  output_format = "txt"
+/>
+
+<structure>
+  <direct
+    a1 = " -5.1 ,  0.0 ,  5.1"
+    a2 = "  0.0 ,  5.1 , 5.1"
+    a3 = "  -5.1 , 5.1 ,  0.0" />
+</structure>
+
+<atoms>
+<types ntypes="1">
+Si  "/igor/marsamos/S3DE/sax/examples/pseudos/Si.vbc.UPF" 15.0
+</types>
+<positions natoms="2" units="bohr" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+Si      -2.55           2.55            2.55
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="3 3 3" shift="0.5 0.5 0.5"/>
+</kmesh>
+
+</input>
+

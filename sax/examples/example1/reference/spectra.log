@@ -1,0 +1,148 @@
+##################################################
+Today is 04/09/2007
+    
+          *            @@@@      @@     @@
+         * *o         @@          @@   @@
+        *** *o         @@          @@ @@
+       **  * *o         @@  @@@@   @@ @@
+       v    * *o        @@ @@  @  @@   @@
+             * *     @@@@  @@@@@ @@     @@
+              * *
+               * *
+               * *  *******
+               * *  *    *
+               * * *    *
+               *  *    *
+               *      *
+               *     *
+                *   *
+                 ***
+     
+FOLLOW THE WHITE RABBIT ...and try to catch it!
+13:01:56.856:  www.sax-project.org, version 0.1.0
+13:01:56.856:  Program spectra.x starts
+13:01:56.856:  This is log from pe 000 of 001
+13:01:56.857:  Writing here initial mallinfo ...
+  0       77824           0           0           0       72416        5408MALLINFO
+13:01:56.857:  ... done
+13:01:56.857:  Writing here initial PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 0
+ Pw library end statistics
+13:01:56.857:  ... done
+13:01:56.857:  Pasting input file /igor/marsamos/S3DE/sax/examples/example1/spectra.in ...
+
+<input>
+<sax_options
+  calculation_kind = "RPA"
+  start_from = "DFT"
+  local_fields_effects="F"
+  convert_from_pwscf="T"
+  just_project_on_q_direction="F"
+  convert_from_pwscf_file="Sibulk.export/index.xml"
+  nbandmin = "1"
+  nbandmax = "36"
+  system_kind = "3D"
+  q = "0 1 0"
+  lorentzian_broadening="0.007"
+  imaginary_axis = "F"
+  omegamax = "2.2"
+  nomega = "400"
+  emax_polarizability = "0.6"
+  nelec="8.0"
+  output_format = "txt"
+/>
+
+<structure>
+  <direct
+    a1 = " -5.1 ,  0.0 ,  5.1"
+    a2 = "  0.0 ,  5.1 , 5.1"
+    a3 = "  -5.1 , 5.1 ,  0.0" />
+</structure>
+
+<atoms>
+<types ntypes="1">
+Si  "/igor/marsamos/S3DE/sax/examples/pseudos/Si.vbc.UPF" 15.0
+</types>
+<positions natoms="2" units="bohr" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+Si      -2.55           2.55            2.55
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="3 3 3" shift="0.5 0.5 0.5"/>
+</kmesh>
+
+</input>
+
+13:01:56.857:  ... done
+13:01:56.858:  Opening input file /igor/marsamos/S3DE/sax/examples/example1/spectra.in ... done
+13:01:56.858:  Reading options ... done
+13:01:56.859:  3D system
+13:01:56.859:  Reading structure ... done
+13:01:56.860:  Reading atoms ... done
+13:01:56.990:  Symmetries are not implemented
+13:01:56.990:  Reading kmesh ... done
+13:01:56.994:  Closing input file /igor/marsamos/S3DE/sax/examples/example1/spectra.in ... done
+13:01:56.994:  Writing here the kmesh for PWSCF code ...
+K_POINTS crystal
+   27
+    0.166666667    0.166666667    0.166666667    0.037037037
+    0.500000000    0.166666667    0.166666667    0.037037037
+    0.833333333    0.166666667    0.166666667    0.037037037
+    0.166666667    0.500000000    0.166666667    0.037037037
+    0.500000000    0.500000000    0.166666667    0.037037037
+    0.833333333    0.500000000    0.166666667    0.037037037
+    0.166666667    0.833333333    0.166666667    0.037037037
+    0.500000000    0.833333333    0.166666667    0.037037037
+    0.833333333    0.833333333    0.166666667    0.037037037
+    0.166666667    0.166666667    0.500000000    0.037037037
+    0.500000000    0.166666667    0.500000000    0.037037037
+    0.833333333    0.166666667    0.500000000    0.037037037
+    0.166666667    0.500000000    0.500000000    0.037037037
+    0.500000000    0.500000000    0.500000000    0.037037037
+    0.833333333    0.500000000    0.500000000    0.037037037
+    0.166666667    0.833333333    0.500000000    0.037037037
+    0.500000000    0.833333333    0.500000000    0.037037037
+    0.833333333    0.833333333    0.500000000    0.037037037
+    0.166666667    0.166666667    0.833333333    0.037037037
+    0.500000000    0.166666667    0.833333333    0.037037037
+    0.833333333    0.166666667    0.833333333    0.037037037
+    0.166666667    0.500000000    0.833333333    0.037037037
+    0.500000000    0.500000000    0.833333333    0.037037037
+    0.833333333    0.500000000    0.833333333    0.037037037
+    0.166666667    0.833333333    0.833333333    0.037037037
+    0.500000000    0.833333333    0.833333333    0.037037037
+    0.833333333    0.833333333    0.833333333    0.037037037
+13:01:56.994:  ... done
+13:01:56.995:  Initializing states ... done
+13:01:56.995:  Converting states from pwscf format to file 'states' ... done
+13:01:57.391:  Reading states from file 'states' ... done
+13:01:57.708:  The cutoff for single particle wfc is:   14.956820715 Ry
+13:01:57.708:  Initializing epsilon... done
+13:01:57.708:  Calculating macroscopic dielectric tensor... done
+13:01:58.064:  Writing macroscopic dielectric tensor on file epsilon.nlf.RPA... done
+13:01:58.236:  Initializing epsilon... done
+13:01:58.236:  Reading macroscopic dielectric tensor from file epsilon.nlf.RPA... done
+13:01:58.527:  Projecting macroscopic dielectric tensor on   0   1
+   0   direction
+13:01:58.528:  Writing electron energy loss on file eels.nlf.RPA... done
+13:01:58.530:  Writing optical absorption spectrum on file oas.nlf.RPA... done
+13:01:58.531:  Writing real part of macroscopic dielectric tensor on file repsilon...Writing here final mallinfo ...
+  0      245760           0           0           0       72416      173344MALLINFO
+13:01:58.534:  ... done
+13:01:58.534:  Writing here final PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 0
+ Pw library end statistics
+13:01:58.534:  ... done
+13:01:58.534:  Program spectra ends

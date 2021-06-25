@@ -1,0 +1,20 @@
+#
+# LASI Options file
+#
+
+
+begin DEFINITION
+
+# specific FLAGS for LASI lib
+# redefine the optimization level
+OFLAGS = $(OFLAGS_NOOPT) 
+
+# avoid problems in compilation if 
+# autodouble is set
+PRECISION=
+
+end DEFINITION
+
+USE lapack
+USE blas
+

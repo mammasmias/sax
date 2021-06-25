@@ -1,0 +1,79 @@
+-------------------------------------------------------------------------------
+DESCRIPTION OF MEMORY INPUT PARAMETERS
+-------------------------------------------------------------------------------
+===============================================================================
+<sax_options
+  ...
+\>
+memory calculation options
+===============================================================================
+OPTIONS OF INPUT_GW OR OPTIONS OF INPUT_BSE
+-------------------------------------------------------------------------------
+ ADDITIONAL OPTIONS 
+* guessed_nb_proc = "number of processors" guessed for the calculation, on which
+                     the memory will be estimated (default "1").
+
+* nb_memory_test_nproc = "number of test processor's number" for the
+                          calculation of memory statistics (default "4")
+
+* memory_output_file = "name for memory statistics output file" (default "memory.out")
+-------------------------------------------------------------------------------
+ COMMENTS
+ memory.x can just be run using a gw or bse input file. memory.out will contain
+ an estimation of the maximum memory need for a serial calculation and also
+ for four different parallel calculations (different in the proc number)          
+===============================================================================
+<structure>
+  <direct
+   ...
+   \>
+<\structure> 
+Cell vectors should be in a.u.
+===============================================================================
+<atoms>
+  <types ntypes="number_of_atomic_species">
+    ...
+  <\types>
+  Atomic symbol, pseudopotential location and cutoff for the wave functions (Ry)
+  ATENTION! only norm-conserving pseudopotential
+
+  <positions natoms="number_of_atoms" units="bohr|angstrom|alat|crystal" alat="value_of_cellparameter in bohr">
+  atomic_symbol X Y Z
+  </positions>
+
+<\atoms> 
+===============================================================================
+<kmesh>
+<mesh nk="nkx nky nkz" shift="shiftx shifty shiftz"/>
+kme
+</kmesh>
+===============================================================================
+-------------------------------------------------------------------------------
+MEMORY INPUT FILE
+-------------------------------------------------------------------------------
+<input>
+<sax_options
+ ...
+/>
+<structure>
+  <direct
+    a1 = " a1x ,  a1y ,  a1z"
+    a2 = " a2x  , a2y , a2z"
+    a3 = " a3x , a3y ,  a3z" />
+</structure>
+
+<atoms>
+<types ntypes="number_of_atomic_species">
+atomic_symbol "full_path_pseudopotential_location" cutoff 
+</types>
+<positions natoms="number_of_atoms" units="bohr | angstrom | alat | crystal" alat="value_of_cellparameter">
+atomic_symbol X Y Z
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="nkx nky nkz" shift="shiftx shifty shiftz"/>
+</kmesh>
+
+</input>
+-------------------------------------------------------------------------------

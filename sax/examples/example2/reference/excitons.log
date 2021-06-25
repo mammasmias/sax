@@ -1,0 +1,110 @@
+##################################################
+Today is 19/04/2010
+    
+          *            @@@@      @@     @@
+         * *o         @@          @@   @@
+        *** *o         @@          @@ @@
+       **  * *o         @@  @@@@   @@ @@
+       v    * *o        @@ @@  @  @@   @@
+             * *     @@@@  @@@@@ @@     @@
+              * *
+               * *
+               * *  *******
+               * *  *    *
+               * * *    *
+               *  *    *
+               *      *
+               *     *
+                *   *
+                 ***
+     
+FOLLOW THE WHITE RABBIT ...and try to catch it!
+18:29:41.029:  www.sax-project.org, version 0.1.0
+18:29:41.029:  Program excitons.x starts
+18:29:41.029:  This is log from pe 000 of 001
+18:29:41.030:  Writing here initial mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+18:29:41.030:  ... done
+18:29:41.030:  Writing here initial PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 0
+ Pw library end statistics
+18:29:41.031:  ... done
+18:29:41.031:  Pasting input file /Users/marsamos/S3DE/sax/examples/example2/excitons.in ...
+
+<input>
+<sax_options
+  calculation_kind = "ANALYSIS"
+  start_from = "HF"
+  convert_from_pwscf = "F"
+  nbandmin = "1"
+  nbandmax = "20"
+  system_kind = "0D"
+  bse_spin = "0"
+  bse_emin = "0.0"
+  bse_emax = "1.5"
+  nstatemin = "1"
+  nstatemax = "5"
+/>
+
+<structure>
+  <direct
+    a1 = " 20.00 ,  0.0 ,  0.0"
+    a2 = "  0.0 ,  20.000 ,  0.0"
+    a3 = "  0.0 ,  0.0 ,  20.00" />
+</structure>
+
+<atoms>
+<types ntypes="2">
+Si  "/Users/marsamos/S3DE/sax/examples/pseudos/Si.vbc.UPF" 25.0
+H  "/Users/marsamos/S3DE/sax/examples/pseudos/H.vbc.new.UPF" 25.0
+</types>
+<positions natoms="5" units="angstrom" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+H       0.000000000     1.489000000     0.0000000000
+H       0.000000000     -0.496363243    -1.403832088
+H       -1.21575425     -0.496363243    0.701916043
+H       1.21575425      -0.496363243    0.701916043
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="1 1 1" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+18:29:41.032:  ... done
+18:29:41.032:  Opening input file /Users/marsamos/S3DE/sax/examples/example2/excitons.in ... done
+18:29:41.033:  Reading options ... done
+18:29:41.043:  Reading structure ... done
+18:29:41.044:  Reading atoms ... done
+18:29:41.184:  Symmetries are not implemented
+18:29:41.184:  Reading kmesh ... done
+18:29:41.185:  Closing input file /Users/marsamos/S3DE/sax/examples/example2/excitons.in ... done
+18:29:41.186:  Writing here the kmesh for PWSCF code ...
+K_POINTS crystal
+    1
+    0.000000000    0.000000000    0.000000000    1.000000000
+18:29:41.187:  ... done
+18:29:41.187:  Calculation kind is ANALYSIS
+18:29:41.187:  Main contribution of single particle states to excitons writen in txt format
+18:29:41.188:  Reading ntrans ...done
+18:29:41.194:  Reading bse from file bse... done
+18:29:41.246:  Writing here final mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+18:29:41.247:  ... done
+18:29:41.247:  Writing here final PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 0
+ Pw library end statistics
+18:29:41.248:  ... done
+18:29:41.248:  Program excitons ends

@@ -1,0 +1,117 @@
+##################################################
+Today is 19/04/2010
+    
+          *            @@@@      @@     @@
+         * *o         @@          @@   @@
+        *** *o         @@          @@ @@
+       **  * *o         @@  @@@@   @@ @@
+       v    * *o        @@ @@  @  @@   @@
+             * *     @@@@  @@@@@ @@     @@
+              * *
+               * *
+               * *  *******
+               * *  *    *
+               * * *    *
+               *  *    *
+               *      *
+               *     *
+                *   *
+                 ***
+     
+FOLLOW THE WHITE RABBIT ...and try to catch it!
+10:03:15.859:  www.sax-project.org, version 0.1.0
+10:03:15.860:  Program bse.x starts
+10:03:15.860:  This is log from pe 000 of 001
+10:03:15.861:  Writing here initial mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+10:03:15.862:  ... done
+10:03:15.862:  Writing here initial PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 0
+ Pw library end statistics
+10:03:15.871:  ... done
+10:03:15.871:  Pasting input file /Users/marsamos/S3DE/sax/examples/example2/bse.in ...
+
+<input>
+<sax_options
+  calculation_kind = "MACRO"
+  start_from = "HF"
+  convert_from_pwscf = "F"
+  nbandmin = "1"
+  nbandmax = "20"
+  system_kind = "0D"
+  bse_spin = "0"
+  bse_emin = "0.0"
+  bse_emax = "1.5"
+  cutoff_fock = "25.0"
+  ecutvcut="0.5"
+/>
+
+<structure>
+  <direct
+    a1 = " 20.00 ,  0.0 ,  0.0"
+    a2 = "  0.0 ,  20.000 ,  0.0"
+    a3 = "  0.0 ,  0.0 ,  20.00" />
+</structure>
+
+<atoms>
+<types ntypes="2">
+Si  "/Users/marsamos/S3DE/sax/examples/pseudos/Si.vbc.UPF" 25.0
+H  "/Users/marsamos/S3DE/sax/examples/pseudos/H.vbc.new.UPF" 25.0
+</types>
+<positions natoms="5" units="angstrom" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+H       0.000000000     1.489000000     0.0000000000
+H       0.000000000     -0.496363243    -1.403832088
+H       -1.21575425     -0.496363243    0.701916043
+H       1.21575425      -0.496363243    0.701916043
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="1 1 1" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+10:03:15.873:  ... done
+10:03:15.874:  Opening input file /Users/marsamos/S3DE/sax/examples/example2/bse.in ... done
+10:03:15.875:  Reading options ... done
+10:03:15.884:  BSE calculated with a macroscopic dielectric constant
+10:03:15.884:  0D system
+10:03:15.885:  Reading structure ... done
+10:03:15.897:  Reading atoms ... done
+10:03:16.055:  Symmetries are not implemented
+10:03:16.079:  Reading kmesh ... done
+10:03:16.082:  Closing input file /Users/marsamos/S3DE/sax/examples/example2/bse.in ... done
+10:03:16.083:  Writing here the kmesh for PWSCF code ...
+K_POINTS crystal
+    1
+    0.000000000    0.000000000    0.000000000    1.000000000
+10:03:16.084:  ... done
+10:03:16.097:  Initializing states ... done
+10:03:16.099:  Reading states from file 'HF_states'...done
+10:03:16.410:  Initializing bse ...done
+10:03:16.411:  Initializing static macroscopic dielectric constant...done
+10:03:16.441:  Reading macroscopic dielectric constant...done
+10:03:16.486:  The cutoff for single particle wfc is:   24.970099135 Ry
+10:03:16.487:  Solving Bethe-Salpeter Equation...done
+12:15:17.935:  Calculating transpose ... done
+12:15:17.936:  Writing eigenvalues and eigenstates on file bse ...done
+12:15:17.985:  Writing here final mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+12:15:17.986:  ... done
+12:15:17.986:  Writing here final PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 273389163
+ Pw library end statistics
+12:15:17.987:  ... done
+12:15:17.987:  Program BSE ends

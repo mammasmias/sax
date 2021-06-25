@@ -1,0 +1,29 @@
+USE blas
+
+#
+# add here script commands to be
+# executed before running Makefile generator
+#
+begin BEFORE_MAKEMAKE
+   POSSIBLE_MAIN="@none@"
+end BEFORE_MAKEMAKE
+
+#
+# disenable autodouble
+#
+DEFINITION  FAUTODBL=
+
+#
+# specific options for selected files
+# (No optimization needed in this case)
+#
+begin DEFINITION.slamch
+  OFLAGS=$(OFLAGS_NOOPT)
+  PRECISION=
+end DEFINITION.slamch
+
+begin DEFINITION.dlamch
+  OFLAGS=$(OFLAGS_NOOPT)
+  PRECISION=
+end DEFINITION.dlamch
+

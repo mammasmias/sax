@@ -1,0 +1,33 @@
+##############################################################
+The examples corresponds to some of the standard uses of the theory 
+implemented in SaX.
+
+As the examples are build to run in few minutes, the calculations are
+not at convergence.
+
+It is strongly recommended after the installation of the package to 
+run the examples and compare the results with
+
+ATENTION!!!!! EXAMPLE2 and EXAMPLE4 may take some hours
+############################################################## 
+
+##############################################################
+# to run examples
+##############################################################
+
+Some environment variables have to be set
+
+see the file set_env
+on the section set pwscf path to binaries
+change the DFT_BIN variable
+
+source set_env
+
+go to the directory of the example to run
+
+./jrun
+
+to run all the examples
+execute at the examples directory ./jrun_all_examples
+
+##############################################################

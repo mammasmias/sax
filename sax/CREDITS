@@ -1,0 +1,22 @@
+\SAX was originally a project of the
+National Research Center on nanoStructures and bioSystems at Surfaces (S3)
+of the Italian INFM-CNR (http://www.s3.infm.it), based in Modena, Italy.
+Most of the recent developments have been supported by CEA-DIF (France).
+
+The computer time and specific technical support is partly provided by CINECA through ISCRA projects and by CINES through GENCI projects.
+
+The scientific board of the SaX project is composed by
+Layla Martin-Samos, Giovanni Bussi, Alice Ruini,
+Marilia J. Caldas and Elisa Molinari.
+
+The present release of SaX has been realized by Layla Martin-Samos and Giovanni Bussi.
+A list of contributors include Chiara Campani (implementation of memory.x) and
+Leonardo Matheus Marion Jorge (implementation of postprocessing tools as DOS and bands).
+
+ACKNOWLEDGEMENTS.
+The SaX team want to thank Carlo Cavazzoni (CINECA) for his deep and continuative
+consulence about numerical techniques.
+Andrea Ferretti, Eleonora Luppi and Daniele Varsano for useful discussions.
+People from PWSCF for helping us to keep our project compatible with PWSCF.
+People from WanT for helping us to keep our project compatible with WanT.
+

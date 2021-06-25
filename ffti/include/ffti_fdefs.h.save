@@ -1,0 +1,49 @@
+!
+!  Copyright (C) 2002-2004 PWSCF,FPMD,CPV groups
+!  This file is distributed under the terms of the
+!  GNU General Public License. See the file `License'
+!  in the root directory of the present distribution,
+!  or http://www.gnu.org/copyleft/gpl.txt .
+!
+
+
+#if defined(CRAYY) || defined(__LINUX) || defined(HITACHI) || defined(__SUN)
+#  define C_POINTER  integer(kind=4)
+#endif
+
+#if defined(__AIX)
+#  define C_POINTER  integer(kind=8)
+#endif
+
+#if defined __MAC
+#  if defined __MAC64
+#    define C_POINTER  integer(kind=8)
+#  else
+#    define C_POINTER  integer(kind=4)
+#  endif
+#endif
+
+#if defined (FUJ64)|| defined (__ALPHA) || defined (__SX6) || defined(__LINUX64) || defined(__T3E)
+#  define C_POINTER  integer(kind=8)
+#endif
+
+#if defined __HP
+#  if defined __HP64
+#    define C_POINTER  integer(kind=8)
+#  else
+#    define C_POINTER  integer(kind=4)
+#  endif
+#endif
+
+#if defined __SGI || defined __ORIGIN
+#  if defined __SGI64
+#    define C_POINTER  integer(kind=8)
+#  else
+#    define C_POINTER  integer(kind=4)
+#  endif
+#endif
+
+#if defined(__SX4)
+#  define C_POINTER  real(kind=8)
+#endif
+

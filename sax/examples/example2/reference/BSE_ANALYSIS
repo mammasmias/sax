@@ -1,0 +1,35 @@
+ EXCITON number:  1
+energy: 0.647  Ry
+ v    c    k     Weigt
+   3     5     1  0.626
+   3    11     1  0.174
+   2     5     1  0.042
+   3    17     1  0.042
+ EXCITON number:  2
+energy: 0.651  Ry
+ v    c    k     Weigt
+   2     5     1  0.631
+   2    10     1  0.073
+   4     5     1  0.055
+   2     9     1  0.054
+ EXCITON number:  3
+energy: 0.654  Ry
+ v    c    k     Weigt
+   4     5     1  0.664
+   4     9     1  0.143
+   2     5     1  0.041
+   3     5     1  0.029
+ EXCITON number:  4
+energy: 0.674  Ry
+ v    c    k     Weigt
+   2     6     1  0.493
+   3     7     1  0.228
+   2    15     1  0.131
+   3    13     1  0.058
+ EXCITON number:  5
+energy: 0.679  Ry
+ v    c    k     Weigt
+   4     6     1  0.593
+   4    15     1  0.155
+   3     8     1  0.092
+   2     6     1  0.030

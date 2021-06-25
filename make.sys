@@ -1,0 +1,64 @@
+# make.sys.  Generated from make.sys.in by configure.
+
+# -----------------------------
+# compilation rules
+
+.SUFFIXES :
+.SUFFIXES : .o .c .f .f90
+
+.f90.o:
+	$(MPIF90) $(F90FLAGS) -c $<
+
+.f.o:
+	$(F77) $(FFLAGS) -c $<
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+# -----------------------------
+# compiler definitions
+
+
+CC             = cc
+CFLAGS         = -O3 $(DFLAGS) $(IFLAGS)
+CPP            = cpp
+CPPFLAGS       = -P -traditional $(DFLAGS) $(IFLAGS)
+F90            = g95
+MPIF90         = g95
+F90FLAGS       = $(FFLAGS) $(FDFLAGS) $(IFLAGS) 
+PRECISION      = 
+FAUTODBL       = -r8 
+F77            = g95
+FFLAGS         = -O3 -cpp $(PRECISION)
+FFLAGS_NOOPT   = -O0 -cpp
+LD             = g95
+LDFLAGS        = 
+AR             = ar
+ARFLAGS        = ruv
+RANLIB         = ranlib
+
+#------------------------------
+# specific definitions
+
+DFLAGS         =  -D__G95 -D__FFTW -D__USE_INTERNAL_FFTW -D__OSX
+FDFLAGS        = $(DFLAGS)
+IFLAGS         = $(AUTO_INCLUDE)
+LIBOBJS        = $(AUTO_LIBS)
+
+# -----------------------------
+# libraries
+
+LIB_BLAS             =  -latlas
+LIB_BLAS_SWITCH      = external
+#
+LIB_LAPACK           =  -llapack
+LIB_LAPACK_SWITCH    = external
+#
+LIB_FFT              = /Users/marsamos/SaX_svn/SaX/fftw/src/libfftw.a
+LIB_FFT_INCLUDE      = -I/Users/marsamos/SaX_svn/SaX/fftw/include
+LIB_FFT_SWITCH       = internal
+#
+LIB_MPI              = 
+LIB_MASS             = 
+#
+LIBS                 = $(LIB_MPI) $(LIB_MASS)

@@ -1,0 +1,8 @@
+Optk_external.f90
+Iptk_external.spp
+I../include/ptk_include.sh
+I../include/ptk_version.sh
+I../include/ptk_include.sh
+Iptk_external.spp
+I../include/ptk_auxmacros.spp
+Iptk_external.spp

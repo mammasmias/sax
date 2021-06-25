@@ -1,0 +1,128 @@
+##################################################
+Today is 19/04/2010
+    
+          *            @@@@      @@     @@
+         * *o         @@          @@   @@
+        *** *o         @@          @@ @@
+       **  * *o         @@  @@@@   @@ @@
+       v    * *o        @@ @@  @  @@   @@
+             * *     @@@@  @@@@@ @@     @@
+              * *
+               * *
+               * *  *******
+               * *  *    *
+               * * *    *
+               *  *    *
+               *      *
+               *     *
+                *   *
+                 ***
+     
+FOLLOW THE WHITE RABBIT ...and try to catch it!
+12:15:17.995:  www.sax-project.org, version 0.1.0
+12:15:17.995:  Program bse.x starts
+12:15:17.996:  This is log from pe 000 of 001
+12:15:17.996:  Writing here initial mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+12:15:17.997:  ... done
+12:15:17.997:  Writing here initial PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 0
+ Pw library end statistics
+12:15:17.998:  ... done
+12:15:17.999:  Pasting input file /Users/marsamos/S3DE/sax/examples/example2/spectra.in ...
+
+<input>
+<sax_options
+  calculation_kind = "RPAEXC"
+  start_from = "HF"
+  convert_from_pwscf = "F"
+  nbandmin = "1"
+  nbandmax = "20"
+  nelec    = "8.0"
+  system_kind = "0D"
+  q = "1 0 0"
+  lorentzian_broadening = "0.007"
+  cutoff_polarizability = "6.0"
+  nomega = "300"
+  omegamax = "2.0"
+  output_format = "txt"
+  bse_spin = "0"
+  bse_emin = "0.0"
+  bse_emax = "1.5"
+/>
+
+<structure>
+  <direct
+    a1 = " 20.00 ,  0.0 ,  0.0"
+    a2 = "  0.0 ,  20.000 ,  0.0"
+    a3 = "  0.0 ,  0.0 ,  20.00" />
+</structure>
+
+<atoms>
+<types ntypes="2">
+Si  "/Users/marsamos/S3DE/sax/examples/pseudos/Si.vbc.UPF" 25.0
+H  "/Users/marsamos/S3DE/sax/examples/pseudos/H.vbc.new.UPF" 25.0
+</types>
+<positions natoms="5" units="angstrom" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+H       0.000000000     1.489000000     0.0000000000
+H       0.000000000     -0.496363243    -1.403832088
+H       -1.21575425     -0.496363243    0.701916043
+H       1.21575425      -0.496363243    0.701916043
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="1 1 1" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+12:15:18.000:  ... done
+12:15:18.000:  Opening input file /Users/marsamos/S3DE/sax/examples/example2/spectra.in ... done
+12:15:18.002:  Reading options ... done
+12:15:18.003:  0D system
+12:15:18.003:  Reading structure ... done
+12:15:18.005:  Reading atoms ... done
+12:15:18.150:  Symmetries are not implemented
+12:15:18.151:  Reading kmesh ... done
+12:15:18.152:  Closing input file /Users/marsamos/S3DE/sax/examples/example2/spectra.in ... done
+12:15:18.153:  Writing here the kmesh for PWSCF code ...
+K_POINTS crystal
+    1
+    0.000000000    0.000000000    0.000000000    1.000000000
+12:15:18.154:  ... done
+12:15:18.154:  Initializing states ... done
+12:15:18.156:  Reading states from file 'HF_states'...done
+12:15:18.268:  The cutoff for single particle wfc is:   24.970099135 Ry
+12:15:18.269:  RPA + excitonic effects allways calculated including nlfe
+12:15:18.270:  Initializing bse ...done
+12:15:18.271:  Reading bse from file bse... done
+12:15:18.346:  Initializing macroscopic dielectric tensor... done
+12:15:18.347:  Calculating optical absorption spectrum... done
+12:42:59.227:  Writing macroscopic dielectric tensor on file epsilon.RPAEXC... done
+12:42:59.345:  Initializing macroscopic dielectric tensor... done
+12:42:59.348:  Reading macroscopic dielectric tensor from file epsilon... done
+12:42:59.575:  Projecting macroscopic dielectric tensor on : 1   0
+ 0   direction
+12:42:59.578:  Writing optical absorption spectrum on file oas.RPAEXC... done
+12:42:59.581:  Writing electron energy loss on file eels.RPAEXC... done
+12:42:59.585:  Writing real part of macroscopic dielectric tensor on file repsilon.RPAEXC... done
+12:42:59.590:  Writing here final mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+12:42:59.591:  ... done
+12:42:59.591:  Writing here final PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 1089252507
+ Pw library end statistics
+12:42:59.592:  ... done
+12:42:59.593:  Program spectra ends

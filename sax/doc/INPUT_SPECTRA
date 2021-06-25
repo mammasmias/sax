@@ -1,0 +1,115 @@
+-------------------------------------------------------------------------------
+DESCRIPTION OF SPECTRA INPUT PARAMETERS
+-------------------------------------------------------------------------------
+===============================================================================
+<sax_options
+  ...
+\>
+spectra calculation options
+===============================================================================
+* system_kind = "0D" spherical cutoff on coulomb interaction
+                "3D" no cutoff
+* calculation_kind = "RPA" compute macroscopic epsilon within RPA approx
+                     "RPAEXC" compute absorption spectra including excitonic effects --> needs previous BSE calculation
+* start_from = "DFT" start with dft states (read file states)
+               "HF" start with hf states (read file HF_states)
+               "GW" start with gw states (read file GW_states)
+-------------------------------------------------------------------------------
+ CONVERSION FROM PWSCF FORMATS --> creation of the file states
+* convert_from_pwscf = if ".true.", the states are first converted from pwscf calculation (default .false.)
+* convert_from_pwscf_file : index file obtained from pwscf calculation
+* nelec = "number of electrons" (is a real number)
+-------------------------------------------------------------------------------
+ PLANE WAVE CUTOFFS
+* cutoff_fock = for calculation_kind="RPA" and local_fields_effects=".true.", "cutoff" 
+                for the calculation of the two particle exchange kernel, in Ry (default "6.0" Ry) 
+************************************************************************
+ATTENTION: It is recommended to use at least the same cutoff for cutoff_fock
+than the one used for the wave functions
+************************************************************************
+
+* cutoff_polarizability = "cutoff for the dipole elements" in the calculation of the dielectric macro tensor (in Ry)
+------------------------------------------------------------------------------- 
+* local_field_effects = if ".true." compute macroscopic epsilon including local fields effects
+* energy_shift : apply an energy shift on transition energies
+
+* emax_polarizability = "energy cutoff" for the allowed transitions
+* degauss_polarizability = "broadening in the selection of the transitions" (Ry)
+                           do not change, if you do not know what you are doing
+-------------------------------------------------------------------------------
+ only for calculation_kind="RPAEXC"
+ bse_emin and bse_emax give the transition energy range (Ry) and have to be coherent
+ with previous bse calculation
+* bse_emin = "min transition energy"
+* bse_emax = "max transition energy"
+-------------------------------------------------------------------------------
+* nbandmin =  "min index of band in states"
+* nbandmax = "max index of band in states"
+
+* q = "qa qb qc" : is an integer vector (crystal coordinates) representing the direction 
+       on which the transition vector q tends to 0. In other words, the crystallographic direction
+       for the momentum transfer between electrons and photons.
+
+* just_project_on_q_direction = if ".true." read the macroscopic dielectric tensor and project on the selected q(3) direction
+
+* lorentzian_broadening = "broadening" to be applied on the poles of macroscopic dielectric tensor (in Ry)
+* imaginary_axis = if ".true." the dielectric tensor is calculated on the imaginary energy axis
+* omegamax = "max energy" on which the dielectric tensor is calculated (in Ry)
+* nomega = "number of energies" (omegamax/nomega = resolution of the energy grid)
+
+* output_format = format for output (eels, absorption and real part of dielectric tensor) "iotk" xml or "txt" readable by any plot programm
+===============================================================================
+<structure>
+  <direct
+   ...
+   \>
+<\structure> 
+Cell vectors should be in a.u.
+===============================================================================
+<atoms>
+  <types ntypes="number_of_atomic_species">
+    ...
+  <\types>
+  Atomic symbol, pseudopotential location and cutoff for the wave functions (Ry)
+  ATENTION! only norm-conserving pseudopotential
+
+  <positions natoms="number_of_atoms" units="bohr|angstrom|alat|crystal" alat="value_of_cellparameter in bohr">
+  atomic_symbol X Y Z
+  </positions>
+
+<\atoms> 
+===============================================================================
+<kmesh>
+<mesh nk="nkx nky nkz" shift="shiftx shifty shiftz"/>
+kme
+</kmesh>
+===============================================================================
+-------------------------------------------------------------------------------
+SPECTRA INPUT FILE
+-------------------------------------------------------------------------------
+<input>
+<sax_options
+ ...
+/>
+<structure>
+  <direct
+    a1 = " a1x ,  a1y ,  a1z"
+    a2 = " a2x  , a2y , a2z"
+    a3 = " a3x , a3y ,  a3z" />
+</structure>
+
+<atoms>
+<types ntypes="number_of_atomic_species">
+atomic_symbol "full_path_pseudopotential_location" cutoff 
+</types>
+<positions natoms="number_of_atoms" units="bohr | angstrom | alat | crystal" alat="value_of_cellparameter">
+atomic_symbol X Y Z
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="nkx nky nkz" shift="shiftx shifty shiftz"/>
+</kmesh>
+
+</input>
+-------------------------------------------------------------------------------

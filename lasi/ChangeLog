@@ -1,0 +1,45 @@
+
+!***************************************************
+     Linear Algebra Subroutines Interfaces (LASI)        
+                    ChangeLog
+!***************************************************
+
+
+24 Jan 06         Dummy initialization of rtmp and dtmp in lasi_module included
+                  in order to work with highly-verbose debug compiler-options.
+                  Suggested by Giovanni Bussi. 
+                  Version number increased to v1.2.3.
+
+-------------------------------------------------
+Date: 24 Jan 2006    Version: LASI-1.2.3
+-------------------------------------------------
+
+28 Dec 04         Kinds in LASI_KINDS modules are treated as in LAPACK and
+                  BLAS in order to be more consistent. Suggested by Giovanni Bussi
+                  Test1 is added to check and verify kinds.
+                  Version number increased to v1.2.2.
+
+-------------------------------------------------
+Date: 21 Dec 2004    Version: LASI-1.2.2
+-------------------------------------------------
+
+21 Dec 04         IMPLICIT NONE added to every routine and function
+                  bug fixed; version number increased to v1.2.1.
+
+-------------------------------------------------
+Date: 21 Dec 2004    Version: LASI-1.2.1
+-------------------------------------------------
+
+27 Sep 04         Porting on INTEL P4 (IFC) completed; some minor
+                  bug fixed; version number increased to v1.2.0.
+
+-------------------------------------------------
+Date: 27 Sep  2004    Version: LASI-1.2.0
+-------------------------------------------------
+
+23 Aug 04         Preprocessor sweitches added and checked; version number
+                  increased to v1.1; first release setup;
+ 
+18 Aug 04         BLAS and Lapack routies added to the module;
+                
+

@@ -1,0 +1,401 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Copyright (C) 2007 SaX group                         %
+%  This file is distributed under the terms of the       %
+%  GNU General Public License.                           %
+%  See the file `License'  in the root directory of      %
+%  the present distribution,                             %
+%  or http://www.gnu.org/copyleft/gpl.txt                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% generally useful macros
+%
+@String{ACR = {Acc.~Chem.~Res.~}}
+@String{AIPCP = {AIP~Conf.~Proc.~}}
+@String{AM = {Adv.~Mater.~}}
+@String{AJP = {Am.~J.~Phys.~}}
+@String{ASSP = {Adv.~Solid State Phys.~}}
+@String{APL = {Appl.~Phys.~Lett.~}}
+@String{APA = {Appl.~Phys.~A}}
+@String{AP = {Ann.~Phys.~}}
+@String{ARMR = {Ann.~Rev.~Mat.~Res.~}}
+
+@String{BOOK = { }}
+@String{BBA = {Biochim.~Biophys.~Acta}}
+@String{BC = {Biochemistry}}
+
+@String{CONDMAT = {Cond-Mat}}
+@String{CAP = {CURRENT Appl.~Phys.~}}
+@String{CAR = {Carbon}}
+@String{CC = {Chem.~Commun.~}}
+@String{CM = {Chem.~Mater.~}}
+@String{CP = {Chem.~Phys.~}}
+@String{CR = {Chem.~Rev.~}}
+@String{CPC = {Comput.~Phys.~Commun.~}}
+@String{CPL = {Chem.~Phys.~Lett.~}}
+@String{CPR = {Comp.~Phys.~Rep.~}}
+
+@String{EL = {Europhys.~Lett.~}}
+
+@String{FEBSL = {FEBS Lett.~}}
+@String{FF = {Foundations of Physics}}
+
+@String{IJRD = {IBM J.~Res.~Dev.~}}
+@String{IJMPB = {Int.~J.~Mod.~Phys.~B}}
+@String{IJQC = {Int.~J.~Quantum~Chem.~}}
+@String{IC = {Inorg.~Chem.~}}
+
+@String{JCP = {J.~Chem.~Phys.~}}
+@String{JAP = {J.~Appl.~Phys.~}}
+@String{JPC = {J.~Phys.~Chem.~}}
+@String{JPCA = {J.~Phys.~Chem.~A}}
+@String{JPCB = {J.~Phys.~Chem.~B}}
+@String{JPD = {J.~Phys.~D}}
+@String{JCG = {J.~Cryst.~Growth}}
+@String{JMS = {J.~Mol.~Struct.~}}
+@String{JMST = {J.~Mol.~Struct.-Theochem}}
+@String{JL = {J.~Lumin.~}}
+@String{JVST = {J.~Vac.~Sci.~Technol.~}}
+@String{JVSTA = {J.~Vac.~Sci.~Technol.~A}}
+@String{JVSTB = {J.~Vac.~Sci.~Technol.~B}}
+@String{JMR = {J.~Mater.~Res.~}}
+@String{JOC = {J.~Org.~Chem.~}}
+@String{JACS = {J.~Am.~Chem.~Soc.~}}
+@String{JPPAC = {J.~Photoch.~Photobio.~A}}
+@String{JJAP = {Jpn.~J.~Appl.~Phys.~}}
+@String{JMC = {J.~Mater.~Chem.~}}
+@String{JPSPP = {J.~Polym.~Sci.~Pol.~Phys.~}}
+@String{JPCM = {J.~Phys.-Condens.~Mat.~}}
+@String{JPCUS = {J.~Phys.~Chem.-US}}
+@String{JF = {J.~Fluoresc.}}
+@String{JCC = {J.~Comput.~Chem.~}}
+@String{JPSJ = {J.~Phys.~Soc.~Jpn.~}}
+@String{JCOP = {J.~Comp.~Phys.~}}
+@String{JESRP = {J.~Electron~Spectrosc.~Relat.~Phenom.~}}
+@String{JCSCC = {J.~Chem.~Soc.~Chem.~Commun.~}}
+
+@String{LANG = {Langmuir}}
+
+@String{MM = {Macromolecules}}
+@String{ME = {Microelectr.~Eng.}}
+@String{MET = {Metrologia}}
+@String{MC = {Makromol.~Chem.}}
+
+@String{NL = {Nano~Lett.~}}
+@String{PSIKNL = {Psi-K~Newslett.~}}
+@String{NAT = {Nature~(London)~}}
+@String{NATM = {Nature Mat.}}
+@String{NAR = {Nucleic~Acids~Research}}
+@String{NJP = {New.~J.~Phys.~}}
+
+@String{OM = {Opt.~Mater.~}}
+@String{OE = {Org.~Electron.~}}
+@String{PR = {Phys.~Rev.~}}
+@String{PRA = {Phys.~Rev.~A}}
+@String{PRB = {Phys.~Rev.~B}}
+@String{PRE = {Phys.~Rev.~E}}
+@String{PRL = {Phys.~Rev.~Lett.~}}
+@String{PW = {Physics~World}}
+@String{PLA = {Phys.~Lett.~A}}
+@String{PPS = {Prog.~Poli.~Sci.~}}
+@String{POL = {Polymer}}
+@String{PSS = {Prog.~Surf.~Sci.~}}
+@String{PM = {Philos.~Mag.~}}
+@String{PMB = {Philos.~Mag.~B}}
+@String{PML = {Philos.~Mag.~Lett.~}}
+@String{PNAS = {PNAS}}
+@String{PREP = {Phys.~Rep.~}}
+@String{PCCP = {Phys.~Chem.~Chem.~Phys.~}}
+@String{PS = {Phys.~Scr.~}}
+@String{PSSB = {Phys.~Status~Solidi~B~}}
+@String{PSSC = {Phys.~Status~Solidi~C~}}
+@String{PE = {Physica E}}
+@String{PP = {Polym.~Prepr.~}}
+@String{RPP = {Rep.~Prog.~Phys.~}}
+@String{RMP = {Rev.~Mod.~Phys.~}}
+
+@String{SM = {Synth.~Met.~}}
+@String{SCI = {Science}}
+@String{SS = {Surf.~Sci.~}}
+@String{SAA = {Spettrochim.~Acta,~Part~A}}
+@String{SSC = {Solid State Commun.~}}
+@String{SSR = {Surf.~Sci.~Rep.~(Netherlands)~}}
+@String{SSP = {Solid State Phys.~}}
+@String{SST = {Semicond.~Sci.~Technol.~}}
+@String{SPIE = {SPIE~Proc.~}}
+
+@String{TOBE = {to be published}}
+@String{TCA = {Theor.~Chem.~Acta}}
+@String{TSF = {Thin~Solid~Films}}
+
+@String{um = {Ultramicroscopy}}
+
+@String{ZETF = {Zh.~Eksp.~Teor.~Fiz.~}}
+@String{ZP = {Z.~Phys.~}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                            % 
+% Bibliography                               %
+%                                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@misc{Iotk,
+  author={Giovanni Bussi},
+  year=2005, note={{\texttt{http://www.s3.infm.it/iotk}}}}
+
+@article{buss04ps,
+  author={Giovanni Bussi},
+  title={Effects of the Electron-Hole Interaction on the Optical Properties of Materials:
+         the Bethe-Salpeter Equation},
+  keyword={THEORY-GW,THEORY-BSE,GBUSSI-PUBL},
+  journal=PS,
+  pages = {141--151},
+  volume={T109},
+  year=2004,
+  annote={}
+}
+
+
+@book{Nr,
+  author = {Press, W. H. and Teukolsky, Saul A. and Vetterling,
+             W. T. and Flannery, Brian P.},
+  title = {Numerical recipes in {FORTRAN}},
+  EDITION = {Second},
+  PUBLISHER = {Cambridge University Press},
+  ADDRESS = {Cambridge},
+  YEAR = {1992}
+}
+
+@book{kitt95book,
+Author = "Charles Kittel",
+Title = {Introduction to Solid State Physics},
+edition= {Seventh},
+publisher={ Wiley },
+Year = {1996} }
+
+@article{chad-cohe73prb,
+  author={D. J. Chadi and Marvin L. Cohen},
+  title={Special Points in the Brillouin Zone},
+  journal={Phys.~Rev.~B},
+  volume=8, number=12, pages={5747--5753}, month=dec, year=1973}
+
+@article{hedi-lund69ssp,
+  author={Lars Hedin and Stig Lundqvist},
+  title={Effects of electron-electron and electron-phonon interactions on the
+         one-electron states of solids},
+  keyword={THEORY-GW,THEORY-CORRELATION},
+  journal=ssp,volume=23,pages={1--181},
+  year=1969,
+}
+
+@article{hedi65pr,
+  author={Lars Hedin},
+  title={New method for calculating the one-particle Green's function with
+         application to the electron gas problem},
+  keyword={THEORY-GW,THEORY-CORRELATION},
+  journal=pr,volume=139,number={3A},pages={A796--A823},
+  year=1965,month=aug,
+}
+
+@article{hybe-loui84prb,
+  author={Mark S. Hybertsen and Steven G. Louie},
+  title={Nonlocal-density-functional approximation for exchange and correlation in semiconductors},
+  keyword={THEORY-GW},
+  journal=PRB,volume=30,number=10,pages={5777--5790},
+  year=1984,month=nov,
+  annote={}
+}
+
+@article{hybe-loui85prl,
+  author={Mark S. Hybertsen and Steven G. Louie},
+  title={First-Principles Theory of Quasiparticles: Calculation of
+         Band Gaps in Semiconductor and Insulators},
+  keyword={THEORY-GW},
+  journal=PRL, volume=55, number=13, pages={1418--1421},
+  year=1985, month=sep}
+
+
+@article{hybe-loui86prb,
+  author={Mark S. Hybertsen and Steven G. Louie},
+  title={Spin-orbit splitting in semiconductors and insulators from the {\it ab initio} pseudopotential},
+  keyword={THEORY-GW},
+  journal=PRB,volume=34,number=4,pages={2920--2922},
+  year=1986,month=aug,
+  annote={}
+}
+
+@article{godb+88prb,
+  author={R. W. Godby and M. Schl{\"u}ter and L. J. Sham},
+  title={Self-energy operators and exchange-correlation potentials in semiconductors},
+  keyword={THEORY-GW},
+  journal=PRB,volume=37,number=17,pages={10159-10175},
+  year=1988,month=jun,
+}
+
+@article{godb-need89prl,
+  author={R. W. Godby and R. J. Needs},
+  title={Metal-insulator transition in Kohn-Sham theory and quasiparticle theory},
+  keyword={},
+  journal=PRL,
+  volume=62,
+  number=10,
+  pages={1169--1172},
+  year=1989,
+  month=mar,
+  annote={}
+}
+
+
+@article{fari+88prb,
+  author={B. Farid and R. Daling and D. Lenstra and W. van Haeringen},
+  title={GW approach to the calculation of electron self-energies in semiconductors},
+  keyword={},
+  journal=PRB,
+  volume=38,
+  number=11,
+  pages={7530--7534},
+  year=1988,
+  month=oct,
+  annote={}
+}
+
+@incollection{fari99book,
+  author={Benham Farid},
+  title={Ground and Low-Lying Excited States of Interacting Electron Systems;
+         A Survey and Some Critical Analyses},
+  booktitle={Electron Correlation in the Solid State},
+  publisher={Imperial College Press, London},
+  year=1999,
+  editor={N. H. March},
+  pages={103--261},
+  annote={\GB non poteva mancare il bib file per questo superbo trattato
+          sulle funzioni di Green. Tratta molti dettagli matematici trascurati
+          regolarmente dagli altri autori. A volte un po pedante...}
+}
+
+
+@article{enge+91prb,
+  author={G. E. Engel and Behnam Farid and C. M. M. Nex and N. H. March},
+  title={Calculation of the $GW$ self-energy in semiconducting crystals},
+  keyword={},
+  journal=PRB,
+  volume=44,
+  number=24,
+  pages={13356--13373},
+  year=1991,
+  month=dec,
+  annote={}
+}
+
+@article{enge-fari93prb,
+  author={G. E. Engel and Behnam Farid},
+  title={Generalized plasmon-pole model and plasmon band structures of crystals},
+  keyword={},
+  journal=PRB,
+  volume=47,
+  number=23,
+  pages={15931--15934},
+  year=1993,
+  month=jun,
+  annote={}
+}
+
+@article{shir-mart93prb,
+  author={Eric L. Shirley and Richard M. Martin},
+  title={GW quasiparticle calculations in atoms},
+  keyword={THEORY-GW},
+  journal=PRB,
+  volume={47},
+  number={23},
+  pages={15404-15412},
+  year=1993,
+  month=jun,
+}
+
+@article{roja+95prl,
+  author={H. N. Rojas and R. W. Godby and R. J. Needs},
+  title={Ab initio calculations of self-energies and dielectric response
+         functions of solids},
+  keyword={THEORY-TDDFT,THEORY-GW},
+  journal=prl,volume=74,number=10,pages={1827--1830},
+  year=1995,month=mar,
+}
+
+@article{rohl+95prb,
+  author={Michael Rohlfing and Peter Kr{\"u}ger and Johannes Pollmann},
+  title={Efficient scheme for GW quasiparticle band-structure calculations with applications to bulk Si and to the Si(001)-(2{$\times$}1) surface},
+  keyword={THEORY-GW},
+  journal=PRB,volume=52,number=3,pages={1905--1917},
+  year=1995,month=jul,
+}
+
+@article{rohl-loui00prb,
+  title={Electron-hole excitations and optical spectra from first principles},
+  author={Michael Rohlfing and Steven G. Louie},
+  journal=PRB,volume=62,number=8,pages={4927--4944},
+  keyword={THEORY-GW,THEORY-BSE,OPTICS},
+  year=2000,month=aug}
+
+
+@article{hohe-kohn64pr,
+  author={P. Hohenberg and W. Kohn},
+  title={Inhomogeneus Electron Gas},
+  journal=PR, volume=136, number={3B}, pages={B864--B871},
+  year=1964, month=nov}
+
+@article{kohn-sham65pr,
+  author={W. Kohn and L. J. Sham},
+  title={Self-Consistent Equations Including Exchange and Correlation Effects},
+  journal=PR, volume=140, number={4A}, pages={A1133--A1138},
+  year=1965, month=nov}
+
+@article{arya-gunn98rpp,
+  author={F. Aryasetiawan and O. Gunnarsson},
+  title={The GW method},
+  keyword={},
+  journal=RPP,volume=61,number=3,pages=237,
+  year=1998,month=mar,
+  annote={}
+}
+
+@article{onid+02rmp,
+  author={Giovanni Onida and Lucia Reining and Angel Rubio},
+  title={Electronic excitations: density-functional versus many-body Green's-function approaches},
+  keyword={THEORY-BSE},
+  journal=RMP,volume=74,number=2,pages={601--659},
+  year=2002,month=apr,
+  annote={}
+}
+
+
+@book{fett-wale71book,
+  author={Alexander L. Fetter and John Dirk Walecka},
+  title={Quantum theory of many-particle systems},
+  publisher={McGraw-Hill, New York},
+  year=1971}
+
+@article{froy89prb,
+  author={Sverre Froyen},
+  title={Brillouin-zone integration by Fourier quadrature: Special points for superlattice and supercell calculations},
+  keyword={},
+  journal=PRB,volume=39,number=5,pages={3168--3172},
+  year=1989,month=feb}
+
+@article{fale04prl,
+  author={S. V. Faleev and M. van Schlifgaarde and T. Kotani},
+  keyword={},
+  journal=PRL,volume=93,pages={126406},
+  year=2004}
+
+@article{ABINIT,
+  author       = "X. Gonze and J. M. Beuken and R. Caracas and F. Detraux,
+M. Fuchs and G. M. Rignanese and L. Sindic and M. Verstraete and G. Zerah and F.
+Jollet and
+M. Torrent and A. Roy and M. Mikami and Ph. Ghosez and J. Y. Raty and D. C. Allan",
+  title        = "http://www.abinit.org",
+  journal      = "Comp. Mat. Sci", volume="25", pages="478",
+  year         = "2002",
+}
+
+@Misc{SELF,
+  author       = "A. Marini",
+  title        = " the {\tt SELF} project http://people.roma2.infm.it/\symbol{126}marini/self",
+  year         = "",
+}

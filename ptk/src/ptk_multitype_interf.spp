@@ -1,0 +1,297 @@
+! Parallel Tool Kit (PTK)
+! Copyright (C) 2004-2006 Giovanni Bussi
+!
+! This library is free software; you can redistribute it and/or
+! modify it under the terms of the GNU Lesser General Public
+! License as published by the Free Software Foundation; either
+! version 2.1 of the License, or (at your option) any later version.
+!
+! This library is distributed in the hope that it will be useful,
+! but WITHOUT ANY WARRANTY; without even the implied warranty of
+! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+! Lesser General Public License for more details.
+!
+! You should have received a copy of the GNU Lesser General Public
+! License along with this library; if not, write to the Free Software
+! Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+!------------------------------------------------------------------------------!
+! Inclusion of configuration file
+#include "ptk_config.h"
+!------------------------------------------------------------------------------!
+
+>##############################################################################<
+># inclusion if the spp definitions
+>include -s ptk_include.sh
+>##############################################################################<
+># inclusion if the auxiliary macros
+>include ptk_auxmacros.spp
+>##############################################################################
+
+module ptk_multitype_interf
+use ptk_base
+implicit none
+private
+public :: ptk_bcast
+public :: ptk_send
+public :: ptk_recv
+public :: ptk_reduce
+public :: ptk_allreduce
+public :: ptk_reduce_inplace
+public :: ptk_allreduce_inplace
+public :: ptk_gather
+public :: ptk_allgather
+
+interface ptk_bcast
+>for type in $types ; do
+>  for kind in ${kinds}   ; do
+>    if [ $type != CHARACTER -o $kind -eq 1 ] ; then
+#ifdef __PTK_${type}${kind}
+>      for rank in ${ranks}   ; do
+>        eval "LENSTAR=\$LENSTAR_$type"
+#if ${rank} <= __PTK_MAXRANK
+subroutine ptk_bcast_${type}${kind}_${rank}(buffer,root,comm,ierr)
+  use ptk_base
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(inout) :: buffer ${SHAPE[$rank]}
+  integer,        intent(in),  optional :: root
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+end subroutine ptk_bcast_${type}${kind}_${rank}
+#endif
+>      done
+#endif
+>    fi
+>  done
+>done
+end interface
+
+interface ptk_send
+>for type in $types ; do
+>  for kind in ${kinds}   ; do
+>    if [ $type != CHARACTER -o $kind -eq 1 ] ; then
+#ifdef __PTK_${type}${kind}
+>      for rank in ${ranks}   ; do
+>        eval "LENSTAR=\$LENSTAR_$type"
+#if ${rank} <= __PTK_MAXRANK
+subroutine ptk_send_${type}${kind}_${rank}(buffer,dest,tag,comm,ierr)
+  use ptk_base
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(in) :: buffer ${SHAPE[$rank]}
+  integer,        intent(in)            :: dest
+  integer,        intent(in),  optional :: tag
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+end subroutine ptk_send_${type}${kind}_${rank}
+#endif
+>      done
+#endif
+>    fi
+>  done
+>done
+end interface
+
+interface ptk_recv
+>for type in $types ; do
+>  for kind in ${kinds}   ; do
+>    if [ $type != CHARACTER -o $kind -eq 1 ] ; then
+#ifdef __PTK_${type}${kind}
+>      for rank in ${ranks}   ; do
+>        eval "LENSTAR=\$LENSTAR_$type"
+#if ${rank} <= __PTK_MAXRANK
+subroutine ptk_recv_${type}${kind}_${rank}(buffer,source,tag,comm,status,ierr)
+  use ptk_base
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(out) :: buffer ${SHAPE[$rank]}
+  integer,          intent(in),  optional :: source
+  integer,          intent(in),  optional :: tag
+  type(ptk_comm),   intent(in),  optional :: comm
+  type(ptk_status), intent(out), optional :: status
+  integer,          intent(out), optional :: ierr
+end subroutine ptk_recv_${type}${kind}_${rank}
+#endif
+>      done
+#endif
+>    fi
+>  done
+>done
+end interface
+
+interface ptk_get_count
+>for type in $types ; do
+>  for kind in ${kinds}   ; do
+>    if [ $type != CHARACTER -o $kind -eq 1 ] ; then
+#ifdef __PTK_${type}${kind}
+>      for rank in ${ranks}   ; do
+>        eval "LENSTAR=\$LENSTAR_$type"
+#if ${rank} <= __PTK_MAXRANK
+subroutine ptk_get_count_${type}${kind}_${rank}(buffer,status,count,ierr)
+  use ptk_base
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(in) :: buffer ${SHAPE[$rank]}
+  type(ptk_status), intent(in)            :: status
+  integer,          intent(out)           :: count
+  integer,          intent(out), optional :: ierr
+end subroutine ptk_get_count_${type}${kind}_${rank}
+#endif
+>      done
+#endif
+>    fi
+>  done
+>done
+end interface
+
+interface ptk_reduce
+>for type in $types ; do
+>  for kind in ${kinds}   ; do
+>    if [ $type != CHARACTER -o $kind -eq 1 ] ; then
+#ifdef __PTK_${type}${kind}
+>      for rank in ${ranks}   ; do
+>        eval "LENSTAR=\$LENSTAR_$type"
+#if ${rank} <= __PTK_MAXRANK
+subroutine ptk_reduce_${type}${kind}_${rank}(sendbuf,recvbuf,op,root,comm,ierr)
+  use ptk_base
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(in)  :: sendbuf ${SHAPE[$rank]}
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(out) :: recvbuf ${SHAPE[$rank]}
+  type(ptk_op),   intent(in)            :: op
+  integer,        intent(in),  optional :: root
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+end subroutine ptk_reduce_${type}${kind}_${rank}
+#endif
+>      done
+#endif
+>    fi
+>  done
+>done
+end interface
+
+interface ptk_allreduce
+>for type in $types ; do
+>  for kind in ${kinds}   ; do
+>    if [ $type != CHARACTER -o $kind -eq 1 ] ; then
+#ifdef __PTK_${type}${kind}
+>      for rank in ${ranks}   ; do
+>        eval "LENSTAR=\$LENSTAR_$type"
+#if ${rank} <= __PTK_MAXRANK
+subroutine ptk_allreduce_${type}${kind}_${rank}(sendbuf,recvbuf,op,comm,ierr)
+  use ptk_base
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(in)  :: sendbuf ${SHAPE[$rank]}
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(out) :: recvbuf ${SHAPE[$rank]}
+  type(ptk_op),   intent(in)            :: op
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+end subroutine ptk_allreduce_${type}${kind}_${rank}
+#endif
+>      done
+#endif
+>    fi
+>  done
+>done
+end interface
+
+interface ptk_reduce_inplace
+>for type in $types ; do
+>  for kind in ${kinds}   ; do
+>    if [ $type != CHARACTER -o $kind -eq 1 ] ; then
+#ifdef __PTK_${type}${kind}
+>      for rank in ${ranks}   ; do
+>        eval "LENSTAR=\$LENSTAR_$type"
+#if ${rank} <= __PTK_MAXRANK
+subroutine ptk_reduce_ip_${type}${kind}_${rank}(buffer,op,root,comm,ierr)
+  use ptk_base
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(inout)  :: buffer ${SHAPE[$rank]}
+  type(ptk_op),   intent(in)            :: op
+  integer,        intent(in),  optional :: root
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+end subroutine ptk_reduce_ip_${type}${kind}_${rank}
+#endif
+>      done
+#endif
+>    fi
+>  done
+>done
+end interface
+
+interface ptk_allreduce_inplace
+>for type in $types ; do
+>  for kind in ${kinds}   ; do
+>    if [ $type != CHARACTER -o $kind -eq 1 ] ; then
+#ifdef __PTK_${type}${kind}
+>      for rank in ${ranks}   ; do
+>        eval "LENSTAR=\$LENSTAR_$type"
+#if ${rank} <= __PTK_MAXRANK
+subroutine ptk_allreduce_ip_${type}${kind}_${rank}(buffer,op,comm,ierr)
+  use ptk_base
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(inout) :: buffer ${SHAPE[$rank]}
+  type(ptk_op),   intent(in)            :: op
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+end subroutine ptk_allreduce_ip_${type}${kind}_${rank}
+#endif
+>      done
+#endif
+>    fi
+>  done
+>done
+end interface
+
+interface ptk_gather
+>for type in $types ; do
+>  for kind in ${kinds}   ; do
+>    if [ $type != CHARACTER -o $kind -eq 1 ] ; then
+#ifdef __PTK_${type}${kind}
+>      for rank in ${ranks}   ; do
+>        if (( $rank + 1 <= $maxrank )) ; then
+>          eval "LENSTAR=\$LENSTAR_$type"
+#if ${rank} <= __PTK_MAXRANK
+subroutine ptk_gather_${type}${kind}_${rank}(sendbuf,recvbuf,root,comm,ierr)
+  use ptk_base
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(in)  :: sendbuf ${SHAPE[$rank]}
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(out) :: recvbuf ${SHAPE[$rank + 1]}
+  integer,        intent(in),  optional :: root
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+end subroutine ptk_gather_${type}${kind}_${rank}
+#endif
+>         fi
+>      done
+#endif
+>    fi
+>  done
+>done
+end interface
+
+interface ptk_allgather
+>for type in $types ; do
+>  for kind in ${kinds}   ; do
+>    if [ $type != CHARACTER -o $kind -eq 1 ] ; then
+#ifdef __PTK_${type}${kind}
+>      for rank in ${ranks}   ; do
+>        if (( $rank + 1 <= $maxrank )) ; then
+>          eval "LENSTAR=\$LENSTAR_$type"
+#if ${rank} <= __PTK_MAXRANK
+subroutine ptk_allgather_${type}${kind}_${rank}(sendbuf,recvbuf,comm,ierr)
+  use ptk_base
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(in)  :: sendbuf ${SHAPE[$rank]}
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(out) :: recvbuf ${SHAPE[$rank + 1]}
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+end subroutine ptk_allgather_${type}${kind}_${rank}
+#endif
+>        fi
+>      done
+#endif
+>    fi
+>  done
+>done
+end interface
+
+end module ptk_multitype_interf

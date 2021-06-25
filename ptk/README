@@ -1,0 +1,27 @@
+PACKAGE Parallel Tool Kit
+VERSION 0.1.1
+AUTHORS Giovanni Bussi
+LICENSE GNU LIBRARY GENERAL PUBLIC LICENSE
+
+This library provides wrappers for part of the MPI library
+using fortran 90 features, expecially the overloading procedure.
+Every (implemented) mpi call is translated in an equivalent
+ptk call where the arguments concerning sizes and kinds are omitted.
+
+As an example:
+
+call MPI_Bcast(buffer,10,MPI_INTEGER,root,comm,ierr)
+
+becomes:
+
+call ptk_bcast(buffer,root,comm,ierr)
+
+Also, part of the arguments are usually
+optional with reasonable default values.
+Finally, other extra tools are implemented.
+See the source code for details.
+
+
+
+
+

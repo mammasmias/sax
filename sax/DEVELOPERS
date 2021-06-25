@@ -1,0 +1,100 @@
+PACKAGE Self-energies and eXcitations (SaX)
+VERSION 0.1.0
+AUTHORS SaX developers team
+LICENSE GNU GENERAL PUBLIC LICENSE
+
+INSTRUCTIONS FOR DEVELOPERS
+
+The following rules should be followed by anyone interested
+in developing the official version of SaX. Notice that not
+all of them are already 100% respected, but we are on the way.
+
+1. SaX is object-oriented.
+   Data structures should be grouped in objects (i.e. Fortran types)
+   when possible. Even for very simple data (e.g. simple arrays or even scalars)
+   this choice is to be preferred due to the stronger type checking and
+   to the possibility of adding data later.
+
+2. Clarity before performance.
+   Optimizations which are not critical (less than 20% speed)
+   are to be avoided when they are against the readability of the code.
+
+3. Portability.
+   Avoid constructs working only on specific compilers, or at least
+   provide a portable alternative using c preprocessor.
+   Fortran should be standard Fortran90 (avoid f95 extensions)
+
+4. Preprocessing with cpp or with sprep.
+   The preferred tools for preprocessing the code are the standard
+   cpp preprocessor or the sprep shell preprocessor (files with .spp
+   suffix). sprep should be used only when it offers clear advantages
+   over cpp (e.g. for loop unrolling, multiple interfaces, ...)
+
+5. Respect namespaces.
+   There is a number of namespaces in SaX, presently num_, tools_,
+   and pw_, plus some additional modules for specific programs.
+   The developer should respect this structure.
+   In the future num_ and tools_ could be migrated to an external
+   library and shared with other codes.
+
+6. Respect naming conventions.
+   For an object type X there should be:
+   - a file X_type.f90 containing a module X_type defining the type X
+   - a file X_interf.f90 containing a module X_interf defining the
+     interfaces for its methods
+   - a file X_extern.f90 implementing the methods as external subroutines
+   - a file X_module.f90 containing a module X_module which uses X_type
+     and X_interf, so that the user can simply use this module
+   alternatively, for simple objects one can use a single file
+   X_module.f90 containing a module X_module defining type and methods
+
+   All the methods for object X should have names in the form X_*
+
+   If they act only on one object, this object should be the first argument.
+   E.g., a method aimed at setting some internal values of the object abba
+   should have an interface similar to:
+   subroutine abba_set(X,a1,a2,a3,..)
+     type(abba),  intent(inout) :: X
+     other_types, intent(in)    :: a1,a2,a3
+
+   The names of the interfaces in X_interf should be different
+   from the names of the external routines, where an _x suffix should
+   be added, e.g.
+   in abba_inter.f90:
+     interface abba_init(...)
+       subroutine abba_init_x(...)
+     end interface abba_init
+   in abba_extern.f90:
+     subroutine abba_init_x(...)
+   In this way an user will be able to call a subroutine only if he includes
+   the corresponding module.
+
+   Browse the code to see other examples.
+
+7. Implement standard methods.
+   For all new objects, the following methods should be defined.
+   Basics:
+   default constructor:
+     subroutine X_init (eventually accepting some argument)
+   default destructor:
+     subroutine X_destroy
+   These methods should be defined even if they are unuseful
+   (e.g. when there are not dynamics objects inside di type)
+
+   Input/output:
+   default reader
+     subroutine X_read(X,unit,fmt,name,...)
+   default writer
+     subroutine X_write(X,unit,fmt,name,...)
+   fmt should be a string which defines the way the object is read/written
+   at least the "iotk" possibility should be implemented, accepting
+   the name argument as the name for the main tag (see the package iotk).
+   So, every object should have an xml representation
+
+   Browse the code to see other examples.
+
+8. Avoid explicit kinds.
+   Double precision can be enforced easier with compiler options.
+   Avoid constants like 1.0D0, declaration like 'REAL*8' and
+   even explicit kinds except when it is strictly necessary.
+

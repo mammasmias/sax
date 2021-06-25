@@ -1,0 +1,47 @@
+
+<input>
+<sax_options
+  calculation_kind = "HF"
+  start_from = "DFT"
+  nbandmin = "1"
+  nbandmax = "20"
+  nelec    = "8.0"
+  convert_from_pwscf="T"
+  convert_from_pwscf_file="SiH4.export/index.xml"
+  system_kind = "3D"
+  cutoff_fock="25.0" 
+  calc_sp_hmatrix = "T"
+  sigma_nbmin = "1"
+  sigma_nbmax = "20"
+  diagonal = "T"
+  calc_QP_states = "T"
+  sigma_first_order = "T"
+/>
+
+<structure>
+  <direct
+    a1 = " 20.00 ,  0.0 ,  0.0"
+    a2 = "  0.0 ,  20.000 ,  0.0"
+    a3 = "  0.0 ,  0.0 ,  20.00" />
+</structure>
+
+<atoms>
+<types ntypes="2">
+Si  "/igor/marsamos/S3DE/sax/examples/pseudos/Si.vbc.UPF" 25.0
+H  "/igor/marsamos/S3DE/sax/examples/pseudos/H.vbc.new.UPF" 25.0
+</types>
+<positions natoms="5" units="angstrom" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+H       0.000000000     1.489000000     0.0000000000
+H       0.000000000     -0.496363243    -1.403832088
+H       -1.21575425     -0.496363243    0.701916043
+H       1.21575425      -0.496363243    0.701916043
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="1 1 1" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+

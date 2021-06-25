@@ -1,0 +1,134 @@
+-------------------------------------------------------------------------------
+DESCRIPTION OF BSE INPUT PARAMETERS
+-------------------------------------------------------------------------------
+===============================================================================
+<sax_options
+  ...
+\>
+bse calculation options
+===============================================================================
+* calculation_kind =
+      "MACRO": screened coulomb interation approximated by an epsilon macroscopic
+               obtained in a previous calculation
+      "FULL": read W from a previous GW calculation
+* system_kind =
+       "0D": 0D system Martyna-Tuckerman applied on coulomb interactions
+       "3D": 3D system
+
+!!! for anysotropic systems such as 1D or 2D use system_kind="3D"
+!!! and coulomb_div_treatment="vcut_ws", in this case you
+!!! have to specify a value for ecutvcut. (around 0.7 Ry)
+
+
+* start_from =
+       "DFT": the is solved on the basis of a previous DFT
+              calculation (read file states)
+       "HF": the BSE is solved on the basis of a previous HF calculation
+             calculation (read file HF_states)
+       "GW": the BSE is solved on the basis of a previous GW calculation
+             (read file GW_states)
+
+* nbandmin =  "min index of band in states|HF_states|GW_states"
+* nbandmax = "max index of band in states|HF_states|GW_states"
+
+------------------------------------------------------------------------------
+ CONVERSION FROM PWSCF FORMATS --> creation of the file states
+* convert_from_pwscf = if ".true.", the states are first converted from pwscf calculation
+* convert_from_pwscf_file : index file obtained from pwscf calculation
+* nelec = "number of electrons" (is a real number)
+-------------------------------------------------------------------------------
+ PLANE WAVE CUTOFFS
+* cutoff_fock = "cutoff for the bare coulomb potential (exchange terms)" in Ry (default "6.0" Ry) 
+************************************************************************
+ATTENTION: It is recommended to use at least the same cutoff for cutoff_fock
+than the one used for the wave functions
+************************************************************************
+
+* cutoff_polarizability = "cutoff for the screened Coulomb potential" 
+                           Should be the same as the one used in a
+                           previous GW calculation in Ry
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+* coulomb divergency
+-------------------------------------------------------------------------------
+* coulomb_div_treatment = "how the divergency is treated" (defaul "gigi-baldereschi" for 
+* system_kind="3D", "vcut_ws" for system_kind="0D")
+* ecutvcut="cutoff on reciprocal space (Ry) for coulomb_div_treatment="vcut_ws".             
+* (if system_kind="0D" default "2.0" Ry)
+-------------------------------------------------------------------------------
+* bse_spin = if "0" -> singlet
+             if "1" -> triplet
+
+* energy_shift = "shift on energies" scissor shift for a MACRO calculation (Ry)
+
+* bse_emin = "min transition energy"
+* bse_emax = "max transition energy" 
+              bse_emin and bse_emax give the transition energy range (Ry)
+------------------------------------------------------------------------------
+* calc_bse 
+* calc_oscillators = if "T" calc oscillator strenghs (on file RPAEXC_oscillators) 
+                     including excitonic effects. Fast way for having RPAEXC spectra.
+===============================================================================
+<structure>
+  <direct
+   ...
+   \>
+<\structure> 
+Cell vectors should be in a.u.
+===============================================================================
+<atoms>
+  <types ntypes="number_of_atomic_species">
+    ...
+  <\types>
+  Atomic symbol, pseudopotential location and cutoff for the wave functions (Ry)
+  ATENTION! only norm-conserving pseudopotential
+
+  <positions natoms="number_of_atoms" units="bohr|angstrom|alat|crystal" alat="value_of_cellparameter in bohr">
+  atomic_symbol X Y Z
+  </positions>
+
+<\atoms> 
+===============================================================================
+<kmesh>
+<mesh nk="nkx nky nkz" shift="shiftx shifty shiftz"/>
+kme
+</kmesh>
+===============================================================================
+-------------------------------------------------------------------------------
+EXTRA FILES NEEDED FOR BSE
+-------------------------------------------------------------------------------
+if calculation_kind = "MACRO" bse.x read a file called epsilon.static
+      - epsilon.static contains the macroscopic dielectric tensor calculated at w=0
+        in the units of 8*pi
+      - epsilon.static is calculated in a previous GW calculation
+      - epsilon.static can be specified by the user (see example2)
+===============================================================================
+-------------------------------------------------------------------------------
+BSE INPUT FILE
+-------------------------------------------------------------------------------
+<input>
+<sax_options
+ ...
+/>
+<structure>
+  <direct
+    a1 = " a1x ,  a1y ,  a1z"
+    a2 = " a2x  , a2y , a2z"
+    a3 = " a3x , a3y ,  a3z" />
+</structure>
+
+<atoms>
+<types ntypes="number_of_atomic_species">
+atomic_symbol "full_path_pseudopotential_location" cutoff 
+</types>
+<positions natoms="number_of_atoms" units="bohr | angstrom | alat | crystal" alat="value_of_cellparameter">
+atomic_symbol X Y Z
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="nkx nky nkz" shift="shiftx shifty shiftz"/>
+</kmesh>
+
+</input>
+-------------------------------------------------------------------------------

@@ -1,0 +1,8 @@
+PACKAGE FFTW
+VERSION 2.1.5p0
+AUTHORS
+LICENSE GNU GENERAL PUBLIC LICENSE
+
+This package contains the fftw library (www.fftw.org),
+adapted to the S3 development environment
+

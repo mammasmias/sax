@@ -1,0 +1,408 @@
+! Self-energies and eXcitations (SaX)
+! Copyright (C) 2006 SaX developers team
+!
+! This program is free software; you can redistribute it and/or
+! modify it under the terms of the GNU General Public License
+! as published by the Free Software Foundation; either version 2
+! of the License, or (at your option) any later version.
+!
+! This program is distributed in the hope that it will be useful,
+! but WITHOUT ANY WARRANTY; without even the implied warranty of
+! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+! GNU General Public License for more details.
+!
+! You should have received a copy of the GNU General Public License
+! along with this program; if not, write to the Free Software
+! Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+#include "tools_error.h"
+!@ MANUAL
+module num_interpolation_module
+implicit none
+! This module provides the definition of "num_interpolation" and its methods
+private
+public :: num_interpolation_init
+public :: num_interpolation_destroy
+public :: num_interpolation_calc
+public :: num_interpolation_calc_der
+>for TYPE in real complex ; do
+>  for RANK in 0 1 2 ; do
+#if 0
+public :: num_interpolation_${TYPE}_$RANK
+public :: num_interpolation_${TYPE}_${RANK}_init
+public :: num_interpolation_${TYPE}_${RANK}_destroy
+public :: num_interpolation_${TYPE}_${RANK}_calc
+#endif
+>  done
+>done
+public :: num_interpolation
+
+!@ END MANUAL
+
+!@ MANUAL
+! This is a type for numerical interpolation
+! It contains a table of n+1 pairs of reals,
+! ordered in decreasing or increasing x.
+! if parity is different from 0 it can be used to improve
+! the interpolation
+type num_interpolation
+  integer      :: n
+  real         :: xmin,xmax
+  real,pointer :: y(:),x(:)
+  integer      :: parity
+end type num_interpolation
+!@ END MANUAL
+
+
+#if 0
+>for TYPE in real complex ; do
+>  for RANK in 0 1 2 ; do
+>    if test $RANK -eq 0 ; then SHAPEP1="(:)" ; fi
+>    if test $RANK -eq 1 ; then SHAPEP1="(:,:)" ; fi
+>    if test $RANK -eq 2 ; then SHAPEP1="(:,:,:)" ; fi
+type num_interpolation_${TYPE}_$RANK
+  integer       :: n
+  real          :: xmin,xmax
+  $TYPE,pointer :: x(:),y$SHAPEP1
+  integer       :: parity
+>    if test $RANK -gt 0 ; then
+  integer       :: dim1
+>    fi
+>    if test $RANK -gt 1 ; then
+  integer       :: dim2
+>    fi
+end type num_interpolation_${TYPE}_$RANK
+>  done
+>done
+contains
+
+>for TYPE in real complex ; do
+>  for RANK in 0 1 2 ; do
+subroutine num_interpolation_${TYPE}_${RANK}_init(interpolation &
+>    if test $RANK -eq 1 ; then
+                                                               ,dim &
+>    fi
+>    if test $RANK -eq 2 ; then
+                                                               ,dim1,dim2 &
+>    fi
+                                                                         ,xmin,xmax,delta,parity)
+  type (num_interpolation_${TYPE}_${RANK}), intent(out) :: interpolation
+  real,                                     intent(in)  :: xmin,xmax,delta
+  integer, optional,                        intent(in)  :: parity
+>    if test $RANK -eq 1 ; then
+  integer,                                  intent(in)  :: dim
+>    fi
+>    if test $RANK -eq 2 ; then
+  integer,                                  intent(in)  :: dim1,dim2
+>    fi
+  integer :: i
+  interpolation%n = ceiling(abs(xmax - xmin)/delta) * sign(1.0,(xmax - xmin))
+  allocate(interpolation%x(0:interpolation%n))
+>    if test $RANK -eq 0 ; then
+  allocate(interpolation%y(0:interpolation%n))
+>    fi
+>    if test $RANK -eq 1 ; then
+  interpolation%dim1 = dim
+  allocate(interpolation%y(dim,0:interpolation%n))
+>    fi
+>    if test $RANK -eq 2 ; then
+  interpolation%dim1 = dim1
+  interpolation%dim2 = dim2
+  allocate(interpolation%y(dim1,dim2,0:interpolation%n))
+>    fi
+  interpolation%xmin = xmin
+  interpolation%xmax = xmax
+  do i=0,interpolation%n
+    interpolation%x(i) = xmin + (xmax - xmin) * real(i) / interpolation%n
+  end do
+  interpolation%y=0.0
+  if(present(parity)) then
+    interpolation%parity = parity
+  else
+    interpolation%parity = 0
+  end if
+  if(interpolation%parity /= 0 .and. (xmin /= 0.0 .or. xmax<0.0)) then
+    WARNING("")
+    interpolation%parity = 0
+  end if
+end subroutine num_interpolation_${TYPE}_${RANK}_init
+
+!@ MANUAL
+subroutine num_interpolation_${TYPE}_${RANK}_destroy(interpolation)
+! Destroys the table
+  type (num_interpolation_${TYPE}_${RANK}), intent(inout) :: interpolation
+!@ END MANUAL
+  deallocate(interpolation%x)
+  deallocate(interpolation%y)
+end subroutine num_interpolation_${TYPE}_${RANK}_destroy
+
+subroutine num_interpolation_${TYPE}_${RANK}_little_table(interpolation,x,order,tab_x,tab_y)
+! Private routine to build a small table to be used by the low-level
+! interpolation routines.
+  use numrec_module
+  type (num_interpolation_${TYPE}_${RANK}), intent(in)  :: interpolation
+  real,                     intent(in)  :: x
+  integer,                  intent(in)  :: order
+  real,                     intent(out) :: tab_x(0:order-1)
+>    if test $RANK -eq 0 ; then
+  $TYPE,                    intent(out) :: tab_y(0:order-1)
+>    fi
+>    if test $RANK -eq 1 ; then
+  $TYPE,                    intent(out) :: tab_y(interpolation%dim1,0:order-1)
+>    fi
+>    if test $RANK -eq 2 ; then
+  $TYPE,                    intent(out) :: tab_y(interpolation%dim1,interpolation%dim2,0:order-1)
+>    fi
+  integer :: j,k
+  if(interpolation%parity==0) then
+    call numrec_locate(interpolation%x,interpolation%n+1,x,j)
+    k = min(max(j-(order-1)/2,1),interpolation%n+1+1-order) - 1
+    if(k<0 .or. k+order-1>interpolation%n) ERROR("")
+    tab_x(:) = interpolation%x(k:k+order-1)
+>    if test $RANK -eq 0 ; then
+    tab_y(:) = interpolation%y(k:k+order-1)
+>    fi
+>    if test $RANK -eq 1 ; then
+    tab_y(:,:) = interpolation%y(:,k:k+order-1)
+>    fi
+>    if test $RANK -eq 2 ; then
+    tab_y(:,:,:) = interpolation%y(:,:,k:k+order-1)
+>    fi
+  else
+    call numrec_locate(interpolation%x,interpolation%n+1,abs(x),j)
+    k = min(j-(order-1)/2,interpolation%n+1+1-order) - 1
+    if(k+order-1>interpolation%n) ERROR("")
+    if(k>=0) then
+      tab_x(:) = interpolation%x(k:k+order-1)
+>    if test $RANK -eq 0 ; then
+      if(interpolation%parity>0) then
+        tab_y(:) = interpolation%y(k:k+order-1)
+      else
+        tab_y(:) = interpolation%y(k:k+order-1) * sign(1.0,x)
+      end if
+>    fi
+>    if test $RANK -eq 1 ; then
+      if(interpolation%parity>0) then
+        tab_y(:,:) = interpolation%y(:,k:k+order-1)
+      else
+        tab_y(:,:) = interpolation%y(:,k:k+order-1) * sign(1.0,x)
+      end if
+>    fi
+>    if test $RANK -eq 2 ; then
+      if(interpolation%parity>0) then
+        tab_y(:,:,:) = interpolation%y(:,:,k:k+order-1)
+      else
+        tab_y(:,:,:) = interpolation%y(:,:,k:k+order-1) * sign(1.0,x)
+      end if
+>    fi
+    else
+      tab_x(-k:order-1) = interpolation%x(0:k+order-1)
+      tab_x(0:-k-1)     = - interpolation%x(-k:1:-1)
+>    if test $RANK -eq 0 ; then
+      tab_y(-k:order-1) = interpolation%y(0:k+order-1)
+      tab_y(0:-k-1)     = interpolation%y(-k:1:-1) * sign(1,interpolation%parity)
+>    fi
+>    if test $RANK -eq 1 ; then
+      tab_y(:,-k:order-1) = interpolation%y(:,0:k+order-1)
+      tab_y(:,0:-k-1)     = interpolation%y(:,-k:1:-1) * sign(1,interpolation%parity)
+>    fi
+>    if test $RANK -eq 2 ; then
+      tab_y(:,:,-k:order-1) = interpolation%y(:,:,0:k+order-1)
+      tab_y(:,:,0:-k-1)     = interpolation%y(:,:,-k:1:-1) * sign(1,interpolation%parity)
+>    fi
+    end if
+  end if
+end subroutine num_interpolation_${TYPE}_${RANK}_little_table
+
+
+!@ MANUAL
+function num_interpolation_${TYPE}_${RANK}_calc(interpolation,x,order)
+! Returns the interpolated value in the point x, using a order-1 polynomial
+  use numrec_module
+  type (num_interpolation_${TYPE}_${RANK}), intent(in) :: interpolation
+>    if test $RANK -eq 0 ; then
+  $TYPE                                :: num_interpolation_${TYPE}_${RANK}_calc
+>    fi
+>    if test $RANK -eq 1 ; then
+  $TYPE                                :: num_interpolation_${TYPE}_${RANK}_calc (interpolation%dim1)
+>    fi
+>    if test $RANK -eq 2 ; then
+  $TYPE                                :: num_interpolation_${TYPE}_${RANK}_calc (interpolation%dim1,interpolation%dim2)
+>    fi
+  real,                     intent(in) :: x
+  integer,                  intent(in) :: order
+  integer :: i1,i2
+!@ END MANUAL
+  real    :: tab_x(order)
+>    if test $RANK -eq 0 ; then
+  $TYPE   :: tab_y(order)
+>    fi
+>    if test $RANK -eq 1 ; then
+  $TYPE   :: tab_y(interpolation%dim1,order)
+>    fi
+>    if test $RANK -eq 2 ; then
+  $TYPE   :: tab_y(interpolation%dim1,interpolation%dim2,order)
+>    fi
+  $TYPE :: y,tab_y_tmp(order)
+  real  :: y1,y2,dy
+  call num_interpolation_${TYPE}_${RANK}_little_table(interpolation,x,order,tab_x,tab_y)
+>    if test $RANK -gt 1 ; then
+  do i2 = 1 , interpolation%dim2
+>    fi
+>    if test $RANK -gt 0 ; then
+  do i1 = 1 , interpolation%dim1
+>    fi
+>    if test $RANK -eq 0 ; then
+     tab_y_tmp = tab_y
+>    fi
+>    if test $RANK -eq 1 ; then
+     tab_y_tmp = tab_y(i1,:)
+>    fi
+>    if test $RANK -eq 2 ; then
+     tab_y_tmp = tab_y(i1,i2,:)
+>    fi
+>    if test $TYPE = real ; then
+     call numrec_polint(tab_x,tab_y_tmp,order,abs(x),y,dy)
+>    fi
+>    if test $TYPE = complex ; then
+     call numrec_polint(tab_x,real (tab_y_tmp),order,abs(x),y1,dy)
+     call numrec_polint(tab_x,aimag(tab_y_tmp),order,abs(x),y2,dy)
+     y = cmplx(y1,y2)
+>    fi
+>    if test $RANK -eq 0 ; then
+     num_interpolation_${TYPE}_${RANK}_calc = y
+>    fi
+>    if test $RANK -eq 1 ; then
+     num_interpolation_${TYPE}_${RANK}_calc(i1) = y
+>    fi
+>    if test $RANK -eq 2 ; then
+     num_interpolation_${TYPE}_${RANK}_calc(i1,i2) = y
+>    fi
+
+>    if test $RANK -gt 0 ; then
+  end do
+>    fi
+>    if test $RANK -gt 1 ; then
+  end do
+>    fi
+
+end function num_interpolation_${TYPE}_${RANK}_calc
+
+>  done
+>done
+#else
+  contains
+#endif
+
+!@ MANUAL
+subroutine num_interpolation_init(interpolation,xmin,xmax,delta,parity)
+! Initialise the table.
+! delta is an excess approximation to the interpoint distance
+! (the point are equally spaced and span the interval [xmin,xmax]).
+! If parity/=0, then xmin should be 0.0 and xmax should be positive.
+  type (num_interpolation), intent(out) :: interpolation
+  real,                     intent(in)  :: xmin,xmax,delta
+  integer, optional,        intent(in)  :: parity
+!@ END MANUAL
+  integer :: i
+  interpolation%n = ceiling(abs(xmax - xmin)/delta) * sign(1.0,(xmax - xmin))
+  allocate(interpolation%x(0:interpolation%n))
+  allocate(interpolation%y(0:interpolation%n))
+  interpolation%xmin = xmin
+  interpolation%xmax = xmax
+  do i=0,interpolation%n
+    interpolation%x(i) = xmin + (xmax - xmin) * real(i) / interpolation%n
+  end do
+  interpolation%y=0.0
+  if(present(parity)) then
+    interpolation%parity = parity
+  else
+    interpolation%parity = 0
+  end if
+  if(interpolation%parity /= 0 .and. (xmin /= 0.0 .or. xmax<0.0)) then
+    WARNING("")
+    interpolation%parity = 0
+  end if
+end subroutine num_interpolation_init
+
+!@ MANUAL
+subroutine num_interpolation_destroy(interpolation)
+! Destroys the table
+  type (num_interpolation), intent(inout) :: interpolation
+!@ END MANUAL
+  deallocate(interpolation%x)
+  deallocate(interpolation%y)
+end subroutine num_interpolation_destroy
+
+subroutine num_interpolation_little_table(interpolation,x,order,tab_x,tab_y)
+! Private routine to build a small table to be used by the low-level
+! interpolation routines.
+  use numrec_module
+  type (num_interpolation), intent(in)  :: interpolation
+  real,                     intent(in)  :: x
+  integer,                  intent(in)  :: order
+  real,                     intent(out) :: tab_x(0:order-1),tab_y(0:order-1)
+  integer :: j,k
+  if(interpolation%parity==0) then
+    call numrec_locate(interpolation%x,interpolation%n+1,x,j)
+    k = min(max(j-(order-1)/2,1),interpolation%n+1+1-order) - 1
+    if(k<0 .or. k+order-1>interpolation%n) ERROR("")
+    tab_x(:) = interpolation%x(k:k+order-1)
+    tab_y(:) = interpolation%y(k:k+order-1)
+  else
+    call numrec_locate(interpolation%x,interpolation%n+1,abs(x),j)
+    k = min(j-(order-1)/2,interpolation%n+1+1-order) - 1
+    if(k+order-1>interpolation%n) ERROR("")
+    if(k>=0) then
+      tab_x(:) = interpolation%x(k:k+order-1)
+      if(interpolation%parity>0) then
+        tab_y(:) = interpolation%y(k:k+order-1)
+      else
+        tab_y(:) = interpolation%y(k:k+order-1) * sign(1.0,x)
+      end if
+    else
+      tab_x(-k:order-1) = interpolation%x(0:k+order-1)
+      tab_y(-k:order-1) = interpolation%y(0:k+order-1)
+      tab_x(0:-k-1)     = - interpolation%x(-k:1:-1)
+      tab_y(0:-k-1)     = interpolation%y(-k:1:-1) * sign(1,interpolation%parity)
+    end if
+  end if
+end subroutine num_interpolation_little_table
+
+!@ MANUAL
+function num_interpolation_calc(interpolation,x,order)
+  use numrec_module
+! Returns the interpolated value in the point x, using a order-1 polynomial
+  real                                 :: num_interpolation_calc
+  type (num_interpolation), intent(in) :: interpolation
+  real,                     intent(in) :: x
+  integer,                  intent(in) :: order
+!@ END MANUAL
+  real    :: tab_x(order),tab_y(order)
+  real :: y,dy
+  call num_interpolation_little_table(interpolation,x,order,tab_x,tab_y)
+  call numrec_polint(tab_x,tab_y,order,abs(x),y,dy)
+  num_interpolation_calc = y
+end function num_interpolation_calc
+
+!@ MANUAL
+function num_interpolation_calc_der(interpolation,x,order,ider)
+  use numrec_module
+! Returns the interpolated value of the ider-th derivative in the point x
+! Note: ider=0 => the function not derived (in this case prefer num_interpolation_calc)
+  real                                 :: num_interpolation_calc_der
+  type (num_interpolation), intent(in) :: interpolation
+  real,                     intent(in) :: x
+  integer,                  intent(in) :: order
+  integer,                  intent(in) :: ider
+!@ END MANUAL
+  real    :: tab_x(order),tab_y(order)
+  real    :: cof(order),pd(0:ider)
+  call num_interpolation_little_table(interpolation,x,order,tab_x,tab_y)
+  call numrec_polcof(tab_x,tab_y,order,cof)
+  call numrec_ddpoly(cof,order,x,pd,ider+1)
+  num_interpolation_calc_der = pd(ider)
+end function num_interpolation_calc_der
+
+end module num_interpolation_module
+

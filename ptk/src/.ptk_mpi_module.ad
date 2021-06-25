@@ -1,0 +1,8 @@
+Optk_mpi_module.f90
+Iptk_mpi_module.spp
+I../include/ptk_include.sh
+I../include/ptk_version.sh
+I../include/ptk_include.sh
+Iptk_mpi_module.spp
+I../include/ptk_auxmacros.spp
+Iptk_mpi_module.spp

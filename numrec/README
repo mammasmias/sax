@@ -1,0 +1,12 @@
+PACKAGE Numrec
+VERSION 0.1.0
+AUTHORS S3 developers team
+LICENSE GNU GENERAL PUBLIC LICENSE
+
+This package implements some of the algorithms described in
+the Numerical Recipes (http://www.nr.com/) book, using the rules of
+the S3 development environment:
++ namespace restricted to numrec_*
++ interfaces are explicit, accessible in the module numrec_module
++ multiple interfaces (single and double precision) implemented through sprep preprocessor
++ only a very limited number of routines are implemented

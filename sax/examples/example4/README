@@ -1,0 +1,20 @@
+##################################################
+# example 4
+#################################################
+Description: GW calculation on a PA chain for different
+k point sampling
+
+Output:
+	- sigma_x.ik contains the exchange part of the
+	self-energy operator in xml format
+	-sigma_c.ik contains the correlation part of the
+	self-energy operator in xml format
+	-GW_QP continains the quasi-particle energies
+	as a functions of the k points in xml format
+
+Suggestions: 
+	-This exmaple is made to show how to solve the coulomb
+	divergencies in 1D systems, we suggest to try to
+	change the coulomb_div_treatment="cutoff_ws" with
+	coulomb_div_treatment="cutoff_spherical" and
+	rerun the scritp.

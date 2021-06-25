@@ -1,0 +1,173 @@
+PACKAGE Linear Algebra Subroutine Interfaces
+VERSION 1.2.2
+AUTHORS Andrea Ferretti
+LICENSE GNU LIBRARY GENERAL PUBLIC LICENSE
+
+!
+! Linear Algebra Subroutine Interfaces (LASI)
+! Copyright (C) 2004 Andrea Ferretti
+!
+! This library is free software; you can redistribute it and/or
+! modify it under the terms of the GNU Lesser General Public
+! License as published by the Free Software Foundation; either
+! version 2.1 of the License, or (at your option) any later version.
+!
+! This library is distributed in the hope that it will be useful,
+! but WITHOUT ANY WARRANTY; without even the implied warranty of
+! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+! Lesser General Public License for more details.
+!
+! You should have received a copy of the GNU Lesser General Public
+! License along with this library; if not, write to the Free Software
+! Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+!
+!-------------------------------------------------------
+! Linear Algebra Subroutines Interfaces (LASI)
+!-------------------------------------------------------
+!
+
+!
+! The LASI module contains INTERFACES to some linear algreba routines
+! (BLAS, LAPACK and others). Lapack interfaces (apart slight changes) are 
+! freely taken from:
+!
+!  -- LAPACK95 interface driver routine (version 3.0) --
+!     UNI-C, Denmark; Univ. of Tennessee, USA; NAG Ltd., UK
+!     September, 2000
+!
+! which is aknowledged.
+!
+! All definitions about kinds (machine dependent) and required
+! interfaces (interface switches) should be modified in 
+! lasi_config.h ; the code present in this file should usually NOT
+! be modified.
+!
+! All preprocessor macros starting with __LASI_ are supposed to be 
+! used only by this library. Other preproc variables are not used. 
+!
+! The convention about names of interfaced routine is:
+! lasi_<name>, 
+! where <name> is usually equal to the name of the called std routine
+! without the first character specifing the type and kind.
+! Here below the full list of names is reported.
+!
+!----------------------------------------
+! BLAS interfaced in this module:
+!
+! **** BLAS 1 ****
+! FUNCTION idamax isamax icamax izamax  -> lasi_IAMAX(n,dx,incx)
+! FUNCTION  snrm2  dnrm2 scnrm2 dznmr2  -> lasi_NRM2(n,x,incx)
+! FUNCTION  sasum  dasum scasum dzasum  -> lasi_ASUM(n,x,incx)
+! FUNCTION               cdotu  zdotu   -> lasi_DOTU(n,x,incx,y,incy)
+! FUNCTION               cdotc  zdotc   -> lasi_DOTC(n,x,incx,y,incy)
+! FUNCTION  sdot   ddot                 -> lasi_DOT(n,x,incx,y,incy)
+! FUNCTION  sdsdot sdot                 -> lasi_DSDOT(n,x,incx,y,incy)
+! SUBROUTINE saxpy daxpy caxpy  zaxpy   -> lasi_AXPY(n,ca,cx,incx,cy,incy)
+! SUBROUTINE scopy dcopy ccopy  zcopy   -> lasi_COPY(n,cx,incx,cy,incy)
+! SUBROUTINE srotg drotg crotg  zrotg   -> lasi_ROTG(a,b,c,s)
+! SUBROUTINE srot  drot  csrot  zdrot   -> lasi_ROT(n,x,incx,y,incy,c,s)
+! SUBROUTINE sscal dscal cscal  zscal  
+!                        csscal zdscal  -> lasi_SCAL(n,a,x,incx)
+! SUBROUTINE sswap dswap cswap  zswap   -> lasi_SWAP(n,x,incx,y,incy)
+!
+! **** BLAS 2 ****
+! SUBROUTINE sgbmv dgbmv cgbmv zgbmv    -> lasi_GBMV(trans,m,kl,ku,n,alpha,A,lda,
+!                                                    X,incx,beta,Y,incy)
+! SUBROUTINE sgemv dgemv cgemv zgemv    -> lasi_GEMV(trans,m,n,alpha,A,lda,
+!                                                    X,incx,beta,Y,incy)
+! SUBROUTINE             cgerc zgerc    -> lasi_GERC(m,n,alpha,x,incx,y,incy,A,lda)
+! SUBROUTINE             cgeru zgeru    -> lasi_GERU(m,n,alpha,x,incx,y,incy,A,lda)
+! SUBROUTINE             chbmv zhbmv    -> lasi_HBMV(uplo,n,k,alpha,A,lda,X,incx,beta,Y,incy)
+! SUBROUTINE             chemv zhemv    -> lasi_HEMV(uplo,n,alpha,A,lda,X,incx,beta,Y,incy)
+! SUBROUTINE             cher  zher     -> lasi_HER(uplo,n,alpha,x,incx,A,lda)
+! SUBROUTINE             cher2 zher2    -> lasi_HER2(uplo,n,alpha,x,incx,y,incy,A,lda)
+! SUBROUTINE             chpr  zhpr     -> lasi_HPR(uplo,n,alpha,x,incx,AP)
+! SUBROUTINE             chpr2 zhpr2    -> lasi_HPR2(uplo,n,alpha,x,incx,y,incy,AP)
+! SUBROUTINE             chpmv zhpmv    -> lasi_HPMV(uplo,n,alpha,AP,X,incx,beta,Y,incy)
+! SUBROUTINE stbmv dtbmv ctbmv ztbmv    -> lasi_TBMV(uplo,trans,diag,n,k,A,lda,X,incx)
+! SUBROUTINE stpmv dtpmv ctpmv ztpmv    -> lasi_TPMV(uplo,trans,diag,n,AP,X,incx)
+! SUBROUTINE strmv dtrmv ctrmv ztrmv    -> lasi_TRMV(uplo,trans,diag,n,A,lda,X,incx)
+! SUBROUTINE ssymv dsymv                -> lasi_SYMV(uplo,n,alpha,A,lda,X,incx,beta,Y,incy)
+! SUBROUTINE ssbmv dsbmv                -> lasi_SBMV(uplo,n,k,alpha,A,lda,X,incx,beta,Y,incy)
+! SUBROUTINE sspmv dspmv                -> lasi_SPMV(uplo,n,alpha,AP,X,incx,beta,Y,incy)
+! SUBROUTINE stbsv dtbsv ctbsv ztbsv    -> lasi_TBSV(uplo,trans,diag,n,k,A,lda,X,incx)
+! SUBROUTINE stpsv dtpsv ctpsv ztpsv    -> lasi_TPSV(uplo,trans,diag,n,AP,X,incx)
+! SUBROUTINE strsv dtrsv ctrsv ztrsv    -> lasi_TRSV(uplo,trans,diag,n,A,lda,X,incx)
+! SUBROUTINE  sger  dger                -> lasi_GER(m,n,alpha,x,incx,y,incy,A,lda)
+! SUBROUTINE  sspr  dspr                -> lasi_SPR(uplo,n,alpha,x,incx,AP)
+! SUBROUTINE sspr2 dspr2                -> lasi_SPR2(uplo,n,alpha,x,incx,y,incy,AP)
+! SUBROUTINE  ssyr  dsyr                -> lasi_SYR(uplo,n,alpha,x,incx,A,lda)
+! SUBROUTINE ssyr2 dsyr2                -> lasi_SYR2(uplo,n,alpha,x,incx,y,incy,A,lda)
+!
+! **** BLAS 3 ****
+! SUBROUTINE sgemm dgemm cgemm zgemm    -> lasi_GEMM(transA,transB,m,n,k,alpha,A,lda,
+!                                                    B,ldb,beta,C,ldc)
+! SUBROUTINE             chemm zhemm    -> lasi_HEMM(side,uplo,m,n,alpha,A,lda,
+!                                                    B,ldb,beta,C,ldc)
+! SUBROUTINE            cher2k zher2k   -> lasi_HER2K(uplo,trans,n,k,alpha,A,lda,B,ldb,
+!                                                    beta,C,ldc)
+! SUBROUTINE             cherk zherk    -> lasi_HERK(uplo,trans,n,k,alpha,A,lda,beta,C,ldc)
+! SUBROUTINE ssymm dsymm csymm zsymm    -> lasi_SYMM(side,uplo,m,n,alpha,A,lda,B,ldb,beta,
+!                                                    C,ldc)
+! SUBROUTINE ssyr2k dsyr2k csyr2k zsyr2k-> lasi_SYR2K(uplo,trans,n,k,alpha,A,lda,B,ldb,beta,
+!                                                    C,ldc)
+! SUBROUTINE ssyrk dsyrk csyrk zsyrk    -> lasi_SYRK(uplo,trans,n,k,alpha,A,lda,beta,C,ldc)
+! SUBROUTINE strmm dtrmm ctrmm ztrmm    -> lasi_TRMM(side,uplo,transa,diag,m,n,alpha,A,lda,
+!                                                    B,ldb)
+! SUBROUTINE strsm dtrsm ctrsm ztrsm    -> lasi_TRSM(side,uplo,transa,diag,m,n,alpha,A,lda,
+!                                                    B,ldb)
+!
+!----------------------------------------
+! LAPACK interfaced in this module:
+!
+!       lasi_LANGB  lasi_TGSEN  lasi_TGSNA  lasi_TGSYL  lasi_TGEXC
+!       lasi_BDSDC  lasi_STEGR  lasi_ORMRZ  lasi_UNMRZ  lasi_TZRZF
+!       lasi_GEQP3  lasi_GESDD  lasi_GGRQF  lasi_GGQRF  lasi_DISNA
+!       lasi_TGSJA  lasi_GGSVP  lasi_TGEVC  lasi_HGEQZ  lasi_GGBAK
+!       lasi_GGBAL  lasi_GGHRD  lasi_PBSTF  lasi_SBGST  lasi_HBGST
+!       lasi_SPGST  lasi_HPGST  lasi_BDSQR  lasi_ORMBR  lasi_UNMBR
+!       lasi_ORGBR  lasi_UNGBR  lasi_GBBRD  lasi_GEBRD  lasi_TRSEN
+!       lasi_TRSNA  lasi_TRSYL  lasi_TREXC  lasi_TREVC  lasi_HSEIN
+!       lasi_HSEQR  lasi_ORMHR  lasi_UNMHR  lasi_ORGHR  lasi_UNGHR
+!       lasi_GEBAK  lasi_GEBAL  lasi_GEHRD  lasi_PTEQR  lasi_STEIN
+!       lasi_STEBZ  lasi_STEDC  lasi_STERF  lasi_STEQR  lasi_OPMTR
+!       lasi_UPMTR  lasi_OPGTR  lasi_UPGTR  lasi_ORMTR  lasi_UNMTR
+!       lasi_SBTRD  lasi_HBTRD  lasi_SPTRD  lasi_HPTRD  lasi_TZRQF
+!       lasi_ORMRQ  lasi_UNMRQ  lasi_ORGRQ  lasi_UNGRQ  lasi_GERQF
+!       lasi_ORMQL  lasi_UNMQL  lasi_ORGQL  lasi_UNGQL  lasi_GEQLF
+!       lasi_ORMLQ  lasi_UNMLQ  lasi_ORGLQ  lasi_UNGLQ  lasi_GELQF
+!       lasi_ORMQR  lasi_UNMQR  lasi_ORGQR  lasi_UNGQR  lasi_GEQRF
+!       lasi_GEQPF  lasi_TBRFS  lasi_TBCON  lasi_TBTRS  lasi_TPTRI
+!       lasi_TPRFS  lasi_TPCON  lasi_TPTRS  lasi_TRTRI  lasi_TRRFS
+!       lasi_TRCON  lasi_TRTRS  lasi_SPTRI  lasi_HPTRI  lasi_SPRFS
+!       lasi_HPRFS  lasi_HPCON  lasi_SPCON  lasi_SPTRS  lasi_HPTRS
+!       lasi_HPTRF  lasi_SPTRF  lasi_SYTRI  lasi_HETRI  lasi_SYRFS
+!       lasi_HERFS  lasi_SYCON  lasi_HECON  lasi_HETRS  lasi_SYTRS
+!       lasi_HETRF  lasi_SYTRF  lasi_PTRFS  lasi_PTCON  lasi_PTTRS
+!       lasi_PTTRF  lasi_PBEQU  lasi_PBRFS  lasi_PBCON  lasi_PBTRS
+!       lasi_PBTRF  lasi_PPEQU  lasi_PPTRI  lasi_PPRFS  lasi_PPCON
+!       lasi_PPTRS  lasi_PPTRF  lasi_POEQU  lasi_POTRI  lasi_PORFS
+!       lasi_POTRS  lasi_GTRFS  lasi_GTCON  lasi_GTTRS  lasi_GTTRF
+!       lasi_GBEQU  lasi_GBRFS  lasi_GBCON  lasi_GBTRS  lasi_GBTRF
+!       lasi_GGSVD  lasi_GEGV   lasi_GEGS   lasi_SBGVX  lasi_HBGVX
+!       lasi_SBGVD  lasi_HBGVD  lasi_SBGV   lasi_HBGV   lasi_SPGVX
+!       lasi_HPGVX  lasi_SPGVD  lasi_HPGVD  lasi_SPGV   lasi_HPGV
+!       lasi_GESVD  lasi_GEEVX  lasi_GGEVX  lasi_GGEV   lasi_GEEV
+!       lasi_GEESX  lasi_GGESX  lasi_GGES   lasi_GEES   lasi_STEVR
+!       lasi_STEVX  lasi_STEVD  lasi_STEV   lasi_SBEVX  lasi_HBEVX
+!       lasi_SBEVD  lasi_HBEVD  lasi_SBEV   lasi_HBEV   lasi_SPEVX
+!       lasi_HPEVX  lasi_SPEVD  lasi_HPEVD  lasi_SPEV   lasi_HPEV
+!       lasi_GGGLM  lasi_GGLSE  lasi_GELSY  lasi_GELSD  lasi_GELSX
+!       lasi_GELSS  lasi_GELS   lasi_SPSV   lasi_HPSV   lasi_SYSV
+!       lasi_HESV   lasi_PTSV   lasi_PBSV   lasi_PPSV   lasi_POSV
+!       lasi_GTSV   lasi_GBSV   lasi_GESV   lasi_SPSVX  lasi_HPSVX
+!       lasi_SYSVX  lasi_HESVX  lasi_PTSVX  lasi_PBSVX  lasi_PPSVX
+!       lasi_POSVX  lasi_GTSVX  lasi_GBSVX  lasi_GESVX  lasi_GETRF
+!       lasi_GETRS  lasi_GETRI  lasi_GERFS  lasi_GEEQU  lasi_LANGE
+!       lasi_GECON  lasi_SYEV   lasi_HEEV   lasi_SYEVD  lasi_HEEVD
+!       lasi_SYEVR  lasi_HEEVR  lasi_SYEVX  lasi_HEEVX  lasi_SYGST
+!       lasi_HEGST  lasi_SYGV   lasi_HEGV   lasi_SYGVX  lasi_HEGVX
+!       lasi_SYGVD  lasi_HEGVD  lasi_SYTRD  lasi_HETRD  lasi_ORGTR
+!       lasi_UNGTR  lasi_LANSY  lasi_POTRF  lasi_POCON  lasi_ILAENV
+!       lasi_LAGGE
+!

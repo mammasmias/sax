@@ -1,0 +1,149 @@
+##################################################
+Today is 19/04/2010
+    
+          *            @@@@      @@     @@
+         * *o         @@          @@   @@
+        *** *o         @@          @@ @@
+       **  * *o         @@  @@@@   @@ @@
+       v    * *o        @@ @@  @  @@   @@
+             * *     @@@@  @@@@@ @@     @@
+              * *
+               * *
+               * *  *******
+               * *  *    *
+               * * *    *
+               *  *    *
+               *      *
+               *     *
+                *   *
+                 ***
+     
+FOLLOW THE WHITE RABBIT ...and try to catch it!
+19:43:25.511:  www.sax-project.org, version 0.1.0
+19:43:25.511:  Program bse.x starts
+19:43:25.511:  This is log from pe 000 of 001
+19:43:25.512:  Writing here initial mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+19:43:25.512:  ... done
+19:43:25.512:  Writing here initial PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 0
+ Pw library end statistics
+19:43:25.513:  ... done
+19:43:25.513:  Pasting input file /Users/marsamos/S3DE/sax/examples/example3/spectra.in ...
+
+<input>
+<sax_options
+  calculation_kind = "RPAEXC"
+  start_from = "GW"
+  convert_from_pwscf="F"
+  nbandmin = "1"
+  nbandmax = "10"
+  system_kind = "3D"
+  q = "1 0 0"
+  lorentzian_broadening="0.022"
+  cutoff_polarizability="8.0"
+  omegamax = "2.2"
+  nomega = "400"
+  output_format = "txt"
+  bse_emax = "0.4"
+  bse_emin = "0.0"
+  bse_spin = "0"  
+/>
+
+<structure>
+  <direct
+    a1 = " -5.1 ,  0.0 ,  5.1"
+    a2 = "  0.0 ,  5.1 , 5.1"
+    a3 = "  -5.1 , 5.1 ,  0.0" />
+</structure>
+
+<atoms>
+<types ntypes="1">
+Si  "/Users/marsamos/S3DE/sax/examples/pseudos/Si.vbc.UPF" 15.0
+</types>
+<positions natoms="2" units="bohr" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+Si      -2.55           2.55            2.55
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="3 3 3" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+19:43:25.514:  ... done
+19:43:25.514:  Opening input file /Users/marsamos/S3DE/sax/examples/example3/spectra.in ... done
+19:43:25.515:  Reading options ... done
+19:43:25.516:  3D system
+19:43:25.517:  Reading structure ... done
+19:43:25.517:  Reading atoms ... done
+19:43:25.629:  Symmetries are not implemented
+19:43:25.629:  Reading kmesh ... done
+19:43:25.636:  Closing input file /Users/marsamos/S3DE/sax/examples/example3/spectra.in ... done
+19:43:25.637:  Writing here the kmesh for PWSCF code ...
+K_POINTS crystal
+   27
+    0.000000000    0.000000000    0.000000000    0.037037037
+    0.333333333    0.000000000    0.000000000    0.037037037
+    0.666666667    0.000000000    0.000000000    0.037037037
+    0.000000000    0.333333333    0.000000000    0.037037037
+    0.333333333    0.333333333    0.000000000    0.037037037
+    0.666666667    0.333333333    0.000000000    0.037037037
+    0.000000000    0.666666667    0.000000000    0.037037037
+    0.333333333    0.666666667    0.000000000    0.037037037
+    0.666666667    0.666666667    0.000000000    0.037037037
+    0.000000000    0.000000000    0.333333333    0.037037037
+    0.333333333    0.000000000    0.333333333    0.037037037
+    0.666666667    0.000000000    0.333333333    0.037037037
+    0.000000000    0.333333333    0.333333333    0.037037037
+    0.333333333    0.333333333    0.333333333    0.037037037
+    0.666666667    0.333333333    0.333333333    0.037037037
+    0.000000000    0.666666667    0.333333333    0.037037037
+    0.333333333    0.666666667    0.333333333    0.037037037
+    0.666666667    0.666666667    0.333333333    0.037037037
+    0.000000000    0.000000000    0.666666667    0.037037037
+    0.333333333    0.000000000    0.666666667    0.037037037
+    0.666666667    0.000000000    0.666666667    0.037037037
+    0.000000000    0.333333333    0.666666667    0.037037037
+    0.333333333    0.333333333    0.666666667    0.037037037
+    0.666666667    0.333333333    0.666666667    0.037037037
+    0.000000000    0.666666667    0.666666667    0.037037037
+    0.333333333    0.666666667    0.666666667    0.037037037
+    0.666666667    0.666666667    0.666666667    0.037037037
+19:43:25.638:  ... done
+19:43:25.638:  Initializing states ... done
+19:43:25.639:  Reading states from file 'GW_states'...done
+19:43:25.738:  The cutoff for single particle wfc is:   14.967361111 Ry
+19:43:25.739:  RPA + excitonic effects allways calculated including nlfe
+19:43:25.740:  Initializing bse ...done
+19:43:25.742:  Reading bse from file bse... done
+19:43:25.914:  Initializing macroscopic dielectric tensor... done
+19:43:25.915:  Calculating optical absorption spectrum... done
+19:46:06.178:  Writing macroscopic dielectric tensor on file epsilon.RPAEXC... done
+19:46:06.334:  Initializing macroscopic dielectric tensor... done
+19:46:06.339:  Reading macroscopic dielectric tensor from file epsilon... done
+19:46:06.636:  Projecting macroscopic dielectric tensor on : 1   0
+ 0   direction
+19:46:06.638:  Writing optical absorption spectrum on file oas.RPAEXC... done
+19:46:06.641:  Writing electron energy loss on file eels.RPAEXC... done
+19:46:06.647:  Writing real part of macroscopic dielectric tensor on file repsilon.RPAEXC... done
+19:46:06.652:  Writing here final mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+19:46:06.653:  ... done
+19:46:06.654:  Writing here final PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 105051573
+ Pw library end statistics
+19:46:06.655:  ... done
+19:46:06.655:  Program spectra ends

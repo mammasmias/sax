@@ -1,0 +1,319 @@
+#############################################################
+#
+# RUN SCRIPT FOR EXAMPLE 2
+#
+#############################################################
+
+#############################################################
+# Path definitions
+#############################################################
+JOB="example2"
+
+JOB_DIR="$EXAMPLES_DIR/$JOB"
+
+PW_EXE="$DFT_BIN/pw.x"
+PW_INPUT="$JOB_DIR/pw.in"
+PW_OUTPUT="$JOB_DIR/pw.out"
+PP_EXE="$DFT_BIN/pw_export.x"
+PP_INPUT="$JOB_DIR/pp.in"
+PP_OUTPUT="$JOB_DIR/pp.out"
+SAX_EXE="$SAX_BIN/sax.x"
+GW_INPUT="$JOB_DIR/gw.in"
+GW_OUTPUT="$JOB_DIR/gw.log"
+BSE_INPUT="$JOB_DIR/bse.in"
+BSE_OUTPUT="$JOB_DIR/bse.log"
+SPECTRA_INPUT="$JOB_DIR/spectra.in"
+SPECTRA_OUTPUT="$JOB_DIR/spectra.log"
+EXCITONS_EXE="$SAX_BIN/excitons.x"
+EXCITONS_INPUT="$JOB_DIR/excitons.in"
+EXCITONS_OUTPUT="$JOB_DIR/excitons.log"
+#############################################################
+
+#############################################################
+# generation of pwscf input file
+#############################################################
+cat << EOF > $PW_INPUT
+
+&CONTROL
+title="SiH4"
+calculation='scf',
+restart_mode = 'from_scratch',
+tprnfor=.t.,
+PSEUDO_DIR='$PSEUDO_DIR',
+prefix='SiH4',
+/
+ &SYSTEM
+                       ibrav = 0,
+                   celldm(1) = 20.0,
+                         nat = 5,
+                        ntyp = 2,
+                     ecutwfc = 25.0 ,
+                       nosym = .true. ,
+                        nbnd = 20,
+                        assume_isolated="martyna-tuckerman"
+ /
+ &ELECTRONS
+ /
+CELL_PARAMETERS cubic
+     1.000000000    0.000000000    0.000000000
+     0.000000000    1.000000000    0.000000000
+     0.000000000    0.000000000    1.000000000
+ATOMIC_SPECIES
+    Si    1.00000  Si.vbc.UPF
+    H    1.00000  H.vbc.new.UPF
+ATOMIC_POSITIONS angstrom
+Si      0.000000000     0.000000000     0.0000000000
+H       0.000000000     1.489000000     0.0000000000
+H       0.000000000     -0.496363243    -1.403832088
+H       -1.21575425     -0.496363243    0.701916043
+H       1.21575425      -0.496363243    0.701916043
+K_POINTS crystal
+    1 
+    0.00000	0.00000     0.00000	1.0000000
+EOF
+#############################################################
+
+#############################################################
+# generation of pw_export input file
+#############################################################
+cat << EOF > $PP_INPUT
+&inputpp
+  prefix="SiH4",
+/
+EOF
+#############################################################
+
+#############################################################
+# generation of gw.x input file
+#############################################################
+cat << EOF > $GW_INPUT
+
+<input>
+<sax_options
+  calculation_kind = "HF"
+  start_from = "DFT"
+  nbandmin = "1"
+  nbandmax = "20"
+  nelec    = "8.0"
+  convert_from_pwscf="T"
+  convert_from_pwscf_file="SiH4.export/index.xml"
+  system_kind = "0D"
+  cutoff_fock="25.0" 
+  calc_sp_hmatrix = "T"
+  sigma_nbmin = "1"
+  sigma_nbmax = "20"
+  diagonal = "T"
+  calc_QP_states = "T"
+  sigma_first_order = "T"
+  ecutvcut="0.5"
+/>
+
+<structure>
+  <direct
+    a1 = " 20.00 ,  0.0 ,  0.0"
+    a2 = "  0.0 ,  20.000 ,  0.0"
+    a3 = "  0.0 ,  0.0 ,  20.00" />
+</structure>
+
+<atoms>
+<types ntypes="2">
+Si  "$PSEUDO_DIR/Si.vbc.UPF" 25.0
+H  "$PSEUDO_DIR/H.vbc.new.UPF" 25.0
+</types>
+<positions natoms="5" units="angstrom" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+H       0.000000000     1.489000000     0.0000000000
+H       0.000000000     -0.496363243    -1.403832088
+H       -1.21575425     -0.496363243    0.701916043
+H       1.21575425      -0.496363243    0.701916043
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="1 1 1" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+EOF
+#############################################################
+
+#############################################################
+# generation of bse.x input file
+#############################################################
+cat << EOF > $BSE_INPUT
+
+<input>
+<sax_options
+  calculation_kind = "MACRO"
+  start_from = "HF"
+  convert_from_pwscf = "F"
+  nbandmin = "1"
+  nbandmax = "20"
+  system_kind = "0D"
+  bse_spin = "0"
+  bse_emin = "0.0"
+  bse_emax = "1.5"
+  cutoff_fock = "25.0"
+  ecutvcut="0.5"
+/>
+
+<structure>
+  <direct
+    a1 = " 20.00 ,  0.0 ,  0.0"
+    a2 = "  0.0 ,  20.000 ,  0.0"
+    a3 = "  0.0 ,  0.0 ,  20.00" />
+</structure>
+
+<atoms>
+<types ntypes="2">
+Si  "$PSEUDO_DIR/Si.vbc.UPF" 25.0
+H  "$PSEUDO_DIR/H.vbc.new.UPF" 25.0
+</types>
+<positions natoms="5" units="angstrom" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+H       0.000000000     1.489000000     0.0000000000
+H       0.000000000     -0.496363243    -1.403832088
+H       -1.21575425     -0.496363243    0.701916043
+H       1.21575425      -0.496363243    0.701916043
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="1 1 1" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+EOF
+#############################################################
+
+#############################################################
+# generation of spectra.x input file
+#############################################################
+cat << EOF > $SPECTRA_INPUT
+
+<input>
+<sax_options
+  calculation_kind = "RPAEXC"
+  start_from = "HF"
+  convert_from_pwscf = "F"
+  nbandmin = "1"
+  nbandmax = "20"
+  nelec    = "8.0"
+  system_kind = "0D"
+  q = "1 0 0"
+  lorentzian_broadening = "0.007"
+  cutoff_polarizability = "6.0"
+  nomega = "300"
+  omegamax = "2.0"
+  output_format = "txt"
+  bse_spin = "0"
+  bse_emin = "0.0"
+  bse_emax = "1.5"
+/>
+
+<structure>
+  <direct
+    a1 = " 20.00 ,  0.0 ,  0.0"
+    a2 = "  0.0 ,  20.000 ,  0.0"
+    a3 = "  0.0 ,  0.0 ,  20.00" />
+</structure>
+
+<atoms>
+<types ntypes="2">
+Si  "$PSEUDO_DIR/Si.vbc.UPF" 25.0
+H  "$PSEUDO_DIR/H.vbc.new.UPF" 25.0
+</types>
+<positions natoms="5" units="angstrom" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+H       0.000000000     1.489000000     0.0000000000
+H       0.000000000     -0.496363243    -1.403832088
+H       -1.21575425     -0.496363243    0.701916043
+H       1.21575425      -0.496363243    0.701916043
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="1 1 1" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+EOF
+#############################################################
+#############################################################
+# generation of excitons.x input file
+#############################################################
+cat << EOF > $EXCITONS_INPUT
+
+<input>
+<sax_options
+  calculation_kind = "WAVES"
+  start_from = "HF"
+  convert_from_pwscf = "F"
+  nbandmin = "1"
+  nbandmax = "20"
+  system_kind = "0D"
+  bse_spin = "0"
+  bse_emin = "0.0"
+  bse_emax = "1.5"
+  nstatemin = "1"
+  nstatemax = "5"
+  r_hole = "0.0 0.0 0.0"
+  supergrid = "60 60 60"
+/>
+
+<structure>
+  <direct
+    a1 = " 20.00 ,  0.0 ,  0.0"
+    a2 = "  0.0 ,  20.000 ,  0.0"
+    a3 = "  0.0 ,  0.0 ,  20.00" />
+</structure>
+
+<atoms>
+<types ntypes="2">
+Si  "$PSEUDO_DIR/Si.vbc.UPF" 25.0
+H  "$PSEUDO_DIR/H.vbc.new.UPF" 25.0
+</types>
+<positions natoms="5" units="angstrom" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+H       0.000000000     1.489000000     0.0000000000
+H       0.000000000     -0.496363243    -1.403832088
+H       -1.21575425     -0.496363243    0.701916043
+H       1.21575425      -0.496363243    0.701916043
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="1 1 1" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+EOF
+#############################################################
+
+
+$PARA_PREFIX $PARA_POSTFIX $PW_EXE < $PW_INPUT > $PW_OUTPUT
+$PARA_PREFIX $PARA_POSTFIX $PP_EXE < $PP_INPUT > $PP_OUTPUT
+
+$PARA_PREFIX $PARA_POSTFIX $SAX_EXE -code gw << EOF
+$GW_INPUT
+$GW_OUTPUT
+EOF
+
+$PARA_PREFIX $PARA_POSTFIX $SAX_EXE -code bse << EOF
+$BSE_INPUT
+$BSE_OUTPUT
+EOF
+
+$PARA_PREFIX $PARA_POSTFIX $SAX_EXE -code spectra << EOF
+$SPECTRA_INPUT
+$SPECTRA_OUTPUT
+EOF
+
+$PARA_PREFIX $PARA_POSTFIX $EXCITONS_EXE << EOF
+$EXCITONS_INPUT
+$EXCITONS_OUTPUT
+EOF

@@ -1,0 +1,28 @@
+
+There is still no official release of the SaX package.
+Preliminary snapshots from the CVS can be downloaded at ...
+Since the code is fairly unstable, at the moment we suggest to use
+SaX through a scientific collaboration with our group (see CONTACTS).
+
+TERMS OF USE.
+Although users are not under any obligation in the spirit of the GNU General Public Licence,
+we would appreciate the acknowledgment of the effort to produce
+such codes in the form of the following reference:
+
+In the text: "The results of this work have been obtained using the SaX package.[...]"
+
+In references: "[...] L. Martin-Samos, G. Bussi, Comp. Phys. Comm. 180, 1419 (2009) 
+http://www.sax-project.org"
+
+We also encourage the users of SaX to publish in the form of supplementary materials
+or on their personal web-sites everything needed to reproduce their
+results, such as input files and eventually modified parts of the source code.
+
+DISCLAIMER. While the developers of SaX make every effort to deliver a high quality scientific software, we do not guarantee that our codes are free from defects. Our software is provided "as is". Users are solely responsible for determining the appropriateness of using this package and assume all risks associated with the use of it, including but not limited to the risks of program errors, damage to or loss of data, programs or equipment, and unavailability or interruption of operations. Due to the limited human resources involved in the development of this software package, no support will be given to individual users for either installation or execution of the codes.
+Finally, in the spirit of every open source project, any contribution from external users is welcome, encouraged and, if appropriate, will be included in future releases.
+
+LICENCE. All the material included in this distribution is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+These programs are distributed in the hope that they will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+

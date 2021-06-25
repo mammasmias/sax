@@ -1,0 +1,112 @@
+-------------------------------------------------------------------------------
+DESCRIPTION OF PPTOOLS INPUT PARAMETERS
+-------------------------------------------------------------------------------
+===============================================================================
+<sax_options
+  ...
+\>
+pptools calculation options
+===============================================================================
+* system_kind = "0D" spherical cutoff on coulomb interaction
+                "3D" no cutoff
+* calculation_kind = "SI" compute the Self-Interaction
+                     "PR" compute the Participation Ratio, not yet in use
+                     "DOS" compute the Density of States
+                     "BAND" compute the Band Structure
+* start_from = "DFT" start with dft results (read file states)
+               "HF" start with hf results (read file HF_states - HF_QP for DOS)
+               "GW" start with gw results (read file GW_states - GW_QP for DOS)
+-------------------------------------------------------------------------------
+ CONVERSION FROM PWSCF FORMATS --> creation of the file states
+* convert_from_pwscf = if ".true.", the states are first converted from pwscf calculation 
+* convert_from_pwscf_file : index file obtained from pwscf calculation
+* nelec = "number of electrons" (is a real number)
+-------------------------------------------------------------------------------
+ PLANE WAVE CUTOFFS
+* cutoff_fock = "cutoff of the fock-operator" on units of wave function cutoff (default "1.0")
+* cutoff_density = "cutoff of the density operator" in units of wave function cutoff (default "4.0")
+-------------------------------------------------------------------------------
+* nbandmin, nbandmax = Bands included in DOS or BAND calculation
+* file_out = Name of output file for DOS or BAND calculation
+-------------------------------------------------------------------------------
+ DOS OPTIONS
+* omegamin = minimum energy
+* omegamax = maximum energy
+* nomega = number of steps between omegamin and omegamax
+* degauss = gaussian broadening
+* diagonal = "diagonal" option when states file was created
+-------------------------------------------------------------------------------
+ BAND STRUCTURE OPTIONS
+* interp_kind = 1 nearest-neighbor interpolation (test only!)
+                2 TriLinear Interpolation (default)
+* stretch_val = energy stretch for valence bands (default "1.0")
+* stretch_cond = energy stretch for conduction bands (default "1.0")
+* shift_val = energy shift for valence bands (default "0.0")
+* shift_cond = energy shift for conduction bands (default "0.0")
+ FINAL BAND ENERGY = E(state)*stretch_val  + shift_val   for valence bands
+                  or E(state)*stretch_cond + shift_cond  for conduction bands
+-------------------------------------------------------------------------------
+===============================================================================
+<structure>
+  <direct
+   ...
+   \>
+<\structure> 
+Cell vectors should be in a.u.
+===============================================================================
+<atoms>
+  <types ntypes="number_of_atomic_species">
+    ...
+  <\types>
+  Atomic symbol, pseudopotential location and cutoff for the wave functions (Ry)
+  ATENTION! only norm-conserving pseudopotential
+
+  <positions natoms="number_of_atoms" units="bohr|angstrom|alat|crystal" alat="value_of_cellparameter in bohr">
+  atomic_symbol X Y Z
+  </positions>
+
+<\atoms> 
+===============================================================================
+<kmesh>
+<mesh nk="nkx nky nkz" shift="shiftx shifty shiftz"/>
+kme
+</kmesh>
+===============================================================================
+<kband num_k="number of kpoints for Band Structure">
+LIST OF KPOINTS
+</kband>
+For band structure only! Read in Crystal coordinates.
+===============================================================================
+-------------------------------------------------------------------------------
+PPTOOLS INPUT FILE
+-------------------------------------------------------------------------------
+<input>
+<sax_options
+ ...
+/>
+<structure>
+  <direct
+    a1 = " a1x ,  a1y ,  a1z"
+    a2 = " a2x  , a2y , a2z"
+    a3 = " a3x , a3y ,  a3z" />
+</structure>
+
+<atoms>
+<types ntypes="number_of_atomic_species">
+atomic_symbol "full_path_pseudopotential_location" cutoff 
+</types>
+<positions natoms="number_of_atoms" units="bohr | angstrom | alat | crystal" alat="value_of_cellparameter">
+atomic_symbol X Y Z
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="nkx nky nkz" shift="shiftx shifty shiftz"/>
+</kmesh>
+
+<kband num_k="number_of_kpoints">
+LIST OF KPOINTS
+</kband>
+
+</input>
+-------------------------------------------------------------------------------

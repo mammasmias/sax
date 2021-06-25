@@ -1,0 +1,20 @@
+# identifying diretories for examples
+EXAMPLES_DIR=`pwd`
+PSEUDO_DIR="`pwd`/pseudos"
+cd ../
+SAX_BIN="`pwd`/bin"
+cd $EXAMPLES_DIR
+
+
+
+echo $SAX_BIN
+
+# here give the path to quantum-espresso binaries
+# DFT_BIN="/my-espresso-full-path binaries"
+
+# for run in parall machines
+# PARA_PREFIX="name_of_parall_exe"
+# PARA_POSTFIX="-procs number_of_process"
+
+
+export EXAMPLES_DIR SAX_BIN PSEUDO_DIR DFT_BIN PARA_PREFIX PARA_POSTFIX

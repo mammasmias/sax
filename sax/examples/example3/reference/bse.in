@@ -1,0 +1,39 @@
+
+<input>
+<sax_options
+  calculation_kind = "FULL"
+  start_from = "GW"
+  convert_from_pwscf = "F"
+  nbandmin = "1"
+  nbandmax = "10"
+  cutoff_polarizability="8.0"
+  cutoff_fock = "15.0"
+  system_kind = "3D"
+  bse_emax = "0.4"
+  bse_emin = "0.0"
+  bse_spin = "0"  
+/>
+
+<structure>
+  <direct
+    a1 = " -5.1 ,  0.0 ,  5.1"
+    a2 = "  0.0 ,  5.1 , 5.1"
+    a3 = "  -5.1 , 5.1 ,  0.0" />
+</structure>
+
+<atoms>
+<types ntypes="1">
+Si  "/igor/marsamos/S3DE/sax/examples/pseudos/Si.vbc.UPF" 15.0
+</types>
+<positions natoms="2" units="bohr" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+Si      -2.55           2.55            2.55
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="3 3 3" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+

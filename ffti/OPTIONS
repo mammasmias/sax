@@ -1,0 +1,7 @@
+USE fftw blas
+LINK scsl essl complib
+begin DEFINITION.ffti_singleton
+  PRECISION=$(FAUTODBL)
+end DEFINITION.ffti_singleton
+
+

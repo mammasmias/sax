@@ -1,0 +1,769 @@
+##################################################
+Today is 19/04/2010
+    
+          *            @@@@      @@     @@
+         * *o         @@          @@   @@
+        *** *o         @@          @@ @@
+       **  * *o         @@  @@@@   @@ @@
+       v    * *o        @@ @@  @  @@   @@
+             * *     @@@@  @@@@@ @@     @@
+              * *
+               * *
+               * *  *******
+               * *  *    *
+               * * *    *
+               *  *    *
+               *      *
+               *     *
+                *   *
+                 ***
+     
+FOLLOW THE WHITE RABBIT ...and try to catch it!
+18:12:55.959:  www.sax-project.org, version 0.1.0
+18:12:55.959:  Program gw.x starts
+18:12:55.960:  This is log from pe 000 of 001
+18:12:55.960:  Writing here initial mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+18:12:55.961:  ... done
+18:12:55.962:  Writing here initial PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 0
+ Pw library end statistics
+18:12:55.963:  ... done
+18:12:55.963:  Pasting input file /Users/marsamos/S3DE/sax/examples/example3/gw2.in ...
+
+<input>
+<sax_options
+  calculation_kind = "GW"
+  start_from = "DFT"
+  gw_integration_method = "plasmon_pole"
+  calc_plasmon_pole_parameters = "F"
+  lorentzian_broadening = "0.01"
+  plasmon_energy = "1.0"
+  nbandmin = "1"
+  nbandmax = "36"
+  nelec    = "8.0"
+  convert_from_pwscf="T"
+  convert_from_pwscf_file="Sibulk.export/index.xml"
+  system_kind="3D"
+  calc_polarizability="F"
+  cutoff_polarizability="8.0"
+  calc_w="F"
+  cutoff_fock="15.0" 
+  calc_sigma_x="T"
+  calc_sigma_c="T"
+  calc_energies = "T"
+  calc_sp_hmatrix = "T"
+  sigma_nbmin = "1"
+  sigma_nbmax = "10"
+  diagonal = "T"
+  sigma_first_order = "T"
+  calc_QP_states = "T"
+/>
+
+<structure>
+  <direct
+    a1 = " -5.1 ,  0.0 ,  5.1"
+    a2 = "  0.0 ,  5.1 , 5.1"
+    a3 = "  -5.1 , 5.1 ,  0.0" />
+</structure>
+
+<atoms>
+<types ntypes="1">
+Si  "/Users/marsamos/S3DE/sax/examples/pseudos/Si.vbc.UPF" 15.0
+</types>
+<positions natoms="2" units="bohr" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+Si      -2.55           2.55            2.55
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="3 3 3" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+18:12:55.965:  ... done
+18:12:55.965:  Opening input file /Users/marsamos/S3DE/sax/examples/example3/gw2.in ... done
+18:12:55.967:  Reading options ... done
+18:12:55.969:  Self_Energy calculated within GW approximation
+18:12:55.969:  3D system kind
+18:12:55.970:  Reading structure ... done
+18:12:55.971:  Reading atoms ... done
+18:12:56.090:  Symmetries are not implemented
+18:12:56.091:  Reading kmesh ... done
+18:12:56.098:  Closing input file /Users/marsamos/S3DE/sax/examples/example3/gw2.in ... done
+18:12:56.099:  Writing here the kmesh for PWSCF code ...
+K_POINTS crystal
+   27
+    0.000000000    0.000000000    0.000000000    0.037037037
+    0.333333333    0.000000000    0.000000000    0.037037037
+    0.666666667    0.000000000    0.000000000    0.037037037
+    0.000000000    0.333333333    0.000000000    0.037037037
+    0.333333333    0.333333333    0.000000000    0.037037037
+    0.666666667    0.333333333    0.000000000    0.037037037
+    0.000000000    0.666666667    0.000000000    0.037037037
+    0.333333333    0.666666667    0.000000000    0.037037037
+    0.666666667    0.666666667    0.000000000    0.037037037
+    0.000000000    0.000000000    0.333333333    0.037037037
+    0.333333333    0.000000000    0.333333333    0.037037037
+    0.666666667    0.000000000    0.333333333    0.037037037
+    0.000000000    0.333333333    0.333333333    0.037037037
+    0.333333333    0.333333333    0.333333333    0.037037037
+    0.666666667    0.333333333    0.333333333    0.037037037
+    0.000000000    0.666666667    0.333333333    0.037037037
+    0.333333333    0.666666667    0.333333333    0.037037037
+    0.666666667    0.666666667    0.333333333    0.037037037
+    0.000000000    0.000000000    0.666666667    0.037037037
+    0.333333333    0.000000000    0.666666667    0.037037037
+    0.666666667    0.000000000    0.666666667    0.037037037
+    0.000000000    0.333333333    0.666666667    0.037037037
+    0.333333333    0.333333333    0.666666667    0.037037037
+    0.666666667    0.333333333    0.666666667    0.037037037
+    0.000000000    0.666666667    0.666666667    0.037037037
+    0.333333333    0.666666667    0.666666667    0.037037037
+    0.666666667    0.666666667    0.666666667    0.037037037
+18:12:56.100:  ... done
+18:12:56.100:  Initializing smearing for fermi energy and occupations... done
+18:12:56.101:  Smearing parameters should be coherent with the previous calculation
+18:12:56.101:  The system is treated as a semi-conductor/insulator
+18:12:56.102:  Initializing states ... done
+18:12:56.104:  Converting states from pwscf format to file 'states' ... done
+18:12:56.619:  Start from a DFT calculation
+18:12:56.635:  Initializing states ... done
+18:12:56.637:  Reading states from file 'states' ... done
+18:12:56.938:  The cutoff for single particle wfc is:   14.967361111 Ry
+18:12:56.938:  Initializing density...done
+18:12:56.974:  The cutoff for density is:   58.815404928 Ry
+18:12:56.978:  Calculating the total density...done
+18:12:57.072:  Calculating single particle hamiltonian matrix...done
+18:13:01.673:  Single-particle expectation values writen on files exp_sp.ik
+18:13:01.674:  Integration method is plasmon pole
+18:13:01.674:  Plasmon energy:   13.605691720 eV
+18:13:01.675:  Correlation part of the self-energy operator projected on states
+18:13:01.676:  Initializing plasmon pole parameters ...
+18:13:01.812:  done
+18:13:01.812:  Reading plasmon pole parameters ...
+18:13:01.909:  done
+18:13:01.910:  kpoint:    0.000000      0.000000      0.000000
+Initializing sigma ...done
+18:13:01.911:  Initializing dsigma ...done
+18:13:01.912:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:14:35.178:  Writing sigma on file sigma_c.ik ...done
+18:14:35.179:  Writing dsigma on file dsigma_c.ik ...done
+18:14:35.182:  kpoint:    0.333333      0.000000      0.000000
+Initializing sigma ...done
+18:14:35.183:  Initializing dsigma ...done
+18:14:35.184:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:16:08.329:  Writing sigma on file sigma_c.ik ...done
+18:16:08.331:  Writing dsigma on file dsigma_c.ik ...done
+18:16:08.332:  kpoint:    0.666667      0.000000      0.000000
+Initializing sigma ...done
+18:16:08.334:  Initializing dsigma ...done
+18:16:08.335:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:17:41.571:  Writing sigma on file sigma_c.ik ...done
+18:17:41.574:  Writing dsigma on file dsigma_c.ik ...done
+18:17:41.576:  kpoint:    0.000000      0.333333      0.000000
+Initializing sigma ...done
+18:17:41.578:  Initializing dsigma ...done
+18:17:41.578:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:19:14.640:  Writing sigma on file sigma_c.ik ...done
+18:19:14.641:  Writing dsigma on file dsigma_c.ik ...done
+18:19:14.645:  kpoint:    0.333333      0.333333      0.000000
+Initializing sigma ...done
+18:19:14.647:  Initializing dsigma ...done
+18:19:14.648:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:20:47.627:  Writing sigma on file sigma_c.ik ...done
+18:20:47.630:  Writing dsigma on file dsigma_c.ik ...done
+18:20:47.633:  kpoint:    0.666667      0.333333      0.000000
+Initializing sigma ...done
+18:20:47.635:  Initializing dsigma ...done
+18:20:47.636:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:22:20.803:  Writing sigma on file sigma_c.ik ...done
+18:22:20.806:  Writing dsigma on file dsigma_c.ik ...done
+18:22:20.808:  kpoint:    0.000000      0.666667      0.000000
+Initializing sigma ...done
+18:22:20.810:  Initializing dsigma ...done
+18:22:20.811:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:23:54.117:  Writing sigma on file sigma_c.ik ...done
+18:23:54.119:  Writing dsigma on file dsigma_c.ik ...done
+18:23:54.122:  kpoint:    0.333333      0.666667      0.000000
+Initializing sigma ...done
+18:23:54.123:  Initializing dsigma ...done
+18:23:54.125:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:25:27.284:  Writing sigma on file sigma_c.ik ...done
+18:25:27.286:  Writing dsigma on file dsigma_c.ik ...done
+18:25:27.289:  kpoint:    0.666667      0.666667      0.000000
+Initializing sigma ...done
+18:25:27.291:  Initializing dsigma ...done
+18:25:27.292:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:27:00.713:  Writing sigma on file sigma_c.ik ...done
+18:27:00.716:  Writing dsigma on file dsigma_c.ik ...done
+18:27:00.718:  kpoint:    0.000000      0.000000      0.333333
+Initializing sigma ...done
+18:27:00.719:  Initializing dsigma ...done
+18:27:00.720:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:28:34.059:  Writing sigma on file sigma_c.ik ...done
+18:28:34.061:  Writing dsigma on file dsigma_c.ik ...done
+18:28:34.063:  kpoint:    0.333333      0.000000      0.333333
+Initializing sigma ...done
+18:28:34.065:  Initializing dsigma ...done
+18:28:34.067:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:30:07.390:  Writing sigma on file sigma_c.ik ...done
+18:30:07.392:  Writing dsigma on file dsigma_c.ik ...done
+18:30:07.395:  kpoint:    0.666667      0.000000      0.333333
+Initializing sigma ...done
+18:30:07.396:  Initializing dsigma ...done
+18:30:07.397:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:31:40.799:  Writing sigma on file sigma_c.ik ...done
+18:31:40.801:  Writing dsigma on file dsigma_c.ik ...done
+18:31:40.804:  kpoint:    0.000000      0.333333      0.333333
+Initializing sigma ...done
+18:31:40.806:  Initializing dsigma ...done
+18:31:40.807:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:33:13.855:  Writing sigma on file sigma_c.ik ...done
+18:33:13.857:  Writing dsigma on file dsigma_c.ik ...done
+18:33:13.861:  kpoint:    0.333333      0.333333      0.333333
+Initializing sigma ...done
+18:33:13.862:  Initializing dsigma ...done
+18:33:13.864:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:34:47.178:  Writing sigma on file sigma_c.ik ...done
+18:34:47.180:  Writing dsigma on file dsigma_c.ik ...done
+18:34:47.182:  kpoint:    0.666667      0.333333      0.333333
+Initializing sigma ...done
+18:34:47.183:  Initializing dsigma ...done
+18:34:47.184:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:36:20.353:  Writing sigma on file sigma_c.ik ...done
+18:36:20.355:  Writing dsigma on file dsigma_c.ik ...done
+18:36:20.357:  kpoint:    0.000000      0.666667      0.333333
+Initializing sigma ...done
+18:36:20.358:  Initializing dsigma ...done
+18:36:20.359:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:37:53.125:  Writing sigma on file sigma_c.ik ...done
+18:37:53.127:  Writing dsigma on file dsigma_c.ik ...done
+18:37:53.128:  kpoint:    0.333333      0.666667      0.333333
+Initializing sigma ...done
+18:37:53.130:  Initializing dsigma ...done
+18:37:53.131:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:39:25.899:  Writing sigma on file sigma_c.ik ...done
+18:39:25.900:  Writing dsigma on file dsigma_c.ik ...done
+18:39:25.902:  kpoint:    0.666667      0.666667      0.333333
+Initializing sigma ...done
+18:39:25.904:  Initializing dsigma ...done
+18:39:25.904:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:40:59.191:  Writing sigma on file sigma_c.ik ...done
+18:40:59.193:  Writing dsigma on file dsigma_c.ik ...done
+18:40:59.195:  kpoint:    0.000000      0.000000      0.666667
+Initializing sigma ...done
+18:40:59.197:  Initializing dsigma ...done
+18:40:59.198:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:42:32.805:  Writing sigma on file sigma_c.ik ...done
+18:42:32.808:  Writing dsigma on file dsigma_c.ik ...done
+18:42:32.810:  kpoint:    0.333333      0.000000      0.666667
+Initializing sigma ...done
+18:42:32.812:  Initializing dsigma ...done
+18:42:32.813:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:44:05.578:  Writing sigma on file sigma_c.ik ...done
+18:44:05.580:  Writing dsigma on file dsigma_c.ik ...done
+18:44:05.581:  kpoint:    0.666667      0.000000      0.666667
+Initializing sigma ...done
+18:44:05.583:  Initializing dsigma ...done
+18:44:05.584:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:45:38.291:  Writing sigma on file sigma_c.ik ...done
+18:45:38.294:  Writing dsigma on file dsigma_c.ik ...done
+18:45:38.297:  kpoint:    0.000000      0.333333      0.666667
+Initializing sigma ...done
+18:45:38.298:  Initializing dsigma ...done
+18:45:38.299:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:47:11.386:  Writing sigma on file sigma_c.ik ...done
+18:47:11.387:  Writing dsigma on file dsigma_c.ik ...done
+18:47:11.389:  kpoint:    0.333333      0.333333      0.666667
+Initializing sigma ...done
+18:47:11.390:  Initializing dsigma ...done
+18:47:11.391:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:48:44.306:  Writing sigma on file sigma_c.ik ...done
+18:48:44.308:  Writing dsigma on file dsigma_c.ik ...done
+18:48:44.311:  kpoint:    0.666667      0.333333      0.666667
+Initializing sigma ...done
+18:48:44.313:  Initializing dsigma ...done
+18:48:44.314:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:50:16.985:  Writing sigma on file sigma_c.ik ...done
+18:50:16.988:  Writing dsigma on file dsigma_c.ik ...done
+18:50:16.990:  kpoint:    0.000000      0.666667      0.666667
+Initializing sigma ...done
+18:50:16.992:  Initializing dsigma ...done
+18:50:16.993:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:51:49.628:  Writing sigma on file sigma_c.ik ...done
+18:51:49.632:  Writing dsigma on file dsigma_c.ik ...done
+18:51:49.634:  kpoint:    0.333333      0.666667      0.666667
+Initializing sigma ...done
+18:51:49.635:  Initializing dsigma ...done
+18:51:49.636:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:53:22.458:  Writing sigma on file sigma_c.ik ...done
+18:53:22.461:  Writing dsigma on file dsigma_c.ik ...done
+18:53:22.463:  kpoint:    0.666667      0.666667      0.666667
+Initializing sigma ...done
+18:53:22.465:  Initializing dsigma ...done
+18:53:22.466:  Calculating sigma and dsigma if sigma_first_order requested ...done
+18:54:55.234:  Writing sigma on file sigma_c.ik ...done
+18:54:55.235:  Writing dsigma on file dsigma_c.ik ...done
+18:54:55.239:  Exchange part of the self-energy operator projected on states
+18:54:55.239:  kpoint:    0.000000      0.000000      0.000000
+Initializing sigma ...done
+18:54:55.240:  Calculating sigma ...done
+18:55:03.653:  Writing sigma on file sigma_x.ik ...done
+18:55:03.655:  kpoint:    0.333333      0.000000      0.000000
+Initializing sigma ...done
+18:55:03.657:  Calculating sigma ...done
+18:55:11.867:  Writing sigma on file sigma_x.ik ...done
+18:55:11.869:  kpoint:    0.666667      0.000000      0.000000
+Initializing sigma ...done
+18:55:11.870:  Calculating sigma ...done
+18:55:20.087:  Writing sigma on file sigma_x.ik ...done
+18:55:20.091:  kpoint:    0.000000      0.333333      0.000000
+Initializing sigma ...done
+18:55:20.092:  Calculating sigma ...done
+18:55:28.145:  Writing sigma on file sigma_x.ik ...done
+18:55:28.148:  kpoint:    0.333333      0.333333      0.000000
+Initializing sigma ...done
+18:55:28.150:  Calculating sigma ...done
+18:55:36.355:  Writing sigma on file sigma_x.ik ...done
+18:55:36.357:  kpoint:    0.666667      0.333333      0.000000
+Initializing sigma ...done
+18:55:36.360:  Calculating sigma ...done
+18:55:44.550:  Writing sigma on file sigma_x.ik ...done
+18:55:44.552:  kpoint:    0.000000      0.666667      0.000000
+Initializing sigma ...done
+18:55:44.553:  Calculating sigma ...done
+18:55:52.750:  Writing sigma on file sigma_x.ik ...done
+18:55:52.752:  kpoint:    0.333333      0.666667      0.000000
+Initializing sigma ...done
+18:55:52.754:  Calculating sigma ...done
+18:56:01.107:  Writing sigma on file sigma_x.ik ...done
+18:56:01.109:  kpoint:    0.666667      0.666667      0.000000
+Initializing sigma ...done
+18:56:01.110:  Calculating sigma ...done
+18:56:09.391:  Writing sigma on file sigma_x.ik ...done
+18:56:09.394:  kpoint:    0.000000      0.000000      0.333333
+Initializing sigma ...done
+18:56:09.396:  Calculating sigma ...done
+18:56:17.816:  Writing sigma on file sigma_x.ik ...done
+18:56:17.818:  kpoint:    0.333333      0.000000      0.333333
+Initializing sigma ...done
+18:56:17.819:  Calculating sigma ...done
+18:56:26.038:  Writing sigma on file sigma_x.ik ...done
+18:56:26.039:  kpoint:    0.666667      0.000000      0.333333
+Initializing sigma ...done
+18:56:26.041:  Calculating sigma ...done
+18:56:34.292:  Writing sigma on file sigma_x.ik ...done
+18:56:34.294:  kpoint:    0.000000      0.333333      0.333333
+Initializing sigma ...done
+18:56:34.296:  Calculating sigma ...done
+18:56:42.619:  Writing sigma on file sigma_x.ik ...done
+18:56:42.622:  kpoint:    0.333333      0.333333      0.333333
+Initializing sigma ...done
+18:56:42.624:  Calculating sigma ...done
+18:56:50.893:  Writing sigma on file sigma_x.ik ...done
+18:56:50.895:  kpoint:    0.666667      0.333333      0.333333
+Initializing sigma ...done
+18:56:50.896:  Calculating sigma ...done
+18:56:59.164:  Writing sigma on file sigma_x.ik ...done
+18:56:59.166:  kpoint:    0.000000      0.666667      0.333333
+Initializing sigma ...done
+18:56:59.168:  Calculating sigma ...done
+18:57:07.501:  Writing sigma on file sigma_x.ik ...done
+18:57:07.504:  kpoint:    0.333333      0.666667      0.333333
+Initializing sigma ...done
+18:57:07.506:  Calculating sigma ...done
+18:57:15.808:  Writing sigma on file sigma_x.ik ...done
+18:57:15.812:  kpoint:    0.666667      0.666667      0.333333
+Initializing sigma ...done
+18:57:15.814:  Calculating sigma ...done
+18:57:24.071:  Writing sigma on file sigma_x.ik ...done
+18:57:24.074:  kpoint:    0.000000      0.000000      0.666667
+Initializing sigma ...done
+18:57:24.076:  Calculating sigma ...done
+18:57:32.418:  Writing sigma on file sigma_x.ik ...done
+18:57:32.420:  kpoint:    0.333333      0.000000      0.666667
+Initializing sigma ...done
+18:57:32.422:  Calculating sigma ...done
+18:57:40.639:  Writing sigma on file sigma_x.ik ...done
+18:57:40.641:  kpoint:    0.666667      0.000000      0.666667
+Initializing sigma ...done
+18:57:40.643:  Calculating sigma ...done
+18:57:48.897:  Writing sigma on file sigma_x.ik ...done
+18:57:48.899:  kpoint:    0.000000      0.333333      0.666667
+Initializing sigma ...done
+18:57:48.901:  Calculating sigma ...done
+18:57:57.233:  Writing sigma on file sigma_x.ik ...done
+18:57:57.236:  kpoint:    0.333333      0.333333      0.666667
+Initializing sigma ...done
+18:57:57.238:  Calculating sigma ...done
+18:58:05.647:  Writing sigma on file sigma_x.ik ...done
+18:58:05.649:  kpoint:    0.666667      0.333333      0.666667
+Initializing sigma ...done
+18:58:05.651:  Calculating sigma ...done
+18:58:14.056:  Writing sigma on file sigma_x.ik ...done
+18:58:14.058:  kpoint:    0.000000      0.666667      0.666667
+Initializing sigma ...done
+18:58:14.061:  Calculating sigma ...done
+18:58:22.327:  Writing sigma on file sigma_x.ik ...done
+18:58:22.329:  kpoint:    0.333333      0.666667      0.666667
+Initializing sigma ...done
+18:58:22.332:  Calculating sigma ...done
+18:58:30.637:  Writing sigma on file sigma_x.ik ...done
+18:58:30.639:  kpoint:    0.666667      0.666667      0.666667
+Initializing sigma ...done
+18:58:30.642:  Calculating sigma ...done
+18:58:38.949:  Writing sigma on file sigma_x.ik ...done
+18:58:41.397:  Ewald energy is:   11.868003464 Ry
+18:58:41.398:  Adding to QP single-particle and the exchange part of self_energy operator
+18:58:41.399:  kpoint:    0.000000      0.000000      0.000000
+Initializing sigma ...done
+18:58:41.400:  Reading sigma ...done
+18:58:41.405:  Collecting ...done
+18:58:41.413:  kpoint:    0.333333      0.000000      0.000000
+Initializing sigma ...done
+18:58:41.414:  Reading sigma ...done
+18:58:41.418:  Collecting ...done
+18:58:41.427:  kpoint:    0.666667      0.000000      0.000000
+Initializing sigma ...done
+18:58:41.428:  Reading sigma ...done
+18:58:41.433:  Collecting ...done
+18:58:41.441:  kpoint:    0.000000      0.333333      0.000000
+Initializing sigma ...done
+18:58:41.443:  Reading sigma ...done
+18:58:41.447:  Collecting ...done
+18:58:41.455:  kpoint:    0.333333      0.333333      0.000000
+Initializing sigma ...done
+18:58:41.457:  Reading sigma ...done
+18:58:41.461:  Collecting ...done
+18:58:41.469:  kpoint:    0.666667      0.333333      0.000000
+Initializing sigma ...done
+18:58:41.470:  Reading sigma ...done
+18:58:41.475:  Collecting ...done
+18:58:41.483:  kpoint:    0.000000      0.666667      0.000000
+Initializing sigma ...done
+18:58:41.485:  Reading sigma ...done
+18:58:41.489:  Collecting ...done
+18:58:41.497:  kpoint:    0.333333      0.666667      0.000000
+Initializing sigma ...done
+18:58:41.499:  Reading sigma ...done
+18:58:41.503:  Collecting ...done
+18:58:41.511:  kpoint:    0.666667      0.666667      0.000000
+Initializing sigma ...done
+18:58:41.512:  Reading sigma ...done
+18:58:41.517:  Collecting ...done
+18:58:41.524:  kpoint:    0.000000      0.000000      0.333333
+Initializing sigma ...done
+18:58:41.526:  Reading sigma ...done
+18:58:41.530:  Collecting ...done
+18:58:41.538:  kpoint:    0.333333      0.000000      0.333333
+Initializing sigma ...done
+18:58:41.539:  Reading sigma ...done
+18:58:41.544:  Collecting ...done
+18:58:41.551:  kpoint:    0.666667      0.000000      0.333333
+Initializing sigma ...done
+18:58:41.553:  Reading sigma ...done
+18:58:41.558:  Collecting ...done
+18:58:41.566:  kpoint:    0.000000      0.333333      0.333333
+Initializing sigma ...done
+18:58:41.568:  Reading sigma ...done
+18:58:41.572:  Collecting ...done
+18:58:41.579:  kpoint:    0.333333      0.333333      0.333333
+Initializing sigma ...done
+18:58:41.580:  Reading sigma ...done
+18:58:41.583:  Collecting ...done
+18:58:41.588:  kpoint:    0.666667      0.333333      0.333333
+Initializing sigma ...done
+18:58:41.590:  Reading sigma ...done
+18:58:41.594:  Collecting ...done
+18:58:41.601:  kpoint:    0.000000      0.666667      0.333333
+Initializing sigma ...done
+18:58:41.603:  Reading sigma ...done
+18:58:41.607:  Collecting ...done
+18:58:41.615:  kpoint:    0.333333      0.666667      0.333333
+Initializing sigma ...done
+18:58:41.616:  Reading sigma ...done
+18:58:41.620:  Collecting ...done
+18:58:41.628:  kpoint:    0.666667      0.666667      0.333333
+Initializing sigma ...done
+18:58:41.630:  Reading sigma ...done
+18:58:41.634:  Collecting ...done
+18:58:41.641:  kpoint:    0.000000      0.000000      0.666667
+Initializing sigma ...done
+18:58:41.643:  Reading sigma ...done
+18:58:41.648:  Collecting ...done
+18:58:41.655:  kpoint:    0.333333      0.000000      0.666667
+Initializing sigma ...done
+18:58:41.656:  Reading sigma ...done
+18:58:41.661:  Collecting ...done
+18:58:41.669:  kpoint:    0.666667      0.000000      0.666667
+Initializing sigma ...done
+18:58:41.670:  Reading sigma ...done
+18:58:41.675:  Collecting ...done
+18:58:41.683:  kpoint:    0.000000      0.333333      0.666667
+Initializing sigma ...done
+18:58:41.684:  Reading sigma ...done
+18:58:41.689:  Collecting ...done
+18:58:41.697:  kpoint:    0.333333      0.333333      0.666667
+Initializing sigma ...done
+18:58:41.699:  Reading sigma ...done
+18:58:41.703:  Collecting ...done
+18:58:41.711:  kpoint:    0.666667      0.333333      0.666667
+Initializing sigma ...done
+18:58:41.713:  Reading sigma ...done
+18:58:41.717:  Collecting ...done
+18:58:41.725:  kpoint:    0.000000      0.666667      0.666667
+Initializing sigma ...done
+18:58:41.726:  Reading sigma ...done
+18:58:41.730:  Collecting ...done
+18:58:41.757:  kpoint:    0.333333      0.666667      0.666667
+Initializing sigma ...done
+18:58:41.759:  Reading sigma ...done
+18:58:41.764:  Collecting ...done
+18:58:41.772:  kpoint:    0.666667      0.666667      0.666667
+Initializing sigma ...done
+18:58:41.774:  Reading sigma ...done
+18:58:41.779:  Collecting ...done
+18:58:41.786:  Adding to QP the correlation part of self_energy operator
+18:58:41.805:  kpoint:    0.000000      0.000000      0.000000
+Initializing sigma ...done
+18:58:41.814:  Reading sigma ...done
+18:58:41.819:  Collecting ...done
+18:58:41.830:  kpoint:    0.333333      0.000000      0.000000
+Initializing sigma ...done
+18:58:41.837:  Reading sigma ...done
+18:58:41.842:  Collecting ...done
+18:58:41.843:  kpoint:    0.666667      0.000000      0.000000
+Initializing sigma ...done
+18:58:41.844:  Reading sigma ...done
+18:58:41.849:  Collecting ...done
+18:58:41.850:  kpoint:    0.000000      0.333333      0.000000
+Initializing sigma ...done
+18:58:41.853:  Reading sigma ...done
+18:58:41.857:  Collecting ...done
+18:58:41.858:  kpoint:    0.333333      0.333333      0.000000
+Initializing sigma ...done
+18:58:41.859:  Reading sigma ...done
+18:58:41.880:  Collecting ...done
+18:58:41.881:  kpoint:    0.666667      0.333333      0.000000
+Initializing sigma ...done
+18:58:41.882:  Reading sigma ...done
+18:58:41.885:  Collecting ...done
+18:58:41.905:  kpoint:    0.000000      0.666667      0.000000
+Initializing sigma ...done
+18:58:41.915:  Reading sigma ...done
+18:58:41.919:  Collecting ...done
+18:58:41.921:  kpoint:    0.333333      0.666667      0.000000
+Initializing sigma ...done
+18:58:41.922:  Reading sigma ...done
+18:58:41.926:  Collecting ...done
+18:58:41.927:  kpoint:    0.666667      0.666667      0.000000
+Initializing sigma ...done
+18:58:41.928:  Reading sigma ...done
+18:58:41.931:  Collecting ...done
+18:58:41.932:  kpoint:    0.000000      0.000000      0.333333
+Initializing sigma ...done
+18:58:41.933:  Reading sigma ...done
+18:58:41.937:  Collecting ...done
+18:58:41.937:  kpoint:    0.333333      0.000000      0.333333
+Initializing sigma ...done
+18:58:41.939:  Reading sigma ...done
+18:58:41.942:  Collecting ...done
+18:58:41.943:  kpoint:    0.666667      0.000000      0.333333
+Initializing sigma ...done
+18:58:41.944:  Reading sigma ...done
+18:58:41.947:  Collecting ...done
+18:58:41.948:  kpoint:    0.000000      0.333333      0.333333
+Initializing sigma ...done
+18:58:41.949:  Reading sigma ...done
+18:58:41.952:  Collecting ...done
+18:58:41.953:  kpoint:    0.333333      0.333333      0.333333
+Initializing sigma ...done
+18:58:41.954:  Reading sigma ...done
+18:58:41.958:  Collecting ...done
+18:58:41.958:  kpoint:    0.666667      0.333333      0.333333
+Initializing sigma ...done
+18:58:41.959:  Reading sigma ...done
+18:58:41.962:  Collecting ...done
+18:58:41.963:  kpoint:    0.000000      0.666667      0.333333
+Initializing sigma ...done
+18:58:41.998:  Reading sigma ...done
+18:58:42.002:  Collecting ...done
+18:58:42.003:  kpoint:    0.333333      0.666667      0.333333
+Initializing sigma ...done
+18:58:42.004:  Reading sigma ...done
+18:58:42.008:  Collecting ...done
+18:58:42.009:  kpoint:    0.666667      0.666667      0.333333
+Initializing sigma ...done
+18:58:42.010:  Reading sigma ...done
+18:58:42.013:  Collecting ...done
+18:58:42.014:  kpoint:    0.000000      0.000000      0.666667
+Initializing sigma ...done
+18:58:42.015:  Reading sigma ...done
+18:58:42.019:  Collecting ...done
+18:58:42.019:  kpoint:    0.333333      0.000000      0.666667
+Initializing sigma ...done
+18:58:42.021:  Reading sigma ...done
+18:58:42.045:  Collecting ...done
+18:58:42.060:  kpoint:    0.666667      0.000000      0.666667
+Initializing sigma ...done
+18:58:42.061:  Reading sigma ...done
+18:58:42.065:  Collecting ...done
+18:58:42.066:  kpoint:    0.000000      0.333333      0.666667
+Initializing sigma ...done
+18:58:42.068:  Reading sigma ...done
+18:58:42.072:  Collecting ...done
+18:58:42.072:  kpoint:    0.333333      0.333333      0.666667
+Initializing sigma ...done
+18:58:42.074:  Reading sigma ...done
+18:58:42.076:  Collecting ...done
+18:58:42.077:  kpoint:    0.666667      0.333333      0.666667
+Initializing sigma ...done
+18:58:42.078:  Reading sigma ...done
+18:58:42.082:  Collecting ...done
+18:58:42.082:  kpoint:    0.000000      0.666667      0.666667
+Initializing sigma ...done
+18:58:42.083:  Reading sigma ...done
+18:58:42.086:  Collecting ...done
+18:58:42.087:  kpoint:    0.333333      0.666667      0.666667
+Initializing sigma ...done
+18:58:42.088:  Reading sigma ...done
+18:58:42.091:  Collecting ...done
+18:58:42.092:  kpoint:    0.666667      0.666667      0.666667
+Initializing sigma ...done
+18:58:42.093:  Reading sigma ...done
+18:58:42.096:  Collecting ...done
+18:58:42.097:  Adding to QP the first_order correction to the QP hamiltonian
+18:58:42.097:  kpoint:    0.000000      0.000000      0.000000
+Initializing dsigma ...done
+18:58:42.099:  Reading dsigma ...done
+18:58:42.102:  first-order corrections ...done
+18:58:42.103:  kpoint:    0.333333      0.000000      0.000000
+Initializing dsigma ...done
+18:58:42.104:  Reading dsigma ...done
+18:58:42.107:  first-order corrections ...done
+18:58:42.108:  kpoint:    0.666667      0.000000      0.000000
+Initializing dsigma ...done
+18:58:42.109:  Reading dsigma ...done
+18:58:42.112:  first-order corrections ...done
+18:58:42.113:  kpoint:    0.000000      0.333333      0.000000
+Initializing dsigma ...done
+18:58:42.114:  Reading dsigma ...done
+18:58:42.118:  first-order corrections ...done
+18:58:42.119:  kpoint:    0.333333      0.333333      0.000000
+Initializing dsigma ...done
+18:58:42.120:  Reading dsigma ...done
+18:58:42.136:  first-order corrections ...done
+18:58:42.137:  kpoint:    0.666667      0.333333      0.000000
+Initializing dsigma ...done
+18:58:42.138:  Reading dsigma ...done
+18:58:42.143:  first-order corrections ...done
+18:58:42.144:  kpoint:    0.000000      0.666667      0.000000
+Initializing dsigma ...done
+18:58:42.145:  Reading dsigma ...done
+18:58:42.176:  first-order corrections ...done
+18:58:42.177:  kpoint:    0.333333      0.666667      0.000000
+Initializing dsigma ...done
+18:58:42.179:  Reading dsigma ...done
+18:58:42.197:  first-order corrections ...done
+18:58:42.198:  kpoint:    0.666667      0.666667      0.000000
+Initializing dsigma ...done
+18:58:42.200:  Reading dsigma ...done
+18:58:42.205:  first-order corrections ...done
+18:58:42.206:  kpoint:    0.000000      0.000000      0.333333
+Initializing dsigma ...done
+18:58:42.207:  Reading dsigma ...done
+18:58:42.212:  first-order corrections ...done
+18:58:42.213:  kpoint:    0.333333      0.000000      0.333333
+Initializing dsigma ...done
+18:58:42.215:  Reading dsigma ...done
+18:58:42.220:  first-order corrections ...done
+18:58:42.222:  kpoint:    0.666667      0.000000      0.333333
+Initializing dsigma ...done
+18:58:42.223:  Reading dsigma ...done
+18:58:42.228:  first-order corrections ...done
+18:58:42.229:  kpoint:    0.000000      0.333333      0.333333
+Initializing dsigma ...done
+18:58:42.230:  Reading dsigma ...done
+18:58:42.235:  first-order corrections ...done
+18:58:42.236:  kpoint:    0.333333      0.333333      0.333333
+Initializing dsigma ...done
+18:58:42.237:  Reading dsigma ...done
+18:58:42.242:  first-order corrections ...done
+18:58:42.243:  kpoint:    0.666667      0.333333      0.333333
+Initializing dsigma ...done
+18:58:42.244:  Reading dsigma ...done
+18:58:42.249:  first-order corrections ...done
+18:58:42.250:  kpoint:    0.000000      0.666667      0.333333
+Initializing dsigma ...done
+18:58:42.252:  Reading dsigma ...done
+18:58:42.256:  first-order corrections ...done
+18:58:42.257:  kpoint:    0.333333      0.666667      0.333333
+Initializing dsigma ...done
+18:58:42.259:  Reading dsigma ...done
+18:58:42.263:  first-order corrections ...done
+18:58:42.264:  kpoint:    0.666667      0.666667      0.333333
+Initializing dsigma ...done
+18:58:42.266:  Reading dsigma ...done
+18:58:42.270:  first-order corrections ...done
+18:58:42.271:  kpoint:    0.000000      0.000000      0.666667
+Initializing dsigma ...done
+18:58:42.272:  Reading dsigma ...done
+18:58:42.277:  first-order corrections ...done
+18:58:42.278:  kpoint:    0.333333      0.000000      0.666667
+Initializing dsigma ...done
+18:58:42.280:  Reading dsigma ...done
+18:58:42.285:  first-order corrections ...done
+18:58:42.286:  kpoint:    0.666667      0.000000      0.666667
+Initializing dsigma ...done
+18:58:42.287:  Reading dsigma ...done
+18:58:42.291:  first-order corrections ...done
+18:58:42.292:  kpoint:    0.000000      0.333333      0.666667
+Initializing dsigma ...done
+18:58:42.294:  Reading dsigma ...done
+18:58:42.298:  first-order corrections ...done
+18:58:42.299:  kpoint:    0.333333      0.333333      0.666667
+Initializing dsigma ...done
+18:58:42.301:  Reading dsigma ...done
+18:58:42.306:  first-order corrections ...done
+18:58:42.307:  kpoint:    0.666667      0.333333      0.666667
+Initializing dsigma ...done
+18:58:42.308:  Reading dsigma ...done
+18:58:42.312:  first-order corrections ...done
+18:58:42.313:  kpoint:    0.000000      0.666667      0.666667
+Initializing dsigma ...done
+18:58:42.315:  Reading dsigma ...done
+18:58:42.319:  first-order corrections ...done
+18:58:42.320:  kpoint:    0.333333      0.666667      0.666667
+Initializing dsigma ...done
+18:58:42.322:  Reading dsigma ...done
+18:58:42.326:  first-order corrections ...done
+18:58:42.327:  kpoint:    0.666667      0.666667      0.666667
+Initializing dsigma ...done
+18:58:42.329:  Reading dsigma ...done
+18:58:42.334:  first-order corrections ...done
+18:58:42.335:  Diagonalization of QP Hamiltonian if requesteddone
+18:58:42.336:  Writing GW QP on file GW_QP...done
+18:58:42.353:  Reading QP...done
+18:58:42.412:  Initializing QP_states...done
+18:58:42.836:  Writing QP_states on file GW_states...done
+18:58:42.891:  Writing here final mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+18:58:42.904:  ... done
+18:58:42.904:  Writing here final PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 4207226
+ Pw library end statistics
+18:58:42.905:  ... done
+18:58:42.905:  Program GW ends

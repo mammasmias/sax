@@ -1,0 +1,132 @@
+##################################################
+Today is 17/04/2010
+    
+          *            @@@@      @@     @@
+         * *o         @@          @@   @@
+        *** *o         @@          @@ @@
+       **  * *o         @@  @@@@   @@ @@
+       v    * *o        @@ @@  @  @@   @@
+             * *     @@@@  @@@@@ @@     @@
+              * *
+               * *
+               * *  *******
+               * *  *    *
+               * * *    *
+               *  *    *
+               *      *
+               *     *
+                *   *
+                 ***
+     
+FOLLOW THE WHITE RABBIT ...and try to catch it!
+14:19:52.638:  www.sax-project.org, version 0.1.0
+14:19:52.639:  Program gw.x starts
+14:19:52.698:  This is log from pe 000 of 001
+14:19:52.698:  Writing here initial mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+14:19:52.699:  ... done
+14:19:52.700:  Writing here initial PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 0
+ Pw library end statistics
+14:19:52.701:  ... done
+14:19:52.701:  Pasting input file /Users/marsamos/S3DE/sax/examples/example2/gw.in ...
+
+<input>
+<sax_options
+  calculation_kind = "HF"
+  start_from = "DFT"
+  nbandmin = "1"
+  nbandmax = "20"
+  nelec    = "8.0"
+  convert_from_pwscf="T"
+  convert_from_pwscf_file="SiH4.export/index.xml"
+  system_kind = "0D"
+  cutoff_fock="25.0" 
+  calc_sp_hmatrix = "T"
+  sigma_nbmin = "1"
+  sigma_nbmax = "20"
+  diagonal = "T"
+  calc_QP_states = "T"
+  sigma_first_order = "T"
+  ecutvcut="0.5"
+/>
+
+<structure>
+  <direct
+    a1 = " 20.00 ,  0.0 ,  0.0"
+    a2 = "  0.0 ,  20.000 ,  0.0"
+    a3 = "  0.0 ,  0.0 ,  20.00" />
+</structure>
+
+<atoms>
+<types ntypes="2">
+Si  "/Users/marsamos/S3DE/sax/examples/pseudos/Si.vbc.UPF" 25.0
+H  "/Users/marsamos/S3DE/sax/examples/pseudos/H.vbc.new.UPF" 25.0
+</types>
+<positions natoms="5" units="angstrom" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+H       0.000000000     1.489000000     0.0000000000
+H       0.000000000     -0.496363243    -1.403832088
+H       -1.21575425     -0.496363243    0.701916043
+H       1.21575425      -0.496363243    0.701916043
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="1 1 1" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+14:19:52.702:  ... done
+14:19:52.703:  Opening input file /Users/marsamos/S3DE/sax/examples/example2/gw.in ... done
+14:19:52.704:  Reading options ... done
+14:19:52.706:  Self-Energy calculated within HF approximation
+14:19:52.707:  0D system
+14:19:52.708:  Reading structure ... done
+14:19:52.709:  Reading atoms ... done
+14:19:52.853:  Symmetries are not implemented
+14:19:52.854:  Reading kmesh ... done
+14:19:52.855:  Closing input file /Users/marsamos/S3DE/sax/examples/example2/gw.in ... done
+14:19:52.856:  Writing here the kmesh for PWSCF code ...
+K_POINTS crystal
+    1
+    0.000000000    0.000000000    0.000000000    1.000000000
+14:19:52.857:  ... done
+14:19:52.857:  Initializing smearing for fermi energy and occupations... done
+14:19:52.858:  Smearing parameters should be coherent with the previous calculation
+14:19:52.859:  The system is treated as a semi-conductor/insulator
+14:19:52.859:  Initializing states ... done
+14:19:52.861:  Converting states from pwscf format to file 'states' ... done
+14:19:53.139:  Start from a DFT calculation
+14:19:53.204:  Initializing states ... done
+14:19:53.205:  Reading states from file 'states' ... done
+14:19:53.321:  The cutoff for single particle wfc is:   24.970099135 Ry
+14:19:53.321:  Initializing density...done
+14:19:54.725:  The cutoff for density is:   99.880396539 Ry
+14:19:54.976:  Calculating the total density...done
+14:19:55.306:  Calculating single particle hamiltonian matrix...done
+08:34:42.801:  Single-particle expectation values writen on files exp_sp.ik
+08:34:42.801:  Calculating HF energies ...done
+08:35:05.661:  Writing HF energies ...done
+08:35:05.663:  Reading QP...done
+08:35:05.672:  Initializing HF states...done
+08:35:07.747:  Writing HF states on file HF_states...done
+08:35:07.884:  Writing here final mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+08:35:07.923:  ... done
+08:35:07.923:  Writing here final PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 3070774
+ Pw library end statistics
+08:35:07.924:  ... done
+08:35:07.924:  Program GW ends

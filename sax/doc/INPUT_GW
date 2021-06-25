@@ -1,0 +1,172 @@
+-------------------------------------------------------------------------------
+DESCRIPTION OF GW INPUT PARAMETERS
+-------------------------------------------------------------------------------
+===============================================================================
+<sax_options
+  ...
+\>
+gw calculation options
+===============================================================================
+* calculation_kind =
+       "HF": sigma hf
+       "GW":  sigma GW
+* system_kind =
+       "0D": 0D system Martyna-Tuckerman applied on coulomb interactions
+       "3D": 3D system
+
+!!! for anysotropic systems such as 1D or 2D use system_kind="3D"
+!!! and coulomb_div_treatment="vcut_ws", in this case you
+!!! have to specify a value for ecutvcut. (around 0.7 Ry)
+
+* start_from = 
+       "DFT" : the operators are calculated on the basis of a previous DFT
+               calculation (read file states)
+       "HF" : the operators are calculated on the basis of a previous HF
+              calculation (read file HF_states)
+       "GW" : the operators are calculated on the basis of a previous GW calculation
+              (read file GW_states)
+
+* gw_integration_method =
+                          "plasmon_pole" : gw calculated in the plasmon pole approximation
+                          "Farid" : gw calculated in the approximation proposed by Farid PRB 38 7530
+                                    (1988). This approach is still under investigation. 
+                                    By now the self-energy is calculated at the Fermi energy.
+    
+                          "cohsex" : COulomb Hole and Screened EXchange, static approximation 
+                                     to the screening
+                          "sshf" : Statically Screened Hartree-Fock, static approximation to the screening
+
+* nbandmin =  "min index of band in states|HF_states|GW_states" 
+* nbandmax = "max index of band in states|HF_states|GW_states"
+
+-------------------------------------------------------------------------------
+ CONVERSION FROM PWSCF FORMATS --> creation of the file states
+* convert_from_pwscf = if ".true.", the states are first converted from pwscf calculation
+* convert_from_pwscf_file : index file obtained from pwscf calculation
+* nelec: number of electrons in the system.!!!! is a real number!, needed just if convert_from_pwscf is ".true."
+-------------------------------------------------------------------------------
+ PLANE WAVE CUTOFFS
+* cutoff_density = "cutoff for the density"  in unit of the wave functions cutoff (default "4.0")
+* cutoff_vxc     = "cutoff for the grid to be used in vxc potential" same units as above (default "4.0")
+* cutoff_vloc    = "cutoff for the local part of the pseudo" same units as above (default "4.0")
+
+* cutoff_fock    = "cutoff for the DFT exchange operator, or bare Coulomb potential" in Ry (default "6.0" Ry)
+************************************************************************
+ATTENTION: It is recommended to use at least the same cutoff for cutoff_fock
+than the one used for the wave functions
+************************************************************************
+* cutoff_polarizability = "cutoff for the polarizability and screened potential" in Ry, (default "6.0")
+-------------------------------------------------------------------------------
+* coulomb divergency
+-------------------------------------------------------------------------------
+* coulomb_div_treatment = "how the divergency is treated" (defaul "gigi-baldereschi" for 
+* system_kind="3D", "vcut_ws" for system_kind="0D")
+* ecutvcut="cutoff on reciprocal space (Ry) for coulomb_div_treatment="vcut_ws".
+* (if system_kind="0D" default "2.0" Ry) 
+-------------------------------------------------------------------------------
+ CALCULATION OPTIONS FOR calculation_kind="GW"
+* calc_polarizability = if ".true.", the polarizability is calculated
+* emax_polarizability = "energy cutoff for the allowed transitions" 
+* degauss_polarizability = "broadening in the selection of the transitions" (Ry)
+                            do not change, if you do not know what you are doing
+* polar_broadening : not yet in use
+
+* calc_w = if ".true.", the screened potential is calculated
+
+-------------------------------------------------------------------------------
+ to specify only if gw_integration_method = "Farid"
+
+* nomega = "number of energies" in the calculation of P and W
+          -> number of energies for the energy integral
+* omegamax = "max value of energy" for the energy integral, in Ry
+-------------------------------------------------------------------------------
+* velocity_operator : not yet in use
+* velocity_operator_pairs : not yet in use
+-------------------------------------------------------------------------------
+* calc_sigma_x = if ".true." the exchange part of the self-energy operator projected on states is calculated
+* calc_sigma_c = if ".true." the correlation part of the self_energy operator
+                 projected on states is calculated
+* sigma_nbmin = "index of min band" on which the hamiltonian has to be projected
+* sigma_nbmax = "in dex of max band" on which the hamiltonian has to be projected
+                 band extrema for Hamiltonian projections (dft, or single particle or QP particle)
+* diagonal = if ".false." the full sigma is computed or the full <psi/H/psi> or
+             full <psi/H_sp/psi> or <psi/H_hf/psi> and then diagonalized if calculation_kind = "HF" 
+
+* sigma_first_order = if ".true." compute derivative of sigma for first order correction to the QP energies
+                      just implemented for plasmon_pole model
+
+* calc_energies = if ".true." the QP energies and eigenvectors using previous
+                  sigma calculation. If combined with sigma_diagonal=.false. --> diagonalization
+                  of H matrix. Computed within [sigma_nbmin,sigma_nbmax] interval.
+
+* calc_QP_states = if ".true." calculation of QP_states. Depending of options
+                  calculation_kind -> HF_states or GW_states
+
+
+
+* calc_plasmon_pole_parameters = if ".true." compute plasmon pole parameters
+* plasmon_energy = "energy of plasmon excitation" (Ry) parameter needed in a plasmon pole calculation. 
+                   Corresponds to the collective excitation energy.
+                  
+* lorentzian_broadening = "broadening" (Ry) parameter needed in a plasmon pole calculation.
+                         Used for numerical stability mainly. This parameter is equivalent to the
+                         broadening used in a GW calculation for real frequencies. (also see INPUT_SPECTRA)
+
+* sax_to_want : conversion of the SaX self-energy to quantum transport code WanT.
+* sax_to_want_output : name of the file on which the cconverted self-energy has to be written
+
+===============================================================================
+<structure>
+  <direct
+   ...
+   \>
+<\structure> 
+Cell vectors should be in a.u.
+===============================================================================
+<atoms>
+  <types ntypes="number_of_atomic_species">
+    ...
+  <\types>
+  Atomic symbol, pseudopotential location and cutoff for the wave functions (Ry)
+  ATENTION! only norm-conserving pseudopotential
+
+  <positions natoms="number_of_atoms" units="bohr|angstrom|alat|crystal" alat="value_of_cellparameter in bohr">
+  atomic_symbol X Y Z
+  </positions>
+
+<\atoms> 
+===============================================================================
+<kmesh>
+<mesh nk="nkx nky nkz" shift="shiftx shifty shiftz"/>
+kme
+</kmesh>
+===============================================================================
+-------------------------------------------------------------------------------
+GW INPUT FILE
+-------------------------------------------------------------------------------
+<input>
+<sax_options
+ ...
+/>
+<structure>
+  <direct
+    a1 = " a1x ,  a1y ,  a1z"
+    a2 = " a2x  , a2y , a2z"
+    a3 = " a3x , a3y ,  a3z" />
+</structure>
+
+<atoms>
+<types ntypes="number_of_atomic_species">
+atomic_symbol "full_path_pseudopotential_location" cutoff 
+</types>
+<positions natoms="number_of_atoms" units="bohr | angstrom | alat | crystal" alat="value_of_cellparameter">
+atomic_symbol X Y Z
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="nkx nky nkz" shift="shiftx shifty shiftz"/>
+</kmesh>
+
+</input>
+-------------------------------------------------------------------------------

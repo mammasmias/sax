@@ -1,0 +1,31 @@
+Implement non-blocking isend/irecv
+It should work even in serial run, with the following scheme:
+
+a call to a send/recv should :
+check if there is a pending comunication (same tag)
+if yes, perform it to/from the saved pointer
+if no, return an error
+
+a call to a isend/irecv should:
+check if there is a pending comunication (same tag)
+if yes, perform it to/from the saved pointer
+if no, save the actual pointer and tag
+
+when the communication is performed, the pointer should be nullified
+
+Also, implement a type:
+type (ptk_request)
+and the subroutines:
+ptk_wait
+ptk_waitall
+ptk_waitany
+ptk_waitsome
+ptk_test
+ptk_testall
+ptk_testany
+ptk_testsome
+ptk_cancel
+ptk_request_free
+ptk_iprobe
+
+

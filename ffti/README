@@ -1,0 +1,7 @@
+PACKAGE Fast Fourier Transform Interface
+VERSION 0.1.0
+AUTHORS Giovanni Bussi (adapted from ESPRESSO package)
+LICENSE GNU GENERAL PUBLIC LICENSE
+
+The ffti package contains wrapper routines for various fft libraries,
+plus a portable Fortran implementation of fft.

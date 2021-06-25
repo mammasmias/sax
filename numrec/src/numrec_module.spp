@@ -1,0 +1,126 @@
+>include -s numrec_config.sh
+
+module numrec_module
+implicit none
+private
+public :: numrec_polint
+public :: numrec_indexx
+public :: numrec_gauleg
+public :: numrec_locate
+public :: numrec_erfcc
+public :: numrec_ddpoly
+public :: numrec_polcof
+public :: numrec_polcoe
+
+interface numrec_polint
+> for kind in $kinds ; do
+subroutine numrec_polint_$kind(xa,ya,n,x,y,dy)
+  use numrec_kinds
+  implicit none
+  integer,     intent(in)  :: n
+  real($kind), intent(in)  :: xa(n)
+  real($kind), intent(in)  :: ya(n)
+  real($kind), intent(in)  :: x
+  real($kind), intent(out) :: y
+  real($kind), intent(out) :: dy
+end subroutine numrec_polint_$kind
+> done
+end interface
+
+interface numrec_indexx
+> for kind in $kinds ; do
+subroutine numrec_indexx_$kind(n,arr,indx)
+! returns in indx an array of integer numbers calculated so that
+! arr(indx(1)) < arr(indx(2)) < ... < arr(indx(n-1)) < arr(indx(n))
+  use numrec_kinds
+  implicit none
+  integer,     intent(in)  :: n
+  real($kind), intent(in)  :: arr(n)
+  integer,     intent(out) :: indx(n)
+end subroutine numrec_indexx_$kind
+> done
+end interface
+
+interface numrec_gauleg
+>for kind in $kinds ; do
+subroutine numrec_gauleg_$kind(x1,x2,x,w,n)
+  use numrec_kinds
+  implicit none
+  real($kind), intent(in)  :: x1
+  real($kind), intent(in)  :: x2
+  integer,     intent(in)  :: n
+  real($kind), intent(out) :: x(n)
+  real($kind), intent(out) :: w(n)
+end subroutine numrec_gauleg_$kind
+>done
+end interface
+
+interface numrec_locate
+>for kind in $kinds ; do
+subroutine numrec_locate_$kind(xx,n,x,j)
+  use numrec_kinds
+  implicit none
+  integer,     intent(in)  :: n
+  real($kind), intent(in)  :: xx(n)
+  real($kind), intent(in)  :: x
+  integer,     intent(out) :: j
+end subroutine numrec_locate_$kind
+>done
+end interface
+
+interface numrec_erfcc
+>for kind in $kinds ; do
+function numrec_erfcc_$kind(x) result(res)
+  use numrec_kinds
+  implicit none
+  real($kind)             :: res
+  real($kind), intent(in) :: x
+end function numrec_erfcc_$kind
+>done
+end interface
+
+interface numrec_ddpoly
+>for kind in $kinds ; do
+subroutine numrec_ddpoly_$kind(c,nc,x,pd,nd)
+  use numrec_kinds
+  implicit none
+  integer,     intent(in)  :: nc
+  real($kind), intent(in)  :: c(nc)
+  real($kind), intent(in)  :: x
+  integer,     intent(in)  :: nd
+  real($kind), intent(out) :: pd(nd)
+end subroutine numrec_ddpoly_$kind
+>done
+end interface
+
+interface numrec_polcof
+>for kind in $kinds ; do
+subroutine numrec_polcof_$kind(xa,ya,n,cof)
+  use numrec_kinds
+  implicit none
+  integer,     intent(in)  :: n
+  real($kind), intent(in)  :: xa(n)
+  real($kind), intent(in)  :: ya(n)
+  real($kind), intent(out) :: cof(n)
+end subroutine numrec_polcof_$kind
+>done
+end interface
+
+interface numrec_polcoe
+>for type in REAL COMPLEX ; do
+> for kind in $kinds ; do
+subroutine numrec_polcoe_$type$kind(x,y,n,cof)
+  use numrec_kinds
+  implicit none
+  integer,      intent(in)  :: n
+  $type($kind), intent(in)  :: x(n)
+  $type($kind), intent(in)  :: y(n)
+  $type($kind), intent(out) :: cof(n)
+end subroutine numrec_polcoe_$type$kind
+> done
+>done
+
+end interface
+
+end module numrec_module
+

@@ -1,0 +1,25 @@
+###################################################################################
+example1
+####################################################################################
+Description: RPA calculation without local field effects of the macroscopic
+             dielectric tensor projected on the (1 0 0) q-direction, for bulk
+             silicon.
+Output:
+   -epsilon.nlf.RPA contains in xml format the full (3*3) macroscopic
+    dielectric tensor
+   -repsilon.nlf.RPA contains the real part of the macroscopic
+    dielectric tensor projected on (1 0 0) q direction as a function of energy (Ry)
+   -oas.nlf.RPA contains format the simulated optical absorption spectra
+    on (1 0 0) q direction as a function of energy (Ry)
+   -eels.nlf.RPA contains format the electron energy loss spectra for q->0
+    in the (1 0 0) direction
+Suggestions:
+   -to include local field effects just change in the spectra.x input
+    the following: local_field_effects="T"
+Note:
+   the inclusion of local field effects in homogeneous system has almost a negligible
+   effect on the spectra.
+
+In the /reference directory the user can find the textual main output of the example1
+run. The calculations have been performed with a pc and the g95 fortran compiler.
+####################################################################################

@@ -1,0 +1,428 @@
+#############################################################
+#
+# RUN SCRIPT FOR EXAMPLE 3
+#
+#############################################################
+#############################################################
+# Path definitions
+#############################################################
+
+JOB="example3"
+
+JOB_DIR="$EXAMPLES_DIR/$JOB"
+
+PW_EXE="$DFT_BIN/pw.x"
+PW1_INPUT="$JOB_DIR/pw1.in"
+PW1_OUTPUT="$JOB_DIR/pw1.out"
+PW2_INPUT="$JOB_DIR/pw2.in"
+PW2_OUTPUT="$JOB_DIR/pw2.out"
+PP_EXE="$DFT_BIN/pw_export.x"
+PP_INPUT="$JOB_DIR/pp.in"
+PP_OUTPUT="$JOB_DIR/pp.out"
+SAX_EXE="$SAX_BIN/sax.x"
+GW1_INPUT="$JOB_DIR/gw1.in"
+GW1_OUTPUT="$JOB_DIR/gw1.log"
+GW2_INPUT="$JOB_DIR/gw2.in"
+GW2_OUTPUT="$JOB_DIR/gw2.log"
+BSE_INPUT="$JOB_DIR/bse.in"
+BSE_OUTPUT="$JOB_DIR/bse.log"
+SPECTRA_INPUT="$JOB_DIR/spectra.in"
+SPECTRA_OUTPUT="$JOB_DIR/spectra.log"
+
+#############################################################
+
+#############################################################
+# generation of pwscf input file with a shifted k-point grid
+#############################################################
+cat << EOF > $PW1_INPUT
+
+&CONTROL
+title="Sibulk"
+calculation='scf',
+restart_mode = 'from_scratch',
+tprnfor=.t.,
+PSEUDO_DIR='$PSEUDO_DIR/',
+prefix='Sibulk',
+/
+ &SYSTEM
+                       ibrav = 0,
+                   celldm(1) = 10.2,
+                         nat = 2,
+                        ntyp = 1,
+                     ecutwfc = 15.0 ,
+			nosym=.true.,
+                        nbnd = 36,
+ /
+ &ELECTRONS
+ /
+CELL_PARAMETERS cubic
+-0.5	0.0	0.5
+0.0	0.5	0.5
+-0.5	0.5	0.0
+ATOMIC_SPECIES
+    Si    1.00000  Si.vbc.UPF
+ATOMIC_POSITIONS crystal
+Si      0.000000000     0.000000000     0.0000000000
+Si	0.250000000	0.250000000	0.2500000000
+K_POINTS crystal
+   27
+    0.166666667    0.166666667    0.166666667    0.037037037
+    0.500000000    0.166666667    0.166666667    0.037037037
+    0.833333333    0.166666667    0.166666667    0.037037037
+    0.166666667    0.500000000    0.166666667    0.037037037
+    0.500000000    0.500000000    0.166666667    0.037037037
+    0.833333333    0.500000000    0.166666667    0.037037037
+    0.166666667    0.833333333    0.166666667    0.037037037
+    0.500000000    0.833333333    0.166666667    0.037037037
+    0.833333333    0.833333333    0.166666667    0.037037037
+    0.166666667    0.166666667    0.500000000    0.037037037
+    0.500000000    0.166666667    0.500000000    0.037037037
+    0.833333333    0.166666667    0.500000000    0.037037037
+    0.166666667    0.500000000    0.500000000    0.037037037
+    0.500000000    0.500000000    0.500000000    0.037037037
+    0.833333333    0.500000000    0.500000000    0.037037037
+    0.166666667    0.833333333    0.500000000    0.037037037
+    0.500000000    0.833333333    0.500000000    0.037037037
+    0.833333333    0.833333333    0.500000000    0.037037037
+    0.166666667    0.166666667    0.833333333    0.037037037
+    0.500000000    0.166666667    0.833333333    0.037037037
+    0.833333333    0.166666667    0.833333333    0.037037037
+    0.166666667    0.500000000    0.833333333    0.037037037
+    0.500000000    0.500000000    0.833333333    0.037037037
+    0.833333333    0.500000000    0.833333333    0.037037037
+    0.166666667    0.833333333    0.833333333    0.037037037
+    0.500000000    0.833333333    0.833333333    0.037037037
+    0.833333333    0.833333333    0.833333333    0.037037037
+EOF
+
+#############################################################
+
+#############################################################
+# generation of pwscf input file with a gamma centered k-point grid
+#############################################################
+
+cat << EOF > $PW2_INPUT
+
+&CONTROL
+title="Sibulk"
+calculation='scf',
+restart_mode = 'from_scratch',
+tprnfor=.t.,
+PSEUDO_DIR='$PSEUDO_DIR/',
+prefix='Sibulk',
+/
+ &SYSTEM
+                       ibrav = 0,
+                   celldm(1) = 10.2,
+                         nat = 2,
+                        ntyp = 1,
+                     ecutwfc = 15.0 ,
+                       nosym = .true. ,
+                        nbnd = 36,
+ /
+ &ELECTRONS
+ /
+CELL_PARAMETERS cubic
+-0.5    0.0     0.5
+0.0     0.5     0.5
+-0.5    0.5     0.0
+ATOMIC_SPECIES
+    Si    1.00000  Si.vbc.UPF
+ATOMIC_POSITIONS crystal
+Si      0.000000000     0.000000000     0.0000000000
+Si      0.250000000     0.250000000     0.2500000000
+K_POINTS crystal
+   27
+    0.000000000    0.000000000    0.000000000    0.037037037
+    0.333333333    0.000000000    0.000000000    0.037037037
+    0.666666667    0.000000000    0.000000000    0.037037037
+    0.000000000    0.333333333    0.000000000    0.037037037
+    0.333333333    0.333333333    0.000000000    0.037037037
+    0.666666667    0.333333333    0.000000000    0.037037037
+    0.000000000    0.666666667    0.000000000    0.037037037
+    0.333333333    0.666666667    0.000000000    0.037037037
+    0.666666667    0.666666667    0.000000000    0.037037037
+    0.000000000    0.000000000    0.333333333    0.037037037
+    0.333333333    0.000000000    0.333333333    0.037037037
+    0.666666667    0.000000000    0.333333333    0.037037037
+    0.000000000    0.333333333    0.333333333    0.037037037
+    0.333333333    0.333333333    0.333333333    0.037037037
+    0.666666667    0.333333333    0.333333333    0.037037037
+    0.000000000    0.666666667    0.333333333    0.037037037
+    0.333333333    0.666666667    0.333333333    0.037037037
+    0.666666667    0.666666667    0.333333333    0.037037037
+    0.000000000    0.000000000    0.666666667    0.037037037
+    0.333333333    0.000000000    0.666666667    0.037037037
+    0.666666667    0.000000000    0.666666667    0.037037037
+    0.000000000    0.333333333    0.666666667    0.037037037
+    0.333333333    0.333333333    0.666666667    0.037037037
+    0.666666667    0.333333333    0.666666667    0.037037037
+    0.000000000    0.666666667    0.666666667    0.037037037
+    0.333333333    0.666666667    0.666666667    0.037037037
+    0.666666667    0.666666667    0.666666667    0.037037037
+EOF
+
+#############################################################
+
+#############################################################
+# generation of pw_export.x input file
+#############################################################
+cat << EOF > $PP_INPUT
+&inputpp
+  prefix="Sibulk",
+/
+EOF
+#############################################################
+
+#############################################################
+# generation of gw.x input file with a shifted k-point grid
+#############################################################
+cat << EOF > $GW1_INPUT
+
+<input>
+<sax_options
+  calculation_kind = "GW"
+  start_from = "DFT"
+  gw_integration_method = "plasmon_pole"
+  calc_plasmon_pole_parameters = "T"
+  lorentzian_broadening = "0.01"
+  plasmon_energy = "1.0"
+  nbandmin = "1"
+  nbandmax = "36"
+  nelec    = "8.0"
+  convert_from_pwscf="T"
+  convert_from_pwscf_file="Sibulk.export/index.xml"
+  system_kind="3D"
+  calc_polarizability="T"
+  cutoff_polarizability="8.0"
+  calc_w="T"
+  cutoff_fock="15.0" 
+/>
+
+<structure>
+  <direct
+    a1 = " -5.1 ,  0.0 ,  5.1"
+    a2 = "  0.0 ,  5.1 , 5.1"
+    a3 = "  -5.1 , 5.1 ,  0.0" />
+</structure>
+
+<atoms>
+<types ntypes="1">
+Si  "$PSEUDO_DIR/Si.vbc.UPF" 15.0
+</types>
+<positions natoms="2" units="bohr" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+Si      -2.55           2.55            2.55
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="3 3 3" shift="0.5 0.5 0.5"/>
+</kmesh>
+
+</input>
+
+EOF
+#############################################################
+
+#############################################################
+# generation of gw.x input file with a gamma centered k-point grid
+#############################################################
+cat << EOF > $GW2_INPUT
+
+<input>
+<sax_options
+  calculation_kind = "GW"
+  start_from = "DFT"
+  gw_integration_method = "plasmon_pole"
+  calc_plasmon_pole_parameters = "F"
+  lorentzian_broadening = "0.01"
+  plasmon_energy = "1.0"
+  nbandmin = "1"
+  nbandmax = "36"
+  nelec    = "8.0"
+  convert_from_pwscf="T"
+  convert_from_pwscf_file="Sibulk.export/index.xml"
+  system_kind="3D"
+  calc_polarizability="F"
+  cutoff_polarizability="8.0"
+  calc_w="F"
+  cutoff_fock="15.0" 
+  calc_sigma_x="T"
+  calc_sigma_c="T"
+  calc_energies = "T"
+  calc_sp_hmatrix = "T"
+  sigma_nbmin = "1"
+  sigma_nbmax = "10"
+  diagonal = "T"
+  sigma_first_order = "T"
+  calc_QP_states = "T"
+/>
+
+<structure>
+  <direct
+    a1 = " -5.1 ,  0.0 ,  5.1"
+    a2 = "  0.0 ,  5.1 , 5.1"
+    a3 = "  -5.1 , 5.1 ,  0.0" />
+</structure>
+
+<atoms>
+<types ntypes="1">
+Si  "$PSEUDO_DIR/Si.vbc.UPF" 15.0
+</types>
+<positions natoms="2" units="bohr" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+Si      -2.55           2.55            2.55
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="3 3 3" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+EOF
+#############################################################
+
+#############################################################
+#generation of the bse.x input file gamma centered k-point grid
+#############################################################
+cat << EOF > $BSE_INPUT
+
+<input>
+<sax_options
+  calculation_kind = "FULL"
+  start_from = "GW"
+  convert_from_pwscf = "F"
+  nbandmin = "1"
+  nbandmax = "10"
+  cutoff_polarizability="8.0"
+  cutoff_fock = "15.0"
+  system_kind = "3D"
+  bse_emax = "0.4"
+  bse_emin = "0.0"
+  bse_spin = "0"  
+/>
+
+<structure>
+  <direct
+    a1 = " -5.1 ,  0.0 ,  5.1"
+    a2 = "  0.0 ,  5.1 , 5.1"
+    a3 = "  -5.1 , 5.1 ,  0.0" />
+</structure>
+
+<atoms>
+<types ntypes="1">
+Si  "$PSEUDO_DIR/Si.vbc.UPF" 15.0
+</types>
+<positions natoms="2" units="bohr" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+Si      -2.55           2.55            2.55
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="3 3 3" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+EOF
+
+#############################################################
+
+#############################################################
+#generation of the spectra.x input file
+#############################################################
+
+cat << EOF > $SPECTRA_INPUT
+
+<input>
+<sax_options
+  calculation_kind = "RPAEXC"
+  start_from = "GW"
+  convert_from_pwscf="F"
+  nbandmin = "1"
+  nbandmax = "10"
+  system_kind = "3D"
+  q = "1 0 0"
+  lorentzian_broadening="0.022"
+  cutoff_polarizability="8.0"
+  omegamax = "2.2"
+  nomega = "400"
+  output_format = "txt"
+  bse_emax = "0.4"
+  bse_emin = "0.0"
+  bse_spin = "0"  
+/>
+
+<structure>
+  <direct
+    a1 = " -5.1 ,  0.0 ,  5.1"
+    a2 = "  0.0 ,  5.1 , 5.1"
+    a3 = "  -5.1 , 5.1 ,  0.0" />
+</structure>
+
+<atoms>
+<types ntypes="1">
+Si  "$PSEUDO_DIR/Si.vbc.UPF" 15.0
+</types>
+<positions natoms="2" units="bohr" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+Si      -2.55           2.55            2.55
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="3 3 3" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+EOF
+#############################################################
+
+$PARA_PREFIX $PARA_POSTFIX $PW_EXE < $PW1_INPUT > $PW1_OUTPUT
+
+$PARA_PREFIX $PARA_POSTFIX $PP_EXE < $PP_INPUT > $PP_OUTPUT
+
+
+#calculation of the screening with a shifted k-point grid
+
+$PARA_PREFIX $PARA_POSTFIX $SAX_EXE -code gw << EOF
+$GW1_INPUT
+$GW1_OUTPUT
+EOF
+
+#############################################################
+# calculation of the QP hamiltonian with a gamma centered k-point grid
+#############################################################
+
+$PARA_PREFIX $PARA_POSTFIX $PW_EXE < $PW2_INPUT > $PW2_OUTPUT
+
+$PARA_PREFIX $PARA_PREFIX $PP_EXE < $PP_INPUT > $PP_OUTPUT
+
+
+#calculation of self-energies with a gamma-centered k-point grid
+
+$PARA_PREFIX $PARA_POSTFIX $SAX_EXE -code gw << EOF
+$GW2_INPUT
+$GW2_OUTPUT
+EOF
+
+#############################################################
+# calculation of excitonic structure
+
+$PARA_PREFIX $PARA_POSTFIX $SAX_EXE -code bse << EOF
+$BSE_INPUT
+$BSE_OUTPUT
+EOF
+
+# calculation of the spectra including excitons
+
+$PARA_PREFIX $PARA_POSTFIX $SAX_EXE -code spectra << EOF
+$SPECTRA_INPUT
+$SPECTRA_OUTPUT
+EOF
+

@@ -1,0 +1,29 @@
+####################################################################################
+example2
+####################################################################################
+Description: non self-consistent Hartree-Fock calculation for the SiH4 molecule,
+             which in this case means a Gv calculation. Plus a BSE calculation with
+             macroscopic epsilon equal to 1 (xml file epsilon.static). 
+             Plus calculation of the spectra.
+
+             This run is quasi equavalent to a non-scf single CI single.
+             The molecule is treated as isolated using Martyna-Tuckerman 
+             approach system_kind = "0D".
+
+Output:
+    -HF_QP contains in xml format the energies and eigen-vectors
+    -HF_states contains the wave functions and coresponding energies
+    -bse contains in xml format the excitonic energies and eigenvectors
+     on the basis of HF_states.
+    -epsilon.RPAEXC contains in xml format the macroscopic dielectric tensor (3*3 matrix)
+    -repsilon.RPAEXC contains the real part of epsilon projected on the (1.0 0.0 0.0) 
+     q direction
+    -oas.RPAEXC contains the absorption spectra on the (1.0 0.0 0.0) direction
+    -eels.RPAEXC contains the electron energy loss spectra when q->0 in the 
+     (1.0 0.0 0.0) direction
+    -BSE_ANALYSIS human readable bse (single-particle composition of excitons)
+
+In the /reference directory the user can find the textual main output of the example1
+run. The calculations have been performed with a pc and the g95 fortran compiler.
+####################################################################################
+

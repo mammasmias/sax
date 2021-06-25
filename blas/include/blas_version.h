@@ -1,0 +1,5 @@
+#define __BLAS_VERSION "1.0.0p0"
+#define __BLAS_VERSION_MAJOR 1
+#define __BLAS_VERSION_MINOR 0
+#define __BLAS_VERSION_PATCH 0
+#define __BLAS_VERSION_EXTRA "p0"

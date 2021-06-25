@@ -1,0 +1,36 @@
+
+&CONTROL
+title="SiH4"
+calculation='scf',
+restart_mode = 'from_scratch',
+tprnfor=.t.,
+PSEUDO_DIR='/igor/marsamos/S3DE/sax/examples/pseudos',
+prefix='SiH4',
+/
+ &SYSTEM
+                       ibrav = 0,
+                   celldm(1) = 20.0,
+                         nat = 5,
+                        ntyp = 2,
+                     ecutwfc = 25.0 ,
+                       nosym = .true. ,
+                        nbnd = 20,
+ /
+ &ELECTRONS
+ /
+CELL_PARAMETERS cubic
+     1.000000000    0.000000000    0.000000000
+     0.000000000    1.000000000    0.000000000
+     0.000000000    0.000000000    1.000000000
+ATOMIC_SPECIES
+    Si    1.00000  Si.vbc.UPF
+    H    1.00000  H.vbc.new.UPF
+ATOMIC_POSITIONS angstrom
+Si      0.000000000     0.000000000     0.0000000000
+H       0.000000000     1.489000000     0.0000000000
+H       0.000000000     -0.496363243    -1.403832088
+H       -1.21575425     -0.496363243    0.701916043
+H       1.21575425      -0.496363243    0.701916043
+K_POINTS crystal
+    1 
+    0.00000	0.00000     0.00000	1.0000000

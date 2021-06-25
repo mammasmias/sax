@@ -1,0 +1,1903 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Copyright (C) 2007 SaX group                          %
+%  This file is distributed under the terms of the       %
+%  GNU General Public License.                           %
+%  See the file `License'  in the root directory of      %
+%  the present distribution,                             %
+%  or http://www.gnu.org/copyleft/gpl.txt                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{makeidx}
+%\usepackage{psfig}
+\bibliographystyle{aip}
+\usepackage{epsfig}
+\usepackage{color}
+
+\makeindex
+
+%% define margins, etc
+\topmargin  0.1in
+\oddsidemargin  0in
+\evensidemargin 0in
+\textheight 8.80in
+\textwidth  6.50in
+\marginparsep   0.25cm
+\headheight 0in
+\headsep    0in
+%%\footskip  0.5in
+%%\footheight    0in%
+
+\input{sax_macros}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\vspace*{1.2in}
+
+\begin{centering}
+  \rule{6.5in}{0.04in}                            \\  \vspace{0.25in}
+  {\Huge \SAX\ \UGTITLE  }                       \\  \vspace{0.25in}
+  {\epsfig{file=sax-logo3.eps,width=7cm,clip}} \\ \vspace{0.25in}
+  {\Large Version \SAXVERSION}                   \\  \vspace{0.25in}
+  {\Large {\sc an integrated approach to}}        \\  \vspace{0.10in}
+  {\Huge  {\sc ab initio electronic excitations}}   \\  \vspace{0.10in}
+  {\Huge {\sc within}} \\ \vspace{0.10in}
+  {\Huge  {\sc GW Approximation}} \\  \vspace{0.10in}
+  {\Large \SAXDATE}                              \\  \vspace{0.10in}
+  {\Large (\SAXURL)}                             \\  \vspace{0.25in}
+  \rule{6.5in}{0.04in}                            \\  \vspace{0.25in}
+\end{centering}
+  \noindent \UGDESC
+
+\newpage
+\begin{description}
+
+\item[ABOUT] \SAX is an open-source GNU General Public License package for the calculation of
+electronic and optical properties, originally developed at the national Research Center on nanoStructures and bioSystems at Surfaces (S3)
+of the Italian INFM-CNR (http://www.s3.infm.it) under the coordination
+of Layla Martin-Samos and Giovanni Bussi. \SAX works in the framework of many-body perturbation theory
+in the GW approximation. This is the state-of-the-art method to describe
+electronic band structures and excitonic effects beyond the
+density-functional theory (DFT), and in the last years
+it has proved to be a successful approach for a wide range of materials.
+\SAX implements the GW approximation and the Bethe-Salpeter Equation using periodic cells, plane-waves and
+pseudopotentials, and the various matrix elements are calculated on
+real-space grids through fast-Fourier transforms. Depending on the
+available computational resources, \SAX can be used to study
+systems with large cells (up to 1000 $\AA^3$) and large number of atoms
+(up to 100).
+
+The \SAX package is written in Fortran90 and designed in a modern way,
+taking advantage of an object-oriented structure.
+The low-level operations are hidden inside object-libraries
+which define plane-waves grids, wavefunctions, etc.
+The modularity of the code simplifies greatly the higher level implementation. 
+For this reason, SaX is a perfect tool
+for methodological research. On the other side, the efficiency
+of the code is tight to the efficiency of the low-level
+routines, which can be optimized (and are already fairly optimized)
+independently.
+
+The \SAX package operates, in principles, as a post-processing of
+any DFT electronic structure code. In the present version, the user will
+find a wrapper to run \SAX from the results of a DFT calculation
+done using PWSCF code (\PWSCFURL) included in the \ESPRESSO~ distribution (\ESPRESSOURL).
+
+SaX calculations will provide the user with:
+\begin{itemize}
+\item Full dynamical structure of the random-phase-approximation polarizability.
+\item Quasiparticle energies and wavefunctions.
+\item Different implementations of GW scheme.
+\item Different degrees of self-consistency in the GW scheme.
+\item Excitonic effects with the Bethe-Salpeter equation.
+\end{itemize}
+
+Current limitations (and planned developments):
+\begin{itemize}
+\item Metallic systems can not be treated properly.
+\item Symmetries are not taken into account.
+\end{itemize}
+
+\item[CONTACTS] The web site for SaX is:
+\medskip
+
+\texttt{http://www.sax-project.org/}
+                  http://www.sax-project.org/
+However is it not anymore maintained.
+
+\medskip
+\noindent
+Releases and patches of SaX can be downloaded from
+\texttt{http://qe-forge/projects/sax-project/}.
+
+If you specifically need to contact the developers of SaX (installation, usage, bug's repport), write to
+\texttt{lmartinsamos@gmail.com}
+                  mailto:lmartinsamos@gmail.com. 
+There is also a user mailing list, users can subscribe at \texttt{http://qe-forge.org/mailman/listinfo/sax-project-users}.
+
+Other pointers:\\
+S3:
+\texttt{http://www.s3.infm.it/}
+                  http://www.s3.infm.it/\\
+INFM:
+\texttt{http://www.infm.it/}%
+                  http://www.infm.it/\\
+CINECA:
+\texttt{http://www.cineca.it/}
+                  http://www.cineca.it/\\
+Quantum-Espresso:
+\texttt{http://www.quantum-espresso.org/}
+                  http://www.quantum-espresso.org/\\
+QE-FORGE:
+\texttt{http://www.qe-forge.org/}
+		  http://www.qe-forge.org/\\
+
+\item[TERMS OF USE] SaX is free software, released under the GNU General Public
+License (the file \texttt{License} in the distribution). Although users are not under any obligation in the spirit of the GNU General Public License, the SaX team would appreciate the aknowledgement of the effort to produce such codes in the form of the following reference:
+\begin{quote}
+{\bf in the text: } "The results of this work have been obtained using the SaX package [...]" \\
+{\bf in the references: } "[...] L. Martin-Samos and G. Bussi, Comp. Phys. Comm. 180, 1416 (2009).
+\texttt{http://qe-forge.org/projects/sax-project/}."
+\end{quote}
+
+All trademarks mentioned in this guide belong to their respective
+owners.
+
+\item[DISCLAIMER] While the developers of SaX make every effort to deliver a high quality scientific software, we do not guarantee that our codes are free from defects. Our software is provided "as is". Users are solely responsible for determining the appropriateness of using this package and assume all risks associated with the use of it, including but not limited to the risks of program errors, damage to or loss of data, programs or equipment, and unavailability or interruption of operations. Due to the limited human resources involved in the development of this software package, only a limited support will be given to individual users for either installation or execution of the codes.
+Finally, in the spirit of every open source project, any contribution from external users is welcome, encouraged and, if appropriate, it will be included in future releases.
+
+\item[LICENCE] All the material included in this distribution is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+These programs are distributed in the hope that they will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+\item[CREDITS] \SAX was originally a project of the
+National Research Center on nanoStructures and bioSystems at Surfaces (S3)
+of the Italian INFM-CNR (http://www.s3.infm.it), based in Modena, Italy.
+Most of the recent developments have been supported by CEA-DIF (France).
+
+The computer time and specific technical support is partly provided by CINECA through ISCRA projects and by CINES through GENCI projects.
+
+The scientific board of the \SAX project is composed by
+Layla Martin-Samos, Giovanni Bussi, Alice Ruini,
+Marilia J. Caldas and Elisa Molinari.
+
+The present release of \SAX has been realized by Layla Martin-Samos and Giovanni Bussi. A list of contributors include Chiara Campani (implementation of memory.x).
+
+For a full list of developers and contributors see the file ~sax/CREDITS
+
+
+\item[ACKNOWLEDGEMENTS] The \SAX team want to thank
+Carlo Cavazzoni (CINECA) for his deep and continuative
+consulence about numerical techniques; Andrea Benassi for the SaX web page and its suggestions for code improvements;
+Andrea Ferretti, Eleonora Luppi and Daniele Varsano for useful discussions;
+People from PWSCF for helping us to keep our project compatible with PWSCF;
+People from WanT for helping us to keep our project compatible with WanT.
+
+\end{description}
+\newpage
+
+\tableofcontents
+
+\clearpage
+\section{Theoretical background}
+The GW approximation for the electronic self-energy
+ has its roots in the work by Hedin
+\cite{hedi65pr,hedi-lund69ssp}.
+In its first formulation, an approximated form for the electron
+self-energy is obtained through an expansion in terms of
+the screened Coulomb potential.
+This procedure can be interpreted as a generalization of
+the Hartree-Fock method, where the expansion is based on the
+bare Coulomb potential.
+The effect of the screening is particularly important in semiconductors
+and in metals, where the Hartree-Fock approach is completely unsuitable.
+In more recent times, see among others Refs.~%
+\cite{hybe-loui84prb,hybe-loui85prl,godb+88prb,fari+88prb,%
+enge+91prb,shir-mart93prb,roja+95prl,rohl+95prb},
+the GW method has been used on top of
+density-functional theory (DFT) calculations \cite{hohe-kohn64pr,kohn-sham65pr},
+to improve the agreement of electronic band structures with experimental results.
+This combined approach is presently
+the state-of-the-art technique for the \emph{ab initio}
+prediction of electronic properties.
+Moreover, the excitonic effects are naturally included
+using the so-called Bethe-Salpeter equation (BSE), which is a two-particle
+equation for an excited electron-hole pair interacting through a screened Coulomb potential treated within the
+Random Phase Approximation (RPA).
+The effect of excitons is particularly important in insulators and semi-conductors where, due to the small screening,
+the electron-hole interaction is strong.
+For a review on the applications of these methods
+the reader is invited to refer to Refs.~\cite{arya-gunn98rpp}
+and~\cite{onid+02rmp}.
+
+\subsection{The GW method}
+
+In the general framework of many-body perturbation theory
+the one particle Green's function is defined as:
+\begin{equation}
+G(xtx't')=-i\langle N|T[\Psi(xt)\Psi^\dagger(x't')]|N\rangle,
+\end{equation}
+where $\langle N|$ is the many-body ground state of the system with $N$
+electrons,
+ $\Psi^\dagger(xt)$ and 
+$\Psi(x't')$ are the Heisenberg operators for creation and annihilation,
+respectively, and 
+$T$ indicates the time-ordered product \cite{fett-wale71book}.
+When a GW calculation is performed on top of a DFT calculation,
+a reasonable initial guess for the frequency representation of
+the single particle Green's function can be written as
+\begin{equation}\label{GKS}
+G^{KS}(xx';\omega) = \sum_{nk}
+\frac{\psi_{nk}(x)\psi^*_{nk}(x')}{
+      \omega-\epsilon_{nk}-i\eta\text{sign}(\mu-\epsilon_{nk})}
+\end{equation}
+where $\psi_{nk}(x)$ is the Kohn-Sham orbital corresponding to the
+band $n$ and the $k$ crystal momentum, $\epsilon_{nk}$ its Kohn-Sham energy,
+and $\mu$ the Fermi energy.
+$\eta$ here is a positive infinitesimal number, necessary to obtain
+the correct time-ordering in the Green's function,
+and the $\text{sign}$ function returns +1 (-1)
+when the argument is positive (negative).
+We consider here a system of spin-compensated fermions,
+completely neglecting the spin dependence of the operators.
+The irreducible polarizability is
+the direct product of two Green's functions in real-space and real-time,
+$-iG(xt,x't')G(x't',xt)$. This direct product in time is written as a convolution
+when expressed in frequency domain. Using equation (\ref{GKS}),
+the polarizability takes the following form:
+\begin{multline}
+\label{eq:polarizability}
+P(xx';\omega) =
+2\sum_{nkn'k'}
+  \psi_{nk}(x)\psi^*_{nk}(x') \psi_{n'k'}(x')\psi^*_{n'k'}(x)\times \\
+  [\frac{\theta(\mu-\epsilon_{nk})\theta(\epsilon_{n'k'}-\mu) }{
+         (\omega-(\epsilon_{nk}-\epsilon_{n'k'})-i\eta)}-
+\frac{\theta(\epsilon_{nk}-\mu)\theta(\mu-\epsilon_{n'k'}) }{
+         (\omega-(\epsilon_{nk}-\epsilon_{n'k'})+i\eta)}]
+\end{multline}
+where the factor 2 comes from the spin degeneracy. 
+The $\theta$ function returns 1 for a positive argument and 
+0 for a negative argument.
+The random-phase approximation for the
+screened potential is obtained by solving the Dyson-like equation:
+\begin{equation}
+W(xx';\omega) = v_C(xx') +
+  \int dx''dx'''dx''''v_C(xx'')P(x'''x'''';\omega)W(x''''x';\omega)
+\end{equation}
+where $v_C$ is the Coulomb potential.
+We split the screened potential as a bare potential ($v_C$) plus
+a polarization potential ($W^p$), defined as $W^p=W-v_C$.
+In the GW approximation the self-energy is a simple product of the Green's
+function and the screened potential:
+\begin{equation} 
+\Sigma=iW(xt^+x't')G(xt,x't').
+\end{equation}
+The self-energy is naturally split in 
+an exchange part ($\Sigma_x$) and a 
+correlation part ($\Sigma_c$).
+The exchange is static and is calculated in the same way as
+in the Hartree-Fock method:
+\begin{equation}
+\Sigma_x(xx') = - \sum_{vk} \theta(\mu-\epsilon_{vk}) \psi_{vk}(x)\psi^*_{vk}(x')v_C(xx')
+\end{equation}
+The correlation part is a convolution in frequency domain and takes, in the DFT-GW scheme, the following form:
+\begin{equation}
+\label{eq:sigmac-in-real-freqquency}
+\Sigma_c(xx';\omega) =
+-\sum_{nk} \psi_{nk}(x)\psi^*_{nk}(x')
+\frac{1}{2\pi i} \int d\omega' \frac{W^p(xx';\omega')}{
+\omega + \omega' - \epsilon_{nk} - i\eta\text{sign}(\mu-\epsilon_{nk})}
+\end{equation}
+This self-energy operator can be used to calculate the energy
+of the quasi-particle states.
+In the quasi-particle picture, an effective quasi-particle Hamiltonian
+can be defined as a sum of
+the single-electron Hamiltonian, the Hartree potential,
+the exchange self-energy and the correlation self-energy:
+\begin{equation}
+H_{QP}(xx';\omega) = h(xx') + V_H(x)\delta(xx') + \Sigma_x(xx')
++ \Sigma_c(xx';\omega)
+\end{equation}
+This Hamiltonian is energy-dependent, and, in general, non Hermitian.
+
+The evaluation of the integral in Eq. (\ref{eq:sigmac-in-real-freqquency}) is still
+nowadays numerically unaffordable for systems with more than very few electrons. As a first crude approximation $W^p(xx';\omega)$ might be set to zero. 
+In this case, just the exchange part of the self-energy contributes, 
+leading to the so called Hartree-Fock self-energy.
+This scheme fails when the polarization effects are not negligible,
+i.e. for metals and semiconductors.
+A better choice is to assume a static effective screening, i.e. $W^p(xx';\omega)=W^p(xx')$.
+Different models for the evaluation of this effective screening have been devised.
+The easiest is the statically screened Hartree-Fock (SSHF)\cite{fari+88prb},
+where the zero-frequency screen is used, $W^p(xx';\omega)=W^p(xx';\omega=0)$. Thus, $\Sigma_c$
+takes the following form:
+\begin{equation}\label{sshf}
+\Sigma_c(xx') = - \sum_{vk} \theta(\mu-\epsilon_{vk}) \psi_{vk}(x)\psi^*_{vk}(x')W^p(xx';0),
+\end{equation} 
+where only valence bands contribute to the electron self-energy. Another possibility is
+the Coulomb-hole plus screened exchange (COH-SEX) approximation \cite{hedi-lund69ssp,fari+88prb},
+where
+\begin{equation}\label{cohsex}
+\Sigma_c(xx') = -\frac{1}{2}\sum_{nk} [\theta(\mu-\epsilon_{nk})- \theta(\epsilon_{nk}-\mu)] \psi_{nk}(x)\psi^*_{nk}(x')W^p(xx';0).
+\end{equation}
+With respect to SSHF, the self-energy in the COH-SEX approximation has an additional factor ($- \frac{1}{2}W^p(xx';0)$)
+which represent the so-called Coulomb-hole correction, for more details see Refs.~\cite{hedi-lund69ssp,fari99book}.
+However, when the dynamical behavior of $W^p(xx';\omega)$ is non-trivial, these approximations
+are going to fail.
+
+The use of an explicitely dynamical screening is non-trivial. An intermediate possibility
+is to assume a dynamical screening but a static self-energy.
+Since the quasiparticle concept is meaningful only
+for the states close to the Fermi energy, 
+the dynamic self-energy operator can be approximated with a static operator
+calculated for a frequency equal to the Fermi energy,
+i.e. assuming $H_{QP}(\omega)=H_{QP}(\mu)$.
+We recall that, at the Fermi energy, the self-energy operator
+is Hermitian. Thus, within this approximation the 
+quasiparticle Hamiltonian is static and Hermitian.
+It is possible to show \cite{godb+88prb}
+that the integral in (\ref{eq:sigmac-in-real-freqquency})
+can be deformed as an integral on the imaginary axis plus a somme on pole contributions arising from the poles of the Green function near the real axis. But, if the self-energy is evaluated at the Fermi energy there is no pole contributionsand the integral in (\ref{eq:sigmac-in-real-freqquency}) becomes: 
+
+\begin{equation} \label{Farid}
+\Sigma_c(xx';\mu) = -\sum_{nk} \psi_{nk}(x)\psi^*_{nk}(x')
+\frac{1}{2\pi} \int_0^{+\infty}  ds W^p(xx';is)
+\frac{2(\mu-\epsilon_{nk})}{(\mu-\epsilon_{nk})^2 + s^2}.
+\end{equation}
+
+This contour deformation is possible as long as
+$\Re\omega\in[\epsilon_H-\epsilon_g,\epsilon_L+\epsilon_g]$,
+where $\epsilon_H$ is the energy of the highest valence state,
+$\epsilon_L$ is the energy of the lowest conduction state,
+and $\epsilon_g=\epsilon_L-\epsilon_H$ is the electronic gap.
+The strong advantage of this procedure is that the behavior
+of $W$ on the imaginary $\omega$ axis is much smoother than on
+the real axis.
+ 
+We also notice that $W$ for imaginary frequency is obtained
+from the analytic continuation of $P$,
+simply using an imaginary $\omega$ in Eq.~\ref{eq:polarizability}
+and taking the limit $\eta \rightarrow 0$.
+With this procedure, the $\eta$ parameter is completely eliminated
+from the actual calculation. This approach is equivalent to \cite{fari+88prb} as a zero order development.
+Our test calculations on this method
+show that it seems to work only in very particular cases. 
+Looking at equation (\ref{Farid}), it
+is easy to show that one of the requirement is that the self-energy should be a constant around the fermi energy.
+The main contribution to self-energy expectation values differences should come 
+from the differences in the overlap integrals between bands.
+For all the details concerning
+analytic continuations of time-ordered functions,
+the reader can refer to Ref.~\cite{fari99book}.
+The integral in (\ref{eq:sigmac-in-real-freqquency}) can be performed numerically,
+i.e. computing $W$ on a grid of imaginary frequencies, or using some model
+for its frequency-dependecy. A common choice is the use of plasmon pole models \cite{enge-fari93prb,godb-need89prl,hybe-loui86prb}, see section \ref{plasmon-pole}.
+
+\subsection{Inclusion of excitonic effects, the Bethe-Salpeter equation}
+
+The key words for the inclusion of excitonic effects within the GW-Bethe-Salpeter scheme implemented in \SAX are 
+the two-particle Green's function ($G_2$), the four point reducible polarizability ($\Pi$), 
+the resonant approximation for the two particle hamiltonian and the static approximation for 
+the screened Coulomb potential ($W$). In theory, BSE should be used on top of a GW calculation.
+
+Let first assume that the excited
+state can be obtained by a coherent linear superposition of
+vertical single-pair excitations plus corrections of higher order:
+\begin{equation} 
+| E \rangle =
+\sum_{nn'k}A_{nn'k}{\hat{a}}^{\dagger}_{nk}\hat{a_{n'k}}|
+0\rangle + | C \rangle, 
+\end{equation}
+where $| C \rangle$ represents higher order corrections.\\
+$| E \rangle$ is an eigenstate of an "unknown" excitonic Hamiltonian
+and the excitonic energy $\Omega$ can therefore be calculated as:
+\begin{equation}\label{exc} 
+\hat{H} | E \rangle = \Omega | E \rangle.
+\end{equation} 
+A possibility for calculating the excitonic energy could be to develop an equation in the coefficient $A_{cvk}$ and energy $\Omega$.\\
+
+Considering only the linear part of $|E\rangle$ in the single-particle transition, it is also
+possible to write $|E\rangle$ on the basis of single-particle orbitals:
+\begin{equation}
+\Psi(xx^{\prime}) = \sum_{nn'k}\psi^{qp}_{nk}(x)\psi^{qp*}_{n'k}(x^{\prime}).
+\end{equation}
+The excitation energies are the solutions of an eigenvalue problem and it is necessary
+to find a form of the effective two-particle hamiltonian of (\ref{exc}). 
+In the context of neutral excitations, this effective two-particle Hamiltonian
+is called the Bethe-Salpeter Equation, where these excitations are described in terms of a bound electron-hole pair.\\
+\\
+\\
+The information on the two-particle excitations of a system is contained in the
+two-particle Green's function \cite{fett-wale71book}:
+\begin{equation}
+G_{2}(x_{1}t_{1},x_{2}t_{2},x_{3}t_{3},x_{4}t_{4}) = (-i)^{2} \langle N | T \left[ \Psi(x_{1}t_{1}) \Psi(x_{2}t_{2})\Psi^\dagger(x_{3}t_{3})\Psi^\dagger(x_{4}t_{4})\right] | N \rangle,
+\end{equation}
+By contraction of  indexes the two-particle Green's function is
+written as:
+
+\begin{multline}
+\nonumber
+G_{2}(x t,x^{\prime}t^{\prime},x t^{+},x^{\prime} t^{\prime +}) = -
+\langle N | T \left[
+\Psi(x t)
+\Psi(x^{\prime}t^{\prime})
+\Psi^\dagger(x t^{+})
+\Psi^\dagger(x^{\prime} t^{\prime +})
+\right] | N \rangle  \nonumber
+ = \\
+\{\begin{array}{ll}
+\langle N |  \left[
+\Psi^\dagger(x t^{+})
+\Psi(x t)
+\Psi^\dagger(x^{\prime} t^{\prime +})
+\Psi(x^{\prime} t^{\prime})
+\right] | N\rangle  & t  > t^{\prime} \nonumber
+\\
+\langle N |  \left[
+\Psi^\dagger(x^{\prime} t^{\prime +})
+\Psi(x^{\prime} t^{\prime})
+\Psi^\dagger(x t^{+})
+\Psi(x t)
+\right] | N\rangle  & t^{\prime} > t 
+\end{array}\}
+= \\
+\langle N| T \left[
+\Psi^\dagger(x t^{+})
+\Psi(x t)
+\Psi^\dagger(x^{\prime} t^{\prime +})
+\Psi(x^{\prime}t^{\prime})
+\right] | N \rangle.  
+\end{multline}
+
+%\begin{equation}
+%\begin{split}
+%\nonumber
+%G_{2}(x t,x^{\prime}t^{\prime},x t^{+},x^{\prime} t^{\prime +}) = &-
+%\langle N | T \left[
+%\Psi(x t)
+%\Psi(x^{\prime}t^{\prime})
+%\Psi^\dagger(x t^{+})
+%\Psi^\dagger(x^{\prime} t^{\prime +})
+%\right] | N \rangle   \nonumber
+%\\
+% = &\{\begin{array}{ll}
+%\langle N |  \left[
+%\Psi^\dagger(x t^{+})
+%\Psi(x t)
+%\Psi^\dagger(x^{\prime} t^{\prime +})
+%\Psi(x^{\prime} t^{\prime})
+%\right] | N\rangle  & t  > t^{\prime} \\\nonumber
+%\langle N |  \left[
+%\Psi^\dagger(x^{\prime} t^{\prime +})
+%\Psi(x^{\prime} t^{\prime})
+%\Psi^\dagger(x t^{+})
+%\Psi(x t)
+%\right] | N\rangle  & t^{\prime} > t 
+%\end{array}
+%&=& 
+%\langle N| T \left[
+%\Psi^\dagger(x t^{+})
+%\Psi(x t)
+%\Psi^\dagger(x^{\prime} t^{\prime +})
+%\Psi(x^{\prime}t^{\prime})
+%\right] | N \rangle.  
+%\end{split}
+%\end{equation} 
+\noindent $G_{2}$ describes
+the propagation of an electron-hole pair created at some point $x$ and $t$ ($x^{\prime}$~and~$t'$) and
+$|N\rangle$ is the ground state of the $N$ particle system.\\
+It is convenient to introduce the polarization propagator $\Pi$ for the
+ electron-hole pair defined as:
+\begin{equation}
+i\Pi(x t,x^{\prime} t^{\prime}) =
+\langle N | T \left[
+\Psi^\dagger(x t^{+})
+\Psi(x t)
+\Psi^\dagger(x^{\prime} t^{\prime +})
+\Psi(x^{\prime}t^{\prime})
+\right] | N \rangle.
+\end{equation}
+The polarization propagator in its Lehman representation takes the following form:
+\begin{equation}
+\Pi_{\lambda \mu,\alpha \beta}(\omega) = \sum_{n}(
+\frac{\langle N | c^{\dagger}_{\mu} c_{\lambda} | \Psi_{n}\rangle 
+      \langle \Psi_{n} | c^{\dagger}_{\alpha} c_{\beta}| N \rangle}
+     { \omega - (E_{n} - E_{0}) + i\eta}
+- \frac{\langle N | c^{\dagger}_{\alpha} c_{\beta}| \Psi_{n}\rangle 
+      \langle \Psi_{n} | c^{\dagger}_{\mu} c_{\lambda} | N \rangle }
+     {\omega + (E_{n} - E_{0}) - i\eta})
+\end{equation}
+where $| \Psi_{n}\rangle$ is an intermediate state.
+The poles of the polarization propagator determine the excitations (resonant term)
+ and de-excitations energies (antiresonant term), similar to 
+the polarizability in (\ref{eq:polarizability}). 
+
+The polarization propagator satisfies a Dyson-like equation:
+\begin{equation}\label{polprop}
+\Pi_{\lambda \mu,\alpha \beta}(\omega) = \Pi^{0}_{\lambda \mu,\alpha \beta}(\omega) + 
+\sum_{\eta\nu,\rho\sigma}\Pi^{0}_{\lambda \mu,\rho \nu}(\omega)K_{\rho\nu,\eta\sigma}(\omega)
+\Pi_{\eta \sigma,\alpha \beta}(\omega).
+\end{equation}
+\\
+This form of the equation for the two-particle polarizability suggests an 
+inversion procedure to be the natural alghoritm, but this requires to perform an explicit inversion for
+each value of the frequency $\omega$.
+\\
+An alternative formulation of the propagation of an electron-hole pair can be found starting from Hedin's equations
+and defining four-point quantities. 
+In this formulation the four-point Coulomb interaction takes the following form:
+\begin{equation}
+v(1,1^{\prime},2,2^{\prime}) =  v(1,2)\delta(1,1^{\prime})\delta(2,2^{\prime}),
+\end{equation}
+similar to the four-point screened interaction:
+\begin{equation}
+W(1,1^{\prime};2,2^{\prime}) =  W(1,1^{\prime})\delta(1,2)\delta(1^{\prime},2^{\prime}),
+\end{equation}
+and the four-point independent particle polarizability:
+\begin{equation}
+P^{0}(1,1^{\prime};2,2^{\prime}) = -iG(1^{\prime},2^{\prime})G(2,1),
+\end{equation}
+where we have used an abbreviated notation ($1$ stays for ($x_1t_1$) etc) 
+It is possible, then, to obtain a generalized
+four-point irreducible polarizability:
+\begin{equation}
+P(1,1^{\prime},2,2^{\prime}) = P_{0}(1,1^{\prime},2,2^{\prime}) + \\
+- \int P_{0}(1,1^{\prime},3,3^{\prime})W(3,3^{\prime},4,4^{\prime})P(4,4^{\prime},2,2^{\prime})\,d\,3\,d\,3^{\prime}\,d\,4d\,4^{\prime},
+\end{equation}
+where only the attractive screened interaction $W$ appears.\\
+With the same considerations, we can obtain a generalized four-point form for the
+modified response function and the modified polarizability:
+\begin{multline}\label{modchiquatt}
+\chi(1,1^{\prime},2,2^{\prime}) = P_{0}(1,1^{\prime},2,2^{\prime}) + \int P_{0}(1,1^{\prime},3,3^{\prime})\times \\
+\left[ v(3,3^{\prime},4,4^{\prime} - W(3,3^{\prime},4,4^{\prime})\right] P(4,4^{\prime},2,2^{\prime})\,d\,3\,d\,3^{\prime}\,d\,4d\,4^{\prime},
+\end{multline}
+\begin{multline}\label{modpquatt}
+\bar{P}(1,1^{\prime},2,2^{\prime}) = P_{0}(1,1^{\prime},2,2^{\prime}) + \int P_{0}(1,1^{\prime},3,3^{\prime})\times \\
+\left[ \bar{v}(3,3^{\prime},4,4^{\prime} - W(3,3^{\prime},4,4^{\prime})\right] \bar{P}(4,4^{\prime},2,2^{\prime})\,d\,3\,d\,3^{\prime}\,d\,4d\,4^{\prime}.
+\end{multline}
+The only difference between (\ref{modchiquatt}) and (\ref{modpquatt}) is the
+long range tail of the Coulomb potential which is responsible for the local-field effects \cite{onid+02rmp}.
+Equation~(\ref{modpquatt}) for the modified polarizability has a Dyson-like form,
+ in analogy with (\ref{polprop}) for the polarizability propagator, just considering
+ the lowest order of the interaction kernel.\\
+Taking into account the translational invariance in time, it
+ is possible to Fourier transform into the frequency space:
+\begin{equation} \nonumber
+\chi(1,1^{\prime},2,2^{\prime}) =
+\chi(x_{1}t_{1},x_{1^{\prime}}t^{+}_{1},x_{2}t_{2},x_{2^{\prime}}t^{+}_{2})
+                      = \chi(x_{1},x_{1^{\prime}},x_{2},x_{2^{\prime}}, t_{2} - t_{1})
+\end{equation}
+\begin{equation}
+\to \chi(x_{1},x_{1^{\prime}},x_{2},x_{2^{\prime}}, \omega)\delta(x_{1} - x_{1^{\prime}})\delta(x_{2} - x_{2^{\prime}}).
+\end{equation}
+An approximation commonly used and currently implemented in \SAX, concerns the energy dependence of the screened potential:
+ this is neglected and one assumes $W(\omega) = W(\omega=0)$ \cite{rohl-loui00prb}. 
+\\
+\\
+This equation for the four-point polarizability can be solved in principle inverting the matrix
+for each possible frequency $\omega$. However, for practical purpose, it is computationaly 
+convenient to reformulate the problem as an effective eigenvalue problem, 
+as also suggested by the initial physical picture of interacting
+electron-hole pairs. The first step is to change the basis set to describe the quantity we are dealing with, considerering as
+a new basis single-particle eigenfunctions $\psi_{n}(x)$ (the subindex $n$ has to
+be read as $n=(n,k)$, that it contains the 
+information of the band and the k point).\\
+In this basis any four point quantity is:
+\begin{equation}
+S(x_{1},x_{1^{\prime}},x_{2},x_{2^{\prime}}) = \sum_{(n_{1},n_{1^{\prime}})(n_{2},n_{2^{\prime}})}
+\psi^{*}_{n_{1}}(x_{1})\psi_{n_{1^{\prime}}}(x_{1^{\prime}})\psi_{n_{2}}(x_{2})\phi^{*}_{n_{2^{\prime}}}(x_{2^{\prime}}) S_{(n_{1},n_{1^{\prime}})(n_{2},n_{2^{\prime}})}.
+\end{equation}
+For instance, the modifed polarizability now becomes:
+\begin{equation}
+\bar{P}_{(n_{1},n_{1^{\prime}})(n_{2},n_{2^{\prime}})} = \bar{P}^{0}_{(n_{1},n_{2^{\prime}})(n_{2},n_{2^{\prime}})} + \bar{P}^{0}_{(n_{1},n_{1^{\prime}})(n_{3},n_{3^{\prime}})}\Xi_{(n_{3},n_{3^{\prime}})(n_{4},n_{4^{\prime}})}\bar{P}_{(n_{4},n_{4^{\prime}})(n_{2},n_{2^{\prime}})}.
+\end{equation}
+Here the interaction kernel is defined as:
+\begin{multline}
+\Xi_{(n_{1},n_{1^{\prime}})(n_{2},n_{2^{\prime}})} = \\
+- \int dx_{1}dx_{1^{\prime}} \psi_{n_{1}}(x_{1})\psi^{*}_{n_{1^{\prime}}}(x_{1^{\prime}}) W(x_{1},x_{1^{\prime}})\psi^{*}_{n_{2}}(x_{1})\psi_{n_{2^{\prime}}}(x_{1^{\prime}}) + \\
++ \int dx_{1}dx_{1^{\prime}}\psi_{n_{1}}(x_{1})\psi^{*}_{n_{1^{\prime}}}(x_{1}) v(x_{1},x_{1^{\prime}})\psi^{*}_{n_{2}}(x_{1^{\prime}})\psi_{n_{2^{\prime}}}(x_{1^{\prime}}),
+\end{multline}
+where the static approximation for the screening has been assumed. 
+\\
+\\
+After some manipulations (see reference \cite{onid+02rmp}), the equivalent eigenvalue problem becomes: 
+\begin{equation}\label{h2peigprob}
+\sum_{(n_{1},n_{1^{\prime}})(n_{2},n_{2^{\prime}})}H^{2p}_{(n_{1},n_{1^{\prime}})(n_{2},n_{2^{\prime}})}A^{\mu}_{(n_{2},n_{2^{\prime}})} = E^{\mu} A^{\mu}_{(n_{1},n_{1^{\prime}})},
+\end{equation}
+where $H^{exc}_{(n_{1},n_{1^{\prime}})(n_{2},n_{2^{\prime}})}$ is the two particle hamiltonian defined as:
+\begin{equation}
+H^{2p}_{(n_{1},n_{1^{\prime}})(n_{2},n_{2^{\prime}})} = (\epsilon_{n_{1^{\prime}}} - \epsilon_{n_{1}})\delta_{(n_{1},n_{2})(n_{1^{\prime}},n_{2^
+{\prime}})} +  (f_{n_{1}} - f_{n_{1^{\prime}}})\Xi_{(n_{1},n_{1^{\prime}})(n_{2},n_{2^{\prime}})},
+\end{equation}
+
+where $\epsilon_{n_{1^{\prime}}}$ and $\epsilon_{n_{1}}$ are single-particle energy eigen-values and $\Xi_{(n_{1},n_{1^{\prime}})(n_{2},n_{2^{\prime}})}$ is the interaction kernel. 
+In general, the eigen-states $A^{\mu}$ are not orthogonal.
+\\
+\\
+In the particular case of semi-conductors (or insulators), this expression can be simplified analyzing
+the form of the effective two particle Hamiltonian $H^{2p}_{(n_{1},n_{1^{\prime}})(n_{2},n_{2^{\prime}})}$. In the definition of $H^{2p}_{(n_{1},n_{1^{\prime}})(n_{2},n_{2^{\prime}})}$ there
+ are $\delta_{(n_{1},n_{2})(n_{1^{\prime}},n_{2^{\prime}})}$, that represent the identity
+ in the transition basis, and $(f_{n_{1}} - f_{n_{1^{\prime}}})$, that is
+ different from zero only for those transitions for which
+ $(n_{1},n_{1^{\prime}})$=(occupied,unoccupied) or $(n_{1},n_{1^{\prime}})$=(unoccupied,occupied).\\ \\
+In what follows we will use this notation:
+\begin{itemize}
+\item{($n_{1},n_{1^{\prime}}$):
+ \begin{itemize}
+ \item{ unoccupied state: $v_{1}$,$v_{1^{\prime}}$}
+ \item{ occupied state :$c_{1}$,$c_{1^{\prime}}$}
+ \end{itemize}
+}
+\item{($n_{2},n_{2^{\prime}}$):
+ \begin{itemize}
+ \item{ unoccupied state: $v_{2}$,$v_{2^{\prime}}$}
+ \item{ occupied state : $c_{2}$,$c_{2^{\prime}}$}
+ \end{itemize}
+}
+\end{itemize}
+The $v$ for unoccupied states, stays for the hole created in the valence band when the electron has been promoted 
+to the conduction band $c$.
+The matrix representation of the two-body Hamiltonian $H^{2p}_{(n_{1},n_{1^{\prime}})(n_{2},n_{2^{\prime}})}$ is: 
+\begin{displaymath}
+\left(\begin{array}{c | c c c c}
+                   &  {v_{2},\,c_{2}} & {c_{2},\,v_{2}} & {v_{2},\,v_{2^{\prime}}} & {c_{2},\,c_{2^{\prime}}} \\
+\hline
+                   & & & & \\
+{v_{1},\,c_{1}}     &  H^{2p}_{(v_{1}\,c_{1})(v_{2}\,c_{2})} & \Xi_{(v_{1}\,c_{1})(c_{2}\,v_{2})} &
+                      \Xi_{(v_{1}\,c_{1})(v_{2}\,v_{2^{\prime}})}         & \Xi_{(v_{1}\,c_{1})(c_{2}\,c_{2^{\prime}})} \\
+                   & & & & \\
+{c_{1},\,v_{1}}     & -\Xi_{(c_{1}\,v_{1})(v_{2}\,c_{2})} & -H^{2p}_{(c_{1}\,v_{1})(c_{2}\,v_{2})} &
+                     -\Xi_{(c_{1}\,v_{1})(v_{2}\,v_{2^{\prime}})}          & -\Xi_{(c_{1}\,v_{1})(c_{2}\,c_{2^{\prime}})} \\
+                   & & & & \\
+{v_{1},\,v_{1^{\prime}}} &           0                                     & 0                                   &
+                     (E_{v_{1^{\prime}}} - E_{v_{1}})\delta_{(v_{1},v_{2})(v_{1^{\prime}},v_{2^{\prime}})} & 0\\
+                   & & & & \\
+{c_{1},\,c_{1^{\prime}}} &            0                                     & 0                                   &
+                                0 & (E_{c_{1^{\prime}}} - E_{c_{1}})\delta_{(c_{1},c_{2})(c_{1^{\prime}},c_{2^{\prime}})}
+\end{array}\right).
+\end{displaymath}
+
+In a "block" representation one obtain the following matrix for $H^{2p}$ :
+\begin{displaymath}
+\left(\begin{array}{c c}
+H^{2p~resonant}_{(v_{1}\,c_{1})(v_{2}\,c_{2})} & \Xi^{coupling}_{(v_{1}\,c_{1})(c_{2}\,v_{2})} \\
+ & \\
+-\left[\Xi^{coupling}_{ (v_{1}\,c_{1})(c_{2}\,v_{2})}\right]^{*} & -\left[H^{2p~resonant}_{(v_{1}\,c_{1})(v_{2}\,c_{2})}\right]^{*}
+\end{array}\right)
+\end{displaymath}
+$H^{2p~resonant}$ is Hermitian and corresponds to positive absorption energy,
+while $-\left[ H^{2p~resonant} \right]^{*}$ is the anti-resonant part,
+and gives the de-excitations energies \cite{rohl-loui00prb}. In the calculations
+of optical spectra the coupling part of the matrix is often neglected (Tamm-Dancoff approximation). In fact, this is what is
+presently implemented in \SAX.\\
+In this approximation the eigenvalue problem can be rewritten as:
+\begin{equation}
+\sum_{(v_{2}\,c_{2})}H^{exc,2p~resonant}_{(v_{1}\,c_{1})(v_{2}\,c_{2})}A^{\mu}_{(v_{2}\,c_{2})} = E^{exc}_{\mu} A^{\mu}_{(v_{1}\,c_{1})},
+\end{equation}
+and the macroscopic dielectric tensor takes the following form:
+\begin{equation}
+\epsilon_{M} = 1 - \lim_{q\to0}v_{0}(q)\sum_{\mu}
+\sum_{(v_{1}\,c_{1})}\frac{ | < v_{1} | e^{-iqr} | c_{1} > A^{(v_{1}\,c_{1})}_{\mu}|^{2} }{E^{exc}_{\mu} - \omega -i\eta}
+\end{equation}
+
+\noindent For a more detailed derivation of the two-particle Hamiltonian see Refs.~\cite{onid+02rmp,buss04ps} .\\
+
+\subsection{In practice} \label{practice}
+All the previous relations are written in frequency domain, since
+in our implementation we never use the time-dependent operators.
+It is also possible to implement the expressions directly
+in time domain ~\cite{roja+95prl}.
+Moreover, while every operation is here written in real space,
+we use everywhere a plane-waves basis set, and we
+switch to the real space representation with fast Fourier transforms
+whenever convenient.\\
+
+We consider a periodic system with unit cell $\Omega$,
+and we set to $N$ the number of cells, working in the
+limit $N\rightarrow\infty$.
+Every function depending on a single spatial coordinate (such as
+the Kohn-Sham orbitals) is represented as a sum of normalized plane waves.
+\begin{equation}
+\psi_{nk}(x) = \frac{1}{\sqrt{N\Omega}} \sum_G \psi_{nk}(G) e^{i(k+G)\cdot x}~,
+\end{equation}
+where $G$ runs over the reciprocal lattice.
+We introduce the product between two Kohn-Sham states in real space as
+\begin{equation}
+M_{nk,n'k'}(x) = \sqrt{N\Omega} \psi^*_{nk}(x) \psi_{n'k'}(x)~.
+\end{equation}
+\\
+\\
+The convention that we adopt for the Fourier representation of two-points functions such as the polarizability, $P$, is:
+\begin{equation}\label{eq:block-diagonal-operators}
+P(xx') = \frac{1}{N\Omega} \sum_{kGG'}
+e^{i(k+G)\cdot x} P_k(G,G') e^{-i(k+G')\cdot x'}.
+\end{equation}
+Here the sum over $k$ vectors runs over a uniform N-points mesh in
+the first Brillouin zone.
+We follow the same convention also for the Coulomb potential,
+which results to be a diagonal matrix.
+
+After some manipulation, $P$ can be expressed in reciprocal
+space in terms of the products $M_{nk,n'k'}$
+\begin{multline}\label{eq:polarizability-in-plane-waves}
+P_q(GG';is) = - \frac{4}{N\Omega}
+  \sum_{cvq}
+  \theta(\epsilon_{ck}-\mu)
+  \theta(\mu-\epsilon_{vk+q})
+\times \\
+M_{ck,vk+q}^*(G) M_{ck,vk+q}(G')
+\frac{2(\epsilon_{ck}-\epsilon_{vk+q})}{(\epsilon_{ck}-\epsilon_{vk+q})^2
++s^2}
+\end{multline}
+In principle, the sums over $k$ and $q$ vectors should be performed
+using an infinitely dense mesh covering the first
+Brillouin zone. In practice, we use the special points
+technique \cite{chad-cohe73prb} for evaluating these sums.
+This technique can be interpreted as a Fourier quadrature
+of the integrand \cite{froy89prb}.
+Thus, in the practical usage, $N$ is finite and
+equal to the number of $k$ points employed, and
+the summation is assumed to be on a proper mesh, generated
+following Ref.~\cite{froy89prb}.
+\\
+\\
+The screened Coulomb potential is then obtained as
+\begin{equation}\label{eq:RPA}
+W(is)=(1-v_CP(is))^{-1}v_C
+\end{equation}
+where matrix operations are implicit.
+We notice that for imaginary frequencies the $P$ matrix is
+Hermitian, thus also $W$ is Hermitian.
+\\
+\\
+For the building of the quasi-particle hamiltonian we use self-energies projected on states.
+These states can be Kohn-Sham states or states coming from a previous GW calculation (GW scf scheme, see below).
+The projected self-energies (exchange and correlation) take the following form:
+\begin{equation}
+\langle nk | \Sigma_x | n'k \rangle
+=
+- \frac{1}{N\Omega} \sum_{vq} \sum_G \theta(\mu-\epsilon_{vk-q})
+M^*_{vk-q,nk}(G) v_C(q+G) M_{vk-q,n'k}(G)
+\end{equation}
+\begin{multline}\label{eq:correlation_part_of_self_energy_in_plane_waves}
+\langle nk | \Sigma_c(\omega) | n'k \rangle
+=
+- \frac{1}{N\Omega} \sum_{n''q} \sum_{GG'}
+M^*_{n''k-q,nk}(G) M_{n''k-q,n'k}(G')
+\times \\
+\frac{-1}{2\pi i}\int d\omega'\frac{W^p_{GG'}(q;\omega')e^{-i\delta\omega'}}{
+\omega + \omega' - \epsilon_{n''k-q} - i\eta\text{sign}(\mu-\epsilon_{n''k-q})}. 
+\end{multline}
+In the case of equation (\ref{Farid}), the calculation of the last integral should be performed
+using the lowest possible number the
+integrand evaluations.
+Inside \SAX this improper integral has been mapped into a proper one through
+a change of variable $s=\omega_0 \tan (\phi)$, with
+$\phi \in [0,\frac{\pi}{2}]$; now it can be evaluated
+by means of the
+Gauss-Legendre formula \cite{Nr}.
+The parameter $\omega_0$ and the number of points in the integral
+$N_\omega$ are used to define a list of frequencies and weighs.
+Those frequencies are used since the beginning to evaluate
+the polarizability on the imaginary axis.
+\\
+It is important to notice that, when representing $\Sigma$
+on a plane waves basis set, the energy cutoff necessary to represent
+correctly $\Sigma_x$ can be different, and in general is much higher,
+than the one necessary for $\Sigma_c$.
+\\
+\\
+As the self-energy is in general energy-dependent and non-Hermitian, it is not trivial to perform
+GW calculation within a scf scheme. To find the new states the self-energy has to be calculated at a given energy and the 
+quasi-particle hamiltonian has to be diagonalized. 
+In a non-scf calculation the quasi-particle hamiltonian is:
+\begin{equation}\label{QPdiagonalH}
+\langle nk | H_{QP}| nk \rangle = [\langle nk | h| nk \rangle + \langle nk | V_H | nk \rangle + 
+\langle nk | \Sigma_x | nk \rangle + \langle nk | \Sigma_c(\epsilon_{nk}) | nk \rangle]
+[\frac{1}{(1-\frac{\partial\Sigma_c}{\partial\omega}|_{\epsilon_{nk}})}],
+\end{equation}
+where the energy dependence of the quasi-particle Hamiltonian has been developed to first order. 
+This expression is equivalent to those implemented in other codes (as abinit \cite{ABINIT}), and we just took away the explicit
+depence with the DFT exchange-correlation potential. For practical purpose, expression (\ref{QPdiagonalH}) saves the implementation of different exchange-correlation potentials within the GW code, as $\epsilon_{nk}$ comes from 
+the DFT code or from a previous GW calculation. Contrary to other implementations (see abinit \cite{ABINIT} or self \cite{SELF}, for instance), the self-energy derivative 
+($\frac{\partial\Sigma_c}{\partial\omega}$) is taken here analytically.
+
+In the case of GW scf scheme, it has been proposed in Ref.\cite{fale04prl} to impose an hermitean and static
+self-energy by using a ``ponderated mean'', or in other words a modified self-energy:
+\begin{equation}
+\langle nk|\Sigma | n'k \rangle = \frac{1}{4}(\langle nk|\Sigma(\epsilon_{n'k})|n'k\rangle + \langle n'k|\Sigma(\epsilon_{n'k})|nk\rangle^* + \langle nk|\Sigma(\epsilon_{nk})|n'k\rangle + \langle n'k|\Sigma(\epsilon_{nk})|nk\rangle^*)
+\end{equation} 
+\\
+In our particular implementation, this "ponderated mean" is needed just for the plasmon-pole self-energy (see \ref{plasmon-pole}), for the other
+cases (see equations (\ref{sshf}), (\ref{cohsex}) and (\ref{Farid})) the self-energy is energy independent and Hermitian.
+
+
+\subsubsection{The plasmon-pole model} \label{plasmon-pole}
+In the plasmon-pole model the dynamical behavior of the dielectric matrix is given
+by a parametrized model of the dielectric function, in reciprocal space. The dielectric function is, then, given by:
+\begin{equation}
+\epsilon^{-1}_{GG'}=1+\frac {\Omega^2_{GG'}(q)}{\omega^2-(\tilde{\omega_{GG'}}(q)-i\eta)^2},
+\end{equation}
+where $\Omega_{GG'}(q)$ (effective bare plasma frequency) and $\omega_{GG'}$ are the two parameters of the model. 
+The small $i\eta$ is just to ensure the right time-ordering. There exist different ways to fit these parameters. To 
+this purpose, two constraints are needed. In \SAX we choose two frequencies, where $\epsilon^{-1}$ is actually computed:
+$\omega=0$ and $\omega=i\omega_p$ ($\omega_p$ is the plasmon frequency). In systems where plasmons are not well defined
+this model should, in theory, not work.
+\\
+\\
+Once the screening is known, the correlation part of the self-energy (integral in Eq. (\ref{eq:sigmac-in-real-freqquency})) can
+be evaluated analytically. By closing the integration path through an arc in the lower 
+half plane ($e^{-i\delta\omega'}$) and applying the residue
+theorem, one gets for the integral:
+\begin{multline}
+\frac{-1}{2\pi i}\int d\omega'\frac{W^p_{GG'}(q;\omega')e^{-i\delta\omega'}}{
+\omega + \omega' - \epsilon_{nk} - i\eta\text{sign}(\mu-\epsilon_{nk})} =\\
+\frac{-1}{2\pi i}\int d\omega'\frac{\epsilon^{-1}_{GG'}(q)v_C(G'+q)e^{-i\delta\omega'}}{
+\omega + \omega' - \epsilon_{nk} - i\eta\text{sign}(\mu-\epsilon_{nk})}=\\
+\frac{-\Omega^2_{GG'}v_C(G'+q)}{2\tilde{\omega_{GG'}(q)}}[\frac{\theta(\mu-\epsilon_{nk})}{\omega+\tilde{\omega}_{GG'}(q)-\epsilon_{nk}-i\eta}+
+\frac{\theta(\epsilon_{nk}-\mu)}{\omega+\tilde{\omega}_{GG'}(q)-\epsilon_{nk}+i\eta}]. 
+\end{multline}
+For the self-energy projected on states, the implemented formula is:
+\begin{multline}
+\langle nk | \Sigma_c(\omega) | n'k \rangle
+=\\
+\frac{1}{N\Omega} \sum_{n''q} \sum_{GG'}
+M^*_{n''q,nk}(G) M_{n''q,nk}(G')v_C(G'+q)
+\times \\
+-\frac{\Omega^2_{GG'}}{2\tilde{\omega_{GG'}(q)}}[\frac{\theta(\mu-\epsilon_{n''k-q})}{\omega+\tilde{\omega}_{GG'}(q)-\epsilon_{n''k-q}-i\eta}+
+\frac{\theta(\epsilon_{n''k-q}-\mu)}{\omega+\tilde{\omega}_{GG'}(q)-\epsilon_{n''k-q}+i\eta}].
+\end{multline}
+
+The derivative of the self-energy, calculated at a given $\epsilon_{nk}$ is:
+\begin{multline}
+\langle nk | \frac{\partial\Sigma_c}{\partial \omega} | nk \rangle |_{\epsilon_{nk}}= \\
+\frac{1}{N\Omega} \sum_{n''q} \sum_{GG'}
+M^*_{n''q,nk}(G) M_{n''q,n'k}(G')v_C(G'+q)
+\times \\
+\frac{\Omega^2_{GG'}}{2\tilde{\omega_{GG'}(q)}}[\frac{\theta(\mu-\epsilon_{n''k-q})}{(\epsilon_{nk}+\tilde{\omega}_{GG'}(q)-\epsilon_{n''k-q}-i\eta)^2}+
+\frac{\theta(\epsilon_{n''k-q}-\mu)}{(\epsilon_{nk}+\tilde{\omega}_{GG'}(q)-\epsilon_{n''k-q}+i\eta)^2}].
+\end{multline}
+
+
+\subsubsection{Divergencies in the Coulomb potential}
+
+One common problem that is encountered when implementing the
+GW equations on a plane-waves basis set is that the Coulomb
+potential is singular in both the real and the reciprocal space.
+The explicit expression of the Coulomb potential, in Rydberg units, is
+\begin{equation}
+v_C(x) = \frac{2}{|x|} ~ ; ~ v_C(q) = \frac{8\pi}{q^2} ~,
+\end{equation}
+where the Fourier transform is defined so that
+$v_C(x) = \frac{1}{N\Omega}\sum_{q} v_C(q) e^{iq\cdot x}$.
+An analytical treatment of the Coulomb potential is necessary
+when one deals with integrals on the Brillouin zone.
+For instance, this is required when calculating the Hartree-Fock exchange operator
+in periodic systems.
+In this case, a special-point summation is not reliable and
+the discontinuity should be handled in a special manner.
+In general, the following integral form is needed:
+\begin{equation}
+I=\frac{1}{(2\pi)^3}\int dk ~ v_C(k) f(k) ~ ,
+\end{equation}
+where $f(k)$ is a function smooth enough to
+be integrated with the special-point technique.
+First, we split the Coulomb potential
+in a long-range part $v_L$ and a short-range part $v_S$
+so that $v_C(x) = v_L(x) + v_S(x)$.
+Then, we add and subtract the long-range part of the
+Coulomb potential times the function calculated in the critical point, that is
+\begin{equation} \label{eq:integral}
+I = \frac{1}{(2\pi)^3}\int dk ~ (v_C(k)f(k)-v_L(k)f(k=0))
+  + \frac{1}{(2\pi)^3}\int dk ~ v_L(k) f(k=0)~.
+\end{equation}
+The reason for adding and subtracting the long-range part only is to have a finite
+value for the second integral in the last expression.
+We define $v_L$ and $v_S$ as
+\begin{equation}
+v_L(q) = \frac{8\pi}{q^2} e^{-\frac{q^2}{2\sigma^2}} ~ ; ~
+v_S(q) = \frac{8\pi}{q^2} \left( 1 - e^{-\frac{q^2}{2\sigma^2}} \right)~.
+\end{equation}
+Since the long-range part has to be as close as possible to the
+bare potential, whose divergency has to be cancelled, we chose
+$\sigma$ to be significantly larger than the spacing of the special-point mesh.
+The first integral in Eq.~(\ref{eq:integral}) can be assumed to be suitable for the special-point
+technique (i.e. $\frac{1}{(2\pi)^3}\int dk = \frac{1}{N\Omega}\sum_{k}$)
+while the second one leads exactly to $v_L(r=0)f(k=0)$. Now,
+isolating the $k=0$ term in the summation, and remembering
+$v_C = v_S + v_L$, one has
+\begin{equation}
+I = \frac{1}{N\Omega}
+   \sideset{}{'}\sum_{k} v_C(k)f(k) +
+   \left(v_L(x=0) + \frac{1}{N\Omega}v_S(k=0) -
+    \frac{1}{N\Omega}\sideset{}{'}\sum_{k} v_L(k)
+   \right)f(k=0)
+\end{equation}
+This equation can be interpreted as a substitution of the divergent
+$v_C$ with a modified $\bar{v}_C$ so that
+\begin{align}
+I &= \frac{1}{N\Omega} \sum_{k} \bar{v}_C(k) f(k) \\
+\bar{v}_C(k) &= \begin{cases}
+   N\Omega v_L(r=0) + v_S(k=0) -
+    \sideset{}{'}\sum_{k'} v_L(k)
+ & \text{if $k=0$,} \\
+  v_C(k) & \text{otherwise}.
+  \end{cases}
+\end{align}
+where $v_L(x=0) = \frac{2\sqrt{2}\sigma}{\sqrt{\pi}}$ and $v_S(k=0) = \frac{4\pi}{\sigma^2}$.
+The sum over $k'$ can be evaluated using a finite number
+of $k$ vectors with the same spacing as the grid used for special-point integration.
+The necessary number of $k$ vectors depends on the cutoff $\sigma$.
+This procedure is quite easy to implement, since the smoothed
+potential $\bar{v}_C$ is calculated once and then
+used everywhere as in the standard special-point method.
+
+A similar approach can be used for the screened potential.
+Here, for small $q$, the screened Coulomb potential is approximately
+\begin{equation}
+v_{SC}(q) = \frac{8\pi}{q\epsilon q}
+\end{equation}
+where $\epsilon$ is in general a complex non-Hermitian tensor.
+We introduce a screened long-range potential as
+\begin{equation}
+v_{SL}=v_{SC}(q)e^{-\frac{q^2}{2\sigma}}
+\end{equation}
+The real space representation of this potential is not analytical;
+however quantities such as
+$v_{SL}(x=0) = \frac{2\sqrt{2}\sigma}{\sqrt{\pi}}
+\langle \frac{q^2}{q\epsilon q} \rangle$
+and
+$v_SS(q=0) = \frac{4\pi}{\sigma^2}
+\langle \frac{q^2}{q\epsilon q} \rangle$, can be obtained, where $\langle \frac{q^2}{q\epsilon q} \rangle$ means 
+a spherical average which can be easily evaluated numerically.
+
+\subsubsection{Analytic treatment of the dielectric matrix}
+
+In the last subsection we have shown how to treat the divergency of
+the Coulomb potential in the integral required for the
+self-energy evaluation. We have also derived the expression required
+for the long-range part of the screened potential in
+terms of the macroscopic dielectric function.
+Here we show how we calculate the macroscopic dielectric function.
+Equation (\ref{eq:RPA}) can be casted equivalently as:
+\begin{equation}
+W^{-1}(\omega) = v^{-1} - P(\omega)
+\end{equation}
+Due to the periodicity of the external Hamiltonian,
+all these operators are block-diagonal and representable in the
+form of Eq. (\ref{eq:block-diagonal-operators}).
+To obtain the limit of $q\rightarrow 0$ of the screened potential
+we first notice that the so-called heads and wings \cite{rohl-loui00prb} 
+of the polarizability can be expanded around $q=0$ as:
+\begin{equation}
+P_q(G=0,G'=0) \sim \sum_{\alpha\alpha'} q_{\alpha} S^{\alpha\alpha'} q_{\alpha'}
+\end{equation}
+\begin{equation}
+P_q(G,G'=0) \sim \sum_{\alpha} L^{\alpha}(G) q_{\alpha}
+\end{equation}
+\begin{equation}
+P_q(G,G'=0) \sim \sum_{\alpha} q_{\alpha} (R^{\alpha}(G'))^*
+\end{equation}
+These equations define $S$, $R$, and $L$. We will not write
+their explict expression as a function of the Kohn-Sham
+orbitals, which can be obtained taking the Hessian and the
+gradients with respect to $q$ of the polarizability in (\ref{eq:polarizability-in-plane-waves}).
+We simply recall that the calculation of the gradients
+$\frac{\partial M_{nk,nk+q}(G)}{\partial q}$, is not
+trivial and has to include a contribution from the derivative with
+respect to $q$ of the non-local part of the pseudopotentials.
+We notice that for imaginary frequencies the polarizability operator is Hermitian,
+therefore $L=R$.
+However we write the following equations in their general
+form, which can be applied also to non-Hermitian polarizability.
+We first introduce an operator $\check{P}$, defined as:
+\begin{equation}
+\check{P}_q(G,G') = \begin{bmatrix}
+1 && 0 \\
+0 && \frac{(q+G)^2}{8\pi} - P_q(G,G')
+\end{bmatrix}
+\end{equation}
+In terms of the $\check{P}$ operator, the inverse of the 
+screened potential operator is
+\begin{equation}
+W_q^{-1}(G,G') \sim 
+\begin{bmatrix}
+  \sum_{\alpha\alpha'} q_{\alpha} (\frac{1}{8\pi} - S^{\alpha\alpha'}) q_{\alpha'} &
+              - \sum_{\alpha} q_{\alpha} (R^{\alpha}(G'))^* \\
+  -  \sum_{\alpha} L^{\alpha}(G) q_{\alpha} & \check{P}(G,G')
+\end{bmatrix}
+\end{equation}
+The matrix can be inverted in blocks. The block corresponding to
+$G=0,G'=0$ is
+\begin{equation}
+W_q(G=0,G'=0) = 
+  \frac{1}{ \sum_{\alpha\alpha'} q_{\alpha} (
+    \frac{1}{8\pi} - S^{\alpha\alpha'} - \sum_{GG'} (R^{\alpha}(G))^* \check{P}_q(G,G') L^{\alpha}(G')
+) q_{\alpha'} }
+\end{equation}
+and the block corresponding to $G\neq 0,G'\neq 0$ is:
+\begin{multline}
+W_q(G,G') = 
+W_q(G=0,G'=0) 
+\begin{bmatrix}
+1 & \sum_{\alpha} q_{\alpha} (\rho^{\alpha}(G'))^* \\
+\sum_{\alpha} \lambda^{\alpha}(G) q_{\alpha} & 
+  \sum_{\alpha\alpha'} q_{\alpha} \lambda^{\alpha}(G) (\rho^{\alpha'}(G'))^* q_{\alpha'}
+\end{bmatrix}
++ \\ +
+\begin{bmatrix}
+0 & 0 \\
+0 & (\check{P}^{-1})_q(G,G').
+\end{bmatrix}
+\end{multline}
+It can be shown that the out-of-diagonal blocks of $W^p$
+are proportional to $q$. Thus, when integrated
+in (\ref{eq:correlation_part_of_self_energy_in_plane_waves}), their contribution will be vanish.
+Thus, we set them to zero from the beginning:
+\begin{equation}
+G'\neq0 \bar{W}_q(G=0,G') = 0
+\end{equation}
+\begin{equation}
+G\neq0 \bar{W}_q(G,G'=0) = 0
+\end{equation}
+
+\subsubsection{The Bethe-Salpeter Equation}
+In practice the excitonic contribution is included first diagonalizing an effective two particle Hamiltonian
+(the Bethe-Salpeter Equation):
+\begin{equation}
+[(\epsilon_{ck}-\epsilon_{vk})\delta_{cc'}\delta_{vv'}\delta_{kk'}+K^x_{cvk,c'v'k'}+K^d_{cvk,c'v'k'}]\Psi^n_{c'v'k'}=
+\Omega^n\Psi^n_{cvk},
+\end{equation}
+where $\epsilon_{ck}$ and $\epsilon_{vk}$ are single particle energies from 
+conduction and valence respectively, $K^x$ is
+the exchange contribution to the kernel (present only for singlet states), $K^d$ is the direct 
+contribution to the kernel, $\Psi^n_{c'v'k'}$ 
+is the $n$ excitonic wave function and $\Omega^n$ is the $n$ exciton energy. 
+In a plane-waves expansion the kernel is:
+\begin{equation}
+K^x_{cvk,c'v'k'}=\sum_{G} M^*_{ck,vk}(G) v_C(G+q) M_{c'k',v'k'}(G')
+\end{equation}
+\begin{equation}
+K^d_{cvk,c'v'k'}=-\sum_{GG'} M^*_{ck,c'k+q}(G) W_{GG'}(q;0) M_{vk,v'k+q}(G')
+\end{equation}
+The static approximation for the screening has been used.
+\\
+Once the excitonic structure is obtained, the macroscopic dielectric tensor becomes:
+\begin{equation}
+\epsilon_{M} = 1 - \lim_{q\to0}v_{0}(q)\sum_{n}
+\sum_{(v,c)}\frac{ |M_{ck-q,vk}(0)  A^n_{(v_{1}\,c_{1})}|^{2} }{\Omega^n - \omega -i\eta}.
+\end{equation}
+
+\clearpage
+
+%---------------------------------------------------------
+%Now begin the practical part
+%---------------------------------------------------------
+\section{Getting Started with \SAX}
+\subsection{Description of the package}
+The SaX package contains the following command line applications for the
+calculation of electronic and optical properties within
+the GW approximation, using a Plane-Wave basis set and
+pseudopotentials:
+\begin{itemize}
+  \item sax.x -code gw : calculation of quasi-particle band structure,
+  \item sax.x -code bse : solution of the Bethe-Salpeter Equation,
+  \item sax.x -code spectra : calculation of the macroscopic dielectric tensor;
+\end{itemize}
+the following auxiliary applications:
+\begin{itemize}
+  \item sax.x -code pptools (Post-Processing tools): calculation of localization properties, DOS and band structure,
+  \item excitons.x : for the plot of the excitonic wave functions (interfaced with XCrysden) or a human readable resume of bse output,
+  \item sax.x -code memory : estimation of the memory needed by gw and bse,
+\end{itemize}
+and the following libraries:
+\begin{itemize}
+  \item iotk (Input-Output ToolKit) : xml input-output (\texttt{http://www.s3.infm.it/iotk}),
+  \item ptk (Parallel ToolKit) : MPI interface,
+  \item numrec : contains mathematic utilities inspired on algorithms from numerical recipes,
+  \item lasi : interface to blas and lapack,
+  \item lapack : internal version of lapack,
+  \item fftw and ffti : internal verison of Fast Fourier Transform  and FFT interfaces. \\
+\end{itemize}
+
+The SaX's codes work on many different types of Unix machines,
+including parallel machines using Message Passing Interface (MPI). \\
+
+The SaX's codes work on top of a previous Density Functional Theory calculation. At the moment, SaX is interfaced with \PWSCF~ which belongs to the \ESPRESSO~distribution \\
+(\ESPRESSOURL). \\
+
+Further documentation, beyond what is provided in this guide, can be
+found in:
+\begin{itemize}
+  \item the \texttt{doc/} directory of SaX distribution
+
+        In particular the \texttt{INPUT\_*} files contain the detailed
+        listing of available input variables and xml tags.
+  \item the various \texttt{README} files found in the distribution
+  \item the SaX web page \SAXURL.
+\end{itemize}
+%
+
+Combining the different applications in SaX, the following quantities can be calculated:
+
+\begin{enumerate}
+  \item Macroscopic dielectric tensor as a function of energy (optical absorption, real part, eels) within the Random Phase Approximation including or not including local field effects.
+  \item Quasi-particle energies and wave functions within the Hartree-Fock approximation (non-explicit self-consistency).
+  \item Quasi-particle energies and wave functions within the GW approximation (non-explicit self-consistency).
+  \item Excited states in the single configuration interaction (single CI) scheme, i.e. unscreened Bethe-Salpeter Equation.
+  \item Exciton energies and wave functions solving the Bethe-Salpeter Equation within the GW and Tamm-Dancoff approximation.
+  \item Macroscopic dielectric tensor as a function of energy including excitonic effects (optical absorption, real part, eels).
+  \item For $\Gamma$ calculations: Localization properties using the Self-Interaction.
+  \item For calculating the Density Of States and babd structure.
+  \item For ploting the excitonic wave functions (combined with XCrysden)
+\end{enumerate}
+All of the above works for semi-conductors, insulators and molecules, within different treatment of the coulomb interaction, in any crystal
+structure, for different approximations to the screened potential, for norm-conserving pseudopotentials (Hamann-Schl\"uter-Chiang) and starting from different initial electronic states (previous DFT, GW, or HF). A postprocessing programm is available for the calculation of localization degrees (Participation Ration or Self-Interaction), the plot of the band structure and the Density Of States.
+
+As the package is very modular and as every physical paramater can be set by the user, there exist many other ways of reaching quasi-particle energies, excitons or spectra. The SaX team does not recommend any other choice that is not described above. 
+
+\subsection{Installation}
+  \label{installation}
+
+Presently, the \SAX package is only distributed in source
+form.
+
+Stable releases of the SaX source package (current version
+is \SAXVERSION) can be downloaded from this URL:
+\medskip
+
+\texttt{http://www.sax-project.org/download.htm}
+\medskip
+
+\noindent
+Uncompress and unpack the distribution using the command:
+\medskip
+
+\texttt{tar -zxvf sax-\SAXVERSION.tar.gz}
+\medskip
+
+\noindent
+If your version of \texttt{tar} doesn't recognize the \texttt{z} flag,
+use this instead:
+\medskip
+
+\texttt{gunzip -c sax-\SAXVERSION.tar.gz | tar -xv}
+\medskip
+
+\noindent
+\texttt{cd} to the directory \texttt{sax-\SAXVERSION/} that will be created.
+
+To install SaX from source, you need C and Fortran-95
+compilers (Fortran-90 is not sufficient, but most ``Fortran-90''
+compilers are actually Fortran-95-compliant).
+If you don't have a commercial Fortran-95 compiler, you may install
+the free \texttt{g95} compiler (\texttt{http://www.g95.org/})
+or the GNU fortran compiler \texttt{gfortran} (\texttt{http://www.gfortran.org/}).
+You also need a minimal Unix environment: basically, a command shell
+(e.g., \texttt{bash} or \texttt{tcsh}) and the utilities
+\texttt{make}, \texttt{awk} and \texttt{sed}.
+MS-Windows users need to have Cygwin (a UNIX environment which runs
+under Windows) installed (see \texttt{http://www.cygwin.com/})
+
+Instructions for the impatient:
+\begin{verbatim}
+  ./configure
+  make allmake
+  cd sax
+  cd src
+  make all
+\end{verbatim}
+Executable programs (actually, symlinks to them) will be placed in the
+\texttt{sax/bin/} directory.
+
+If you encounter problems or you would like to tweak the default settings, read
+the detailed instructions below.
+
+\subsection{Configure}
+{\tt configure} is a GNU-style configuration script,
+automatically generated by GNU Autoconf.  (If you want to play
+with it, its source file is {\tt \$TOPDIR/conf/configure.ac}; you may also
+want to edit {\tt \$TOPDIR/conf/make.sys.in})  It generates the following
+files: \\
+
+%
+%
+\begin{tabular}{ll}
+  \texttt{\$TOPDIR/make.sys}        &     {compilation settings and flags}\\
+  \texttt{\$TOPDIR/*/make.depend}   &     {dependencies, in each source dir} \\
+\end{tabular}
+%
+%
+\\
+
+\noindent Files {\tt make.depend} are actually generated by the
+{\tt makedeps.sh} shell script.  If you modify the program sources,
+you might have to rerun it.  Note that you must run it from the
+directory it is in.\\
+
+\noindent To force using a particular compiler, or compilation
+flags, or libraries, you may set the appropriate environment
+variables when running the configuration script.  For example:
+
+%
+%
+\begin{description}
+  \item {\tt ./configure CC=gcc CFLAGS=-O3 LIBS="-llapack -lblas
+  -lfftw" }
+\end{description}
+%
+%
+
+\noindent Some of those environment variables are: \\
+
+%
+%
+\begin{tabular}{ll}
+  \texttt{TOPDIR}       &{: top directory of the \SAX\ tree (defaults to `pwd`)}\\
+  \texttt{F90, F77, CC} &{: Fortran 90, Fortran 77, and C compilers}\\
+  \texttt{CPP}          &{: source file preprocessor (defaults to "\$CC -E")}\\
+  \texttt{LD}           &{: linker (defaults to \$F90)}\\
+  \texttt{CFLAGS, FFLAGS,}  &  \\
+  \texttt{F90FLAGS, CPPFLAGS, LDFLAGS} &{: compilation flags}\\
+  \texttt{LIBDIRS}      &{: extra directories to search for libraries (see below)}\\
+\end{tabular}
+%
+%
+\\
+
+\noindent In principle, you should always be able to compile the \SAX\ suite of
+programs without editing any of the generated files.  If
+you ever have to do it, that should be considered a bug in the
+configuration script and you are encouraged to submit a bug
+report.\\
+
+\noindent \underline {IMPORTANT}: \SAX\ can take advantage of
+several
+optimized numerical libraries:\\
+\noindent -- ESSL on AIX systems (shipped by IBM)\\
+\noindent -- MKL together with Intel compilers (shipped by Intel,
+free for non-commercial use)\\
+\noindent -- ATLAS (freely downloadable from
+   \texttt{ http://math-atlas.sourceforge.net })\\
+\noindent -- FFTW (freely downloadable from
+   \texttt{ http://www.fftw.org})\\
+
+\noindent The configuration script attempts to find those
+libraries, but may fail if they have been installed in
+non-standard locations. You should look at the LIBS environment
+variable (either in the output of the configuration script, or in
+the generated {\tt make.sys}) to check whether all available
+libraries were found or not.
+If any libraries weren't found, you can rerun the
+configuration script and set manually a list of directories to search,
+by means of the environment variable LIBDIRS; directories in the
+list must be
+separated by spaces.  For example:
+%
+%
+\begin{description}
+  \item \texttt{ ./configure LIBDIRS="/opt/intel/mkl/mkl61/lib/32
+  /usr/local/lib/fftw-2.1.5" }
+\end{description}
+%
+%
+
+\noindent If this still fails, you may set the environment
+variable LIBS manually and retry.  For example:
+%
+%
+\begin{description}
+  \item \texttt{ ./configure LIBS="-L/cineca/prod/intel/lib -lfftw -llapack
+  -lblas" }
+\end{description}
+%
+%
+
+\noindent Beware that in this case, you must specify \textbf{all} the
+libraries that you want to link to.  The configuration script will
+blindly accept the specified value, and will \textbf{not} search for any
+extra library.\\
+
+\noindent If you want to use the FFTW library, the \texttt{fftw.h}
+include file is also required.  If the configuration script wasn't
+able to find it, you can specify the correct directory in the
+INCLUDEFFTW environment variable. For example:
+%
+%
+\begin{description}
+  \item {\tt ./configure INCLUDEFFTW="/cineca/lib/fftw-2.1.3/fftw" }
+\end{description}
+%
+%
+\subsection{Compile}
+
+From the main directory of the SaX package the \texttt{make} command with no arguments yields a list of valid compilation
+targets:
+\begin{verbatim}
+  Possible <target>'s are:
+    make                 make IDE global Makefile
+    allmake              make IDE Makefiles in each dir
+    clean                IDE total cleanup
+    add                  launch a script to add a new pakage
+    <dir>_all            make all executable in <dir>
+    <dir>_loclib         make the local library in <dir>
+    <dir>_make           make the Makefile for <dir>
+    <dir>_allmake        make all the Makefiles for <dir> and its libs
+    <dir>_clean          cleanup in <dir>
+    <dir>_tar            tar of a single dir
+    <dir>_alltar         tar of a dir with its libs
+\end{verbatim}
+Possible $<$dir$>$ values are:
+\begin{itemize}
+\item
+    blas: internal blas library
+\item
+    fftw: internal FFT library
+\item
+    iotk: iotk library
+\item
+    numrec: mathematical utilities library
+\item
+    ptk: MPI interface library
+\item
+    lapack: internal lapack library
+\item
+    ffti: FFT interface library
+\item
+    lasi: blas and lapack interface library
+\item
+    sax: sax codes
+\end{itemize}
+
+\subsection{DFT preliminary step}
+\noindent \underline {NOTE}: At present the \SAX\ suite of codes is
+implemented to work as post processing of DFT
+calculations done using \PWSCF contained in the \ESPRESSO~distribution\\ 
+(\ESPRESSOURL); we will refer to that code in the following.\\
+
+\noindent \underline{IMPORTANT}: For a correct result, the
+following steps \textbf{MUST} be done in the reported order.
+
+\begin{enumerate}
+%
+\item DFT Self-consistent calculation.\\
+      \noindent For the description of the input and for further details see the \PWSCF
+      manual.
+      %
+\item Bandstucture calculation.\\
+      \noindent  Starting from the self-consistent charge
+      calculated in point $(1)$, we calculate the Bloch functions for a
+      {\bf REGULAR {\bf k}-point grid in the COMPLETE Brillouin Zone}; Gamma point
+      must be included. Reduction of \textbf{k}-points due to time-reversal
+      symmetry is not (yet) allowed. The complete list of
+      \textbf{k}-points should be specified in the {\tt K\_POINTS} card.
+      %
+\item From \PWSCF to the \SAX package.\\
+      \noindent Use the post processing
+      {\tt pw\_export.x} (distributed in the \ESPRESSO~distribution
+      %
+      \footnote{The export utility is already distributed in the
+      \ESPRESSO~ v5.0 or earlier.
+      When using v.3.0.0 do not compile with
+      the {\tt -D\_\_NEWPUNCH} pre-processor flag.}
+      ),
+      %
+      to extract the input data necessary for the following
+      calculations
+      from \PWSCF output datafile. Data will be stored in the
+      newly-created directory {\tt \$prefix.export/}.
+\end{enumerate}
+
+\noindent \underline{NOTE}: Steps (1-3) should be run, using the
+parallel version of the code, paying attention to use the same
+number of processors. From this point to the end, instead, the
+code is scalar.
+
+\subsection{Run examples}
+  \label{runexamples}
+
+As a final check that compilation was successful, you may want to run
+some or all of the examples contained within the \texttt{/sax/examples}
+directory of the SaX distribution.
+Those examples try to exercise some of the standard uses of the tools implemented in the
+SaX package. An explanation on HOW TO run these examples is contained in the \texttt{\~/examples/README} file. In each example directory, you will also find a \texttt{README} file describing the physics implied by test, the results and some suggestions for further calculations. 
+Each example contains a \texttt{reference} directory. 
+If you find that any relevant feature isn't being tested, please
+contact us (or even better, write and send us a new example
+yourself!).
+
+The necessary pseudopotentials are included in the directory \texttt{/sax/examples/pseudos}.
+
+Sax is used on top of a previous DFT calculation, before running the examples you should install a 
+\ESPRESSO~distribution (\ESPRESSOURL). 
+
+To run the examples, you should follow this procedure:
+
+\begin{enumerate}
+  \item
+Go to the \texttt{/sax/examples} directory and edit the \texttt{set\_env} file, setting the following variables as needed:
+\begin{quote}
+  uncomment the line \texttt{DFT\_BIN="/my-espresso-full-path binaries"}\\
+  \texttt{DFT\_BIN=} directory where \ESPRESSO executables reside\\
+  source set\_env\\
+\end{quote}
+
+  \item
+If you have compiled the parallel version of \SAX (this
+is the default if parallel libraries are detected), you will usually 
+have to specify a driver program (such as
+\texttt{poe}, \texttt{mpiexec} or \texttt{mpirun}) and the number of processors.
+
+In order to do that, edit again the \texttt{set\_env}
+file and set the \texttt{PARA\_PREFIX} and \texttt{PARA\_POSTFIX}
+variables as needed.
+Parallel executables will be run by a command like this:
+\begin{verbatim}
+  $PARA_PREFIX executable.x $PARA_POSTFIX
+  $FILE.in
+  $FILE.out
+  EOF
+\end{verbatim}
+
+For example, if the command line is like this (as for an IBM clx):
+\begin{verbatim}
+  mpirun sax.x -code gw -procs 4 
+  file.in
+  file.out
+  EOF
+\end{verbatim}
+you should set \texttt{PARA\_PREFIX="poe"},
+\texttt{PARA\_POSTFIX="-procs 4"}.
+
+\item
+Non-Interactive mode: if your machine does not support interactive use, you
+must modify the jrun files on each example directory following the instructions of the batch queueing
+system installed on that machine.
+Ask your system administrator for instructions.
+
+  \item
+To run a single example, go to the corresponding directory (for
+instance, \texttt{examples/example1}) and execute:
+\begin{verbatim}
+  ./jrun
+\end{verbatim}
+
+Some examples take only a few seconds to run, while others may require
+several minutes depending on your system.
+
+To run all the examples in one shot, execute:
+\begin{verbatim}
+  ./jrun_all_examples
+\end{verbatim}
+from the \texttt{/sax/examples} directory.
+On a single-processor machine, this typically takes from one to three
+hours.
+
+  \item
+In each example's directory, the \texttt{reference} subdirectory
+contains verified output files, that you can check your results
+against.
+They were generated on a Linux PC using the g95 compiler.
+On different architectures the precise numbers could be slightly
+different, in particular if different FFT mesh dimensions are automatically
+selected.  For this reason, a plain \texttt{diff} of your results
+against the reference data doesn't work, or at least, it requires
+human inspection of the results. Usually IBM sp5 essl gives slightly 
+different results, this discrepancy is enhanced in the case of molecules. 
+
+\end{enumerate}
+
+\clearpage
+
+\section{Using SaX}
+\subsection{Input data}
+The input files of all the codes in SaX are built on the same general xml structure:
+\begin{verbatim}
+<input>
+<sax_options
+  ...
+/>
+\end{verbatim}
+Calculation options
+\begin{verbatim}
+<structure>
+  <direct
+   ...
+   \>
+<\structure>
+\end{verbatim}
+
+Cell vectors should be in a.u.
+
+\begin{verbatim}
+<atoms>
+  <types ntypes="number_of_atomic_species">
+    ...
+  <\types>
+
+  <positions natoms="number_of_atoms" units="bohr|angstrom|alat|crystal" 
+                               alat="value_of_cellparameter in bohr">
+  atomic_symbol X Y Z
+  </positions>
+<\atoms>
+\end{verbatim}
+\begin{verbatim}
+<kmesh>
+<mesh nk="nkx nky nkz" shift="shiftx shifty shiftz"/>
+kme
+</kmesh>
+</input>
+\end{verbatim} 
+
+You may take the examples distributed with SaX as templates for
+writing your own input files: see section \ref{runexamples}, ``Run
+examples''.  In the following, whenever we mention ``Example N'', we
+refer to those ones.
+Input files are those with names ending in \texttt{.in} (they will appear after you have run the examples).
+
+The keywords which do not fit input keywords are ignored by the codes.
+See file \texttt{doc/INPUT\_GW}, \texttt{doc/INPUT\_BSE}, \texttt{doc/INPUT\_SPECTRA} 
+or \texttt{doc/INPUT\_PPTOOLS} for a detailed explanation of the
+meaning and format of the various fields.
+
+The differences between input files for different codes are in the xml \texttt{sax\_options} tag.
+The following xml tags in \texttt{<input>} must always be
+specified:\\
+
+\begin{verbatim}
+<structure>
+  <direct
+   ...
+   \>
+<\structure>
+\end{verbatim}
+
+\begin{verbatim}
+<atoms>
+  <types ntypes="number_of_atomic_species">
+    ...
+  <\types>
+
+  <positions natoms="number_of_atoms" units="bohr|angstrom|alat|crystal" 
+                                      alat="value_of_cellparameter in bohr">
+  atomic_symbol X Y Z
+  </positions>
+<\atoms>
+\end{verbatim}
+
+\begin{verbatim}
+<kmesh>
+<mesh nk="nkx nky nkz" shift="shiftx shifty shiftz"/>
+kme
+</kmesh>
+\end{verbatim}
+
+Note about k points:
+The k-point grid is automatically generated following the convention
+of Monkhorst and Pack. The previous DFT calculation has to be done forcing
+a calculation with no symmetries (In the case of PWscf setting \texttt{ibrav=0} 
+and \texttt{nosym=.true.}).
+
+\subsection{sax.x -code gw}
+The gw part of sax.x performs quasi-particle electronic structure calculations within two main 
+philosophies: GW or Hartree-Fock (the last one in the sense of Gv). 
+G stays for the single-particle green function, W and v stay for the screen and the bare 
+Coulomb potential respectively.
+
+Atention: the number of bands has to be a multiple of the number of processors.
+
+\subsubsection{Calculation options}
+The calculations options are set in the xml tag \texttt{sax\_options}.
+Most of the options introduced by keywords
+have self-explanatory names, as for instance:
+
+\begin{quote}
+  \texttt{calc\_polarizability}\\
+  \texttt{cutoff\_polarizability}\\ 
+  \texttt{convert\_from\_pwscf}\\
+  \texttt{nelec} 
+\end{quote}
+
+The following variables in \texttt{<input>} must always be
+specified:
+\begin{quote}
+  \texttt{calculation\_kind}\\
+  \texttt{nbandmin}\\
+  \texttt{nbandmax}\\
+  \texttt{convert\_from\_pwscf}\\
+\end{quote}
+If \texttt{convert\_from\_pwscf=".true."} is true then the following variables have to be setted:
+\begin{quote}
+  \texttt{convert\_from\_pwscf\_file}\\
+  \texttt{nelec}\\
+\end{quote}
+
+Most variables of the xml tag \texttt{sax\_options} have default values which may or may not fit your needs:
+\begin{verbatim}
+  system_kind = "3D"
+  start_from = "DFT"
+
+  gw_integration_method = "plasmon_pole"
+
+  cutoff_density = "4.0"
+  cutoff_vxc     = "4.0"
+  cutoff_vloc    = "4.0"
+
+  cutoff_fock    = "6.0"
+  cutoff_polarizability = "6.0"
+
+  coulomb_div_treatment = "gigi-baldereschi"
+
+  diagonal = ".true."
+  sigma_first_order = ".false."
+  emax_polarizability = "1000.0"
+
+  plasmon_energy = "1.3"
+  lorentzian_broadening = "0.01"
+
+  sax_to_want = ".false."
+  sax_to_want_output = "sax_to_want.xml"
+\end{verbatim}
+
+All the calculation variables are set to .false. by default. Explanations for the meaning of variables are in file \texttt{INPUT\_GW}. Please read them carefully.
+
+\subsubsection{Typical cases}
+
+We may distinguish the following typical cases for \texttt{sax.x -code gw}:
+
+\begin{description}
+
+  \item [Quasi-particle band structure within Hartree-Fock (or Gv).]
+
+    Set \texttt{calculation\_kind="HF"}. The HF Hamiltonian is built on single-particle Hamiltonian plus HF self-energy. The single-particle Hamiltonian is calculated setting \texttt{calc\_sp\_hmatrix=".true."}. Specify the range, in terms of bands, on which the HF self-energy has to be calculated setting \texttt{sigma\_nbmin} and \texttt{sigma\_nbmax}. DFT wave functions are not eigenstates of HF Hamiltonian. If you want to calculate the new HF quasi-particle wave-functions, then \texttt{diagonal} has to be set to \texttt{.false.}.  
+
+    If you want to run after sax.x other calculations with SaX codes but starting from this HF band structure you need to set \texttt{calc\_QP\_states = ".true."}. See Example 2.
+
+The SCF is not explicitly implemented. SCF may be reached by preforming further HF calculations specifying \texttt{start\_from="HF"}. 
+
+  \item [Quasi-particle band structure within GW.]
+
+    Set \texttt{calculation\_kind="GW"}. Specify which 
+    approximation to GW you want to use by setting \texttt{gw\_integration\_method=} to one of the following \texttt{"SSHF"} (Statically Screened HF), \texttt{"cohsex"} (COlomb Hole and Screened eXchange) or \texttt{plasmon\_pole} (plasmon pole approximation). The calculation of the screening potential (W) is performed in two steps: first calculation of the polarizability (set \texttt{calc\_polarizability=".true."}), second calculation of W from the polarizability (set \texttt{calc\_w=".true."}). The quasi-particle Hamiltonian is made of three parts: single-particle Hamiltonian plus self-energy exchange part plus correlation part. The single-particle Hamiltonian is calculated setting \texttt{calc\_sp\_hmatrix=".true."}. The exchange and correlation part of the self-energy is calculated by setting \texttt{calc\_sigma\_x=".true."} and \texttt{calc\_sigma\_c=".true."}, respectively. The Quasi-particle Hamiltonian is built within the code by setting \texttt{calc\_energies=".true."}. Specify the range, in terms of bands, on which the GW self-energy has to be calculated setting \texttt{sigma\_nbmin} and \texttt{sigma\_nbmax}. DFT wave functions are not eigenstates of quasi-particle Hamiltonian. If you want to calculate the new GW quasi-particle wave-functions, then \texttt{diagonal} has to be set to \texttt{.false.}.  
+
+    If you want to run after sax.x other calculations with SaX codes but starting from this GW band structure, you need to set \texttt{calc\_QP\_states = ".true."}. See Example 2.
+
+The SCF is not explicitly implemented. SCF may be reached by preforming further GW calculations specifying \texttt{start\_from="GW"}. 
+\end{description}
+
+The output data files are produced in the directory where the code execution is done. In the following, a description of the output data files is given:
+
+\begin{description}
+\item[HF\_QP]: contains the eigenvalues and eigenvectors (in the basis of previous states) of HF Hamiltonian, in textual xml format.
+\item[GW\_QP]: contains the eigenvalues and eigenvectors (in the basis of previous states) of GW quasi-particle Hamiltonian, in textual xml format.
+\item[polar]: contains the polarizability, in binary xml format.
+\item[w.smooth]: contains the screened Coulomb potential, in binary xml format.
+\item[epsilon.static]: contains the static macroscopic dielectric tensor, in textual xml format.
+\item[pp\_parameters]: contains the calculated parameters of the plasmon pole model, in binary xml format.
+\item[states]: contains DFT energies and wave functions, in binary xml format.
+\item[HF\_states]: contains HF energies and wave functions, in binary xml format.
+\item[GW\_states]: contains GW energies and wave functions, in binary xml format.
+\item[sigma\_x.ik]: contains the expectation values of exchange part of the self-energy for each kpoint indexed as ik, in textual xml format.
+\item[sigma\_c.ik]: contains the expectation values of correlation part of the self-energy for each kpoint indexed as ik, in textual xml format.
+\item[dsigma\_c.ik]: contains the expectation values of energy derivatives of the self-energy correlation part for each kpoint indexed as ik, in textual xml format.
+\item[exp\_sp.ik]: contains the expectation values of single-particle Hamiltonian (kinetic + ion-electron + Hartree) for each kpoint indexed as ik, in textual xml format. 
+\end{description}
+
+\subsection{sax.x -code bse}
+The bse part of sax.x solves the Bethe-Salpeter equation, giving the excitonic structure. The direct electron-hole interaction can be calculated using a full screened Coulomb potential obtained from a previous GW calculation or using a static dielectric tensor.
+\subsubsection{Calculation options}
+Calculations options are set in the xml tag \texttt{sax\_options}.
+Most of the options introduced by keywords
+have self-explanatory names, as for instance:
+
+\begin{quote}
+  \texttt{cutoff\_polarizability}\\ 
+  \texttt{convert\_from\_pwscf}\\
+  \texttt{bse\_spin}\\ 
+  \texttt{nelec} 
+\end{quote}
+
+The following variables in \texttt{<input>} must always be
+specified:
+\begin{quote}
+  \texttt{calculation\_kind}\\
+  \texttt{nbandmin}\\
+  \texttt{nbandmax}\\
+  \texttt{convert\_from\_pwscf}\\
+\end{quote}
+If \texttt{convert\_from\_pwscf=".true."} then the following variables have to be set:
+\begin{quote}
+  \texttt{convert\_from\_pwscf\_file}\\
+  \texttt{nelec}\\
+\end{quote}
+
+Most variables of the xml tag \texttt{sax\_options} have default values which may or may not fit your needs:
+\begin{verbatim}
+    cutoff_polarizability="6.0"
+    cutoff_fock="6.0"
+
+    coulomb_div_treatment="gigi-baldereschi"
+
+    bse_emin="0.0"
+    bse_emax="1000.0"
+    bse_spin="0"
+
+    system_kind="3D"
+    energy_shift="0.0"
+    start_from="DFT"
+
+    calc_oscillators="T"
+\end{verbatim}
+
+Explanations for the meaning of variables are in file \texttt{INPUT\_BSE}. Please read them carefully.
+
+\subsubsection{Typical cases}
+
+We may distinguish two typical cases for \texttt{sax.x -code bse}:
+
+\begin{description}
+
+  \item [Excitonic structure with macroscopic screening.]
+
+    Set \texttt{calculation\_kind="MACRO"}. The direct electron-hole interaction is calculated using a macroscopic screening (the code read the file epsilon.static). The format of epsilon.static is explained in example2.
+  \item [Excitonic structure with the full screened Coulomb potential.]
+
+    Set \texttt{calculation\_kind="FULL"}. The direct electron-hole interaction is calculated using the full screened Coulomb potential as obtained by a previous GW calculation (the code reads w.smooth).
+\end{description}
+
+The variable \texttt{energy\_shift} is used to shift single particle energies rigidly.
+
+The output data files are written in the directory where the execution is done. bse.x has just one output file: bse, which contains exciton energies and eigenvectors in the basis of single particle states, in textual xml format.
+
+\subsection{sax.x -code spectra}
+sax.x -code spectra computes the macroscopic dielectric tensor within the Random Phase Approximation with or without excitonic effects as a function of energy. The dielectric tensor is projected on an arbitrary q direction and is separated in different contributions: real part, Optical Absorption Spectrum (oas) and Electron Energy Loss spectrum (eels). 
+\subsubsection{Calculation options}
+As in the previous cases, the calculations options are setted in the xml tag \texttt{sax\_options}.
+Most of the options introduced by keywords have self-explanatory names, as for instance:
+
+\begin{quote}
+  \texttt{cutoff\_polarizability}\\ 
+  \texttt{convert\_from\_pwscf}\\
+  \texttt{bse\_spin}\\ 
+  \texttt{nelec} 
+\end{quote}
+
+The following variables in \texttt{<input>} must always be
+specified:
+\begin{quote}
+  \texttt{calculation\_kind}\\
+  \texttt{nbandmin}\\
+  \texttt{nbandmax}\\
+  \texttt{convert\_from\_pwscf}\\
+\end{quote}
+If \texttt{convert\_from\_pwscf=".true."} then the following variables have to be set:
+\begin{quote}
+  \texttt{convert\_from\_pwscf\_file}\\
+  \texttt{nelec}\\
+\end{quote}
+
+Most variables of the xml tag \texttt{sax\_options} have default values which may or may not fit your needs:
+\begin{verbatim}
+    cutoff_polarizability="6.0"
+    cutoff_fock="6.0"
+    local_field_effects=".false."
+
+    bse_emin="0.0"
+    bse_emax="1000.0"
+    bse_spin="0"
+
+    system_kind="3D"
+    energy_shift="0.0"
+    start_from="DFT"
+
+    imaginary_axis=".false."
+    lorentzian_broadening="0.01"
+
+    omegamax="0.0"
+    nomega="0"
+
+    q="1.0 0.0 0.0"
+    just_project_on_q_direction=".false."
+
+    output_format="txt"
+\end{verbatim}
+
+Explanations for the meaning of variables are in file \texttt{INPUT\_SPECTRA}. Please read them carefully.
+
+\subsubsection{Typical cases}
+We can distinguish two typical cases:
+
+\begin{description}
+
+  \item [Macroscopic dielectric tensor.]
+    Set \texttt{calculation\_kind="RPA"}. The macroscopic dielectric tensor is calculated in RPA taking into account only interband transitions, see a more detailed explanation in example1.
+
+  \item [Macroscopic dielectric tensor with excitonic effects.]
+    Set \texttt{calculation\_kind="RPAEXC"}. The macroscopic dielectric tensor is calculated in RPA including excitonic effects. The code need a previous bse calculation (needs file bse).
+\end{description}
+
+The variable \texttt{energy\_shift} is used to shift single particle energies rigidly. When used with \texttt{calculation\_kind="RPAEXC"} should be coherent with the shift used in the previous bse calculation.\\
+
+The output data files are written in the directory where the execution is done. In the following a description of the output data files is given:
+
+\begin{description}
+\item[epsilon.nlf.RPA]: contains the dielectric macroscopic tensor as a function of energy calculated within RPA, in textual xml format.
+\item[epsilon.lf.RPA]: contains the dielectric macroscopic tensor as a function of energy calculated within RPA and including local field effects, in textual xml format.
+\item[epsilon.RPAEXC]: contains the dielectric macroscopic tensor as a function of energy calculated within RPA, including local field effects and excitonic effects, in textual xml format.
+\item[repsilon.(lf/nlf). \texttt{calculation\_kind}]: real part of epsilon projected on the specified q direction, in format specified by option \texttt{output\_format}.
+\item[oas.(lf/nlf). \texttt{calculation\_kind}]: imaginary part of epsilon (optical absorption spectrum) projected on the specified q direction, in format specified by option \texttt{output\_format}.
+\item[eels.(lf/nlf). \texttt{calculation\_kind}]: imaginary part divided by the square of epsilon (electron energy loss spectrum) projected on the specified q direction, in format specified by option \texttt{output\_format}.
+\end{description}
+
+There is an alternative and more efficient wave for calculating RPAEXC spectra by using calc\_oscillators (see BSE part)
+ and a serial post-processing code \texttt{epsilon\_from\_oscil.f90} (very simple and fast) that can be download from 
+\texttt{http://qe-forge.org/frs/?group\_id=17}.
+
+
+\subsection{sax.x -code pptools}
+sax.x -code pptools compute the Self-Interaction (SI).
+The Participation Ratio (PR) is in project but not yet in use.
+\subsubsection{Calculation options}
+As in the previous cases, the calculations options are setted in the xml tag \texttt{sax\_options}.
+Most of the options introduced by keywords have self-explanatory names, as for instance:
+\begin{quote}
+  \texttt{cutoff\_density}\\ 
+  \texttt{cutoff\_fock}\\ 
+  \texttt{nelec} 
+\end{quote}
+
+The following variables in \texttt{<input>} must always be
+specified:
+\begin{quote}
+  \texttt{calculation\_kind}\\
+  \texttt{nbandmin}\\
+  \texttt{nbandmax}\\
+  \texttt{convert\_from\_pwscf}\\
+\end{quote}
+If \texttt{convert\_from\_pwscf=".true."} then the following variables have to be setted:
+\begin{quote}
+  \texttt{convert\_from\_pwscf\_file}\\
+  \texttt{nelec}\\
+\end{quote}
+
+Most variables of the xml tag \texttt{sax\_options} have default values which may or may not fit your needs:
+\begin{verbatim}
+    system_kind="3D"
+    start_from="DFT"
+
+    cutoff_fock="6.0"
+    cutoff_density="4.0"
+\end{verbatim}
+
+Explanations for the meaning of variables are in file \texttt{INPUT\_PPTOOLS}. Please read them carefully.
+
+
+sax.x -code pptools has just one kind of output file according to the requested kind of calculations: self-interaction.ik or participation-ratio.ik, where ik stands for the kpoint index on which SI or PR is calculated. Those files are textual in xml format.
+
+\subsection{memory.x}
+memory.x gives an estimation of the memory need by gw.x or bse.x. Only the most memory-demanding objects and operations (implying allocation of temporary big arrays) are taken into account. gw.x or bse.x input files are used as memory.x input files. Few additional options can be added to have memory statistics as a function of required number of process.
+\subsubsection{Additional Calculation options}
+As in the previous cases, the calculations options are setted in the xml tag \texttt{sax\_options}. The proper memory.x options and their respective default values are:
+
+\begin{verbatim}
+    guessed_nb_proc = "1"
+    nb_memory_test_nproc = "4"
+    memory_output_file = "memory.out"
+\end{verbatim}
+
+Explanations for the meaning of variables are in file \texttt{INPUT\_MEMORY}. Please read them carefully.
+
+
+Memory.x as a unique output file where the maximum memory allocated by the programs gw.x and bse.x is printed according to the number of process targeted by the user (\texttt{guessed\_nb\_proc}) and to other (\texttt{nb\_memory\_test\_nproc}) different process numbers. The file is written in textual xml format.  
+
+\newpage
+
+\bibliography{sax}
+
+\end{document}

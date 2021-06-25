@@ -1,0 +1,429 @@
+! Parallel Tool Kit (PTK)
+! Copyright (C) 2004-2006 Giovanni Bussi
+!
+! This library is free software; you can redistribute it and/or
+! modify it under the terms of the GNU Lesser General Public
+! License as published by the Free Software Foundation; either
+! version 2.1 of the License, or (at your option) any later version.
+!
+! This library is distributed in the hope that it will be useful,
+! but WITHOUT ANY WARRANTY; without even the implied warranty of
+! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+! Lesser General Public License for more details.
+!
+! You should have received a copy of the GNU Lesser General Public
+! License along with this library; if not, write to the Free Software
+! Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+!------------------------------------------------------------------------------!
+! Inclusion of configuration file
+#include "ptk_config.h"
+!------------------------------------------------------------------------------!
+
+>##############################################################################<
+># inclusion if the spp definitions
+>include -s ptk_include.sh
+>##############################################################################<
+># inclusion if the auxiliary macros
+>include ptk_auxmacros.spp
+>##############################################################################
+
+subroutine ptk_dummy_dummy
+  write(0,*)
+end subroutine ptk_dummy_dummy
+
+> function SIZE () {
+>   if [ $type == CHARACTER ] ; then
+>     if ((rank==0)) ; then
+>       echo -n "len($1)"
+>     else
+>       echo -n "len($1)*size($1)"
+>     fi
+>   else
+>     if ((rank==0)) ; then
+>       echo -n "1"
+>     else
+>       echo -n "size($1)"
+>     fi
+>   fi
+> }
+> function SIZEP1 () {
+>   if [ $type == CHARACTER ] ; then
+>     echo -n "len($1)*size($1)"
+>   else
+>     echo -n "size($1)"
+>   fi
+> }
+
+
+> for type in $types ; do
+> for kind in $kinds ; do
+> if [ $type != CHARACTER -o $kind -eq 1 ] ; then
+> for rank in $ranks ; do
+> ((rank%3==0)) && auxfile ${type}${kind}_${rank}
+!------------------------------------------------------------------------------!
+! Inclusion of configuration file
+#include "ptk_config.h"
+!------------------------------------------------------------------------------!
+
+>##############################################################################<
+># inclusion if the auxiliary macros
+>include ptk_auxmacros.spp
+>##############################################################################
+> eval "LENSTAR=\$LENSTAR_$type"
+
+#ifdef __PTK_${type}${kind}
+#if $rank <= __PTK_MAXRANK
+subroutine ptk_bcast_${type}${kind}_${rank}(buffer,root,comm,ierr)
+  use ptk_interface
+  use ptk_base
+  use ptk_mpi_module
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(inout) :: buffer ${SHAPE[$rank]}
+  integer,        intent(in),  optional :: root
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+  integer :: ierr_loc,root_loc
+  type(ptk_comm) :: comm_loc
+  ierr_loc = 0
+  comm_loc = ptk_comm_world
+  if(present(comm)) comm_loc = comm
+  root_loc = 0
+  if(present(root)) root_loc = root
+#ifdef __PTK_MPI
+  call MPI_Bcast(buffer,$(SIZE buffer),__PTK_MPI_${type}${kind}, &
+                 root_loc,comm_loc%comm,ierr_loc)
+#endif
+  if(present(ierr)) then
+    ierr = ierr_loc
+  else
+    if(ierr_loc/=0) call ptk_error_handler(ierr_loc)
+  end if
+end subroutine ptk_bcast_${type}${kind}_${rank}
+
+subroutine ptk_send_${type}${kind}_${rank}(buffer,dest,tag,comm,ierr)
+  use ptk_interface
+  use ptk_base
+  use ptk_mpi_module
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(in) :: buffer ${SHAPE[$rank]}
+  integer,        intent(in)            :: dest
+  integer,        intent(in),  optional :: tag
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+  integer :: tag_loc,ierr_loc
+  type(ptk_comm) :: comm_loc
+  ierr_loc = 0
+  comm_loc = ptk_comm_world
+  if(present(comm)) comm_loc = comm
+  tag_loc = 0
+  if(present(tag)) tag_loc = tag
+#ifdef __PTK_MPI
+  call MPI_Send(buffer,$(SIZE buffer),__PTK_MPI_${type}${kind}, &
+                dest,tag_loc,comm_loc%comm,ierr_loc)
+#else
+  ierr_loc = __LINE__
+#endif
+  if(present(ierr)) then
+    ierr = ierr_loc
+  else
+    if(ierr_loc/=0) call ptk_error_handler(ierr_loc)
+  end if
+end subroutine ptk_send_${type}${kind}_${rank}
+
+subroutine ptk_recv_${type}${kind}_${rank}(buffer,source,tag,comm,status,ierr)
+  use ptk_interface
+  use ptk_base
+  use ptk_mpi_module
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(out) :: buffer ${SHAPE[$rank]}
+  integer,          intent(in),  optional :: source
+  integer,          intent(in),  optional :: tag
+  type(ptk_comm),   intent(in),  optional :: comm
+  type(ptk_status), intent(out), optional :: status
+  integer,          intent(out), optional :: ierr
+  integer :: ierr_loc,source_loc,tag_loc
+  type(ptk_status) :: status_loc
+  type(ptk_comm) :: comm_loc
+  ierr_loc = 0
+  source_loc = ptk_any_source
+  if(present(source)) source_loc = source
+  tag_loc = ptk_any_tag
+  if(present(tag)) tag_loc = tag
+  comm_loc = ptk_comm_world
+  if(present(comm)) comm_loc = comm
+#ifdef __PTK_MPI
+  call MPI_Recv(buffer,$(SIZE buffer),__PTK_MPI_${type}${kind}, &
+                source_loc,tag_loc,comm_loc%comm,status_loc%status,ierr_loc)
+#else
+> if [ $type = CHARACTER ] ; then
+  buffer = "A"
+> elif [ $type = LOGICAL ] ; then
+  buffer = .true.
+> else
+  buffer = 0
+> fi
+  ierr_loc = __LINE__
+  status_loc%status = 0 ! otherwise the compiler complains
+#endif
+  if(present(status)) status = status_loc
+  if(present(ierr)) then
+    ierr = ierr_loc
+  else
+    if(ierr_loc/=0) call ptk_error_handler(ierr_loc)
+  end if
+end subroutine ptk_recv_${type}${kind}_${rank}
+
+subroutine ptk_get_count_${type}${kind}_${rank}(buffer,status,count,ierr)
+  use ptk_interface, only : ptk_error_handler
+  use ptk_base
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(in) :: buffer ${SHAPE[$rank]}
+  type(ptk_status), intent(in)            :: status
+  integer,          intent(out)           :: count
+  integer,          intent(out), optional :: ierr
+  integer :: ierr_loc
+#ifdef __PTK_MPI
+  call MPI_Get_count(status%status,__PTK_MPI_${type}${kind},count,ierr_loc)
+#else
+  count = 0
+  ierr_loc = __LINE__
+#endif
+  if(present(ierr)) then
+    ierr = ierr_loc
+  else
+    if(ierr_loc/=0) call ptk_error_handler(ierr_loc)
+  end if
+end subroutine ptk_get_count_${type}${kind}_${rank}
+
+subroutine ptk_reduce_${type}${kind}_${rank}(sendbuf,recvbuf,op,root,comm,ierr)
+  use ptk_interface
+  use ptk_base
+  use ptk_mpi_module
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(in)  :: sendbuf ${SHAPE[$rank]}
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(out) :: recvbuf ${SHAPE[$rank]}
+  type(ptk_op),   intent(in)            :: op
+  integer,        intent(in),  optional :: root
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+  integer :: root_loc,ierr_loc
+  type(ptk_comm) :: comm_loc
+  ierr_loc = 0
+  root_loc = 0
+  if(present(root)) root_loc = root
+  comm_loc = ptk_comm_world
+  if(present(comm)) comm_loc = comm
+  if($(SIZE sendbuf) /= $(SIZE recvbuf)) ierr_loc = __LINE__
+  if(ierr_loc/=0) goto 1
+#ifdef __PTK_MPI
+  call MPI_Reduce(sendbuf,recvbuf,$(SIZE sendbuf),__PTK_MPI_${type}${kind}, &
+                  op%op,root_loc,comm_loc%comm,ierr_loc)
+#else
+  recvbuf = sendbuf
+#endif
+1 continue
+  if(present(ierr)) then
+    ierr = ierr_loc
+  else
+    if(ierr_loc/=0) call ptk_error_handler(ierr_loc)
+  end if
+end subroutine ptk_reduce_${type}${kind}_${rank}
+
+subroutine ptk_allreduce_${type}${kind}_${rank}(sendbuf,recvbuf,op,comm,ierr)
+  use ptk_interface
+  use ptk_base
+  use ptk_mpi_module
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(in)  :: sendbuf ${SHAPE[$rank]}
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(out) :: recvbuf ${SHAPE[$rank]}
+  type(ptk_op),   intent(in)            :: op
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+  integer :: ierr_loc
+  type(ptk_comm) :: comm_loc
+  ierr_loc = 0
+  comm_loc = ptk_comm_world
+  if(present(comm)) comm_loc = comm
+  if($(SIZE sendbuf) /= $(SIZE recvbuf)) ierr_loc = __LINE__
+  if(ierr_loc/=0) goto 1
+#ifdef __PTK_MPI
+  call MPI_Allreduce(sendbuf,recvbuf,$(SIZE sendbuf),__PTK_MPI_${type}${kind}, &
+                     op%op,comm_loc%comm,ierr_loc)
+#else
+  recvbuf = sendbuf
+#endif
+1 continue
+  if(present(ierr)) then
+    ierr = ierr_loc
+  else
+    if(ierr_loc/=0) call ptk_error_handler(ierr_loc)
+  end if
+end subroutine ptk_allreduce_${type}${kind}_${rank}
+
+subroutine ptk_reduce_ip_${type}${kind}_${rank}(buffer,op,root,comm,ierr)
+  use ptk_interface
+  use ptk_base
+  use ptk_mpi_module
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(inout)  :: buffer ${SHAPE[$rank]}
+  type(ptk_op),   intent(in)            :: op
+  integer,        intent(in),  optional :: root
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+  integer :: root_loc,ierr_loc,rank
+  type(ptk_comm) :: comm_loc
+> if [ ${type} = CHARACTER ] ; then
+  $type (kind=__PTK_${type}${kind},len=len(buffer)) &
+     :: tempbuf $(BOUNDS $rank buffer)
+> else
+  $type (kind=__PTK_${type}${kind}) :: tempbuf $(BOUNDS $rank buffer)
+> fi
+  ierr_loc = 0
+  root_loc = 0
+  if(present(root)) root_loc = root
+  comm_loc = ptk_comm_world
+  if(present(comm)) comm_loc = comm
+#ifdef __PTK_MPI
+  call MPI_Reduce(buffer,tempbuf,$(SIZE buffer),__PTK_MPI_${type}${kind}, &
+                  op%op,root_loc,comm_loc%comm,ierr_loc)
+  if(ierr_loc/=0) goto 1
+  call ptk_comm_rank(comm_loc,rank,ierr_loc)
+  if(ierr_loc/=0) goto 1
+  if(rank==root_loc) buffer = tempbuf
+#endif
+1 continue
+  if(present(ierr)) then
+    ierr = ierr_loc
+  else
+    if(ierr_loc/=0) call ptk_error_handler(ierr_loc)
+  end if
+end subroutine ptk_reduce_ip_${type}${kind}_${rank}
+
+subroutine ptk_allreduce_ip_${type}${kind}_${rank}(buffer,op,comm,ierr)
+  use ptk_interface
+  use ptk_base
+  use ptk_mpi_module
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(inout) :: buffer ${SHAPE[$rank]}
+  type(ptk_op),   intent(in)            :: op
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+  integer :: ierr_loc
+  type(ptk_comm) :: comm_loc
+>if [ $type = CHARACTER ] ; then
+  $type (kind=__PTK_${type}${kind},len=len(buffer)) &
+   :: tempbuf $(BOUNDS $rank buffer)
+>else
+  $type (kind=__PTK_${type}${kind}) :: tempbuf $(BOUNDS $rank buffer)
+>fi
+  ierr_loc = 0
+  comm_loc = ptk_comm_world
+  if(present(comm)) comm_loc = comm
+#ifdef __PTK_MPI
+  call MPI_Allreduce(buffer,tempbuf,$(SIZE buffer),__PTK_MPI_${type}${kind}, &
+                     op%op,comm_loc%comm,ierr_loc)
+  if(ierr_loc/=0) goto 1
+  buffer = tempbuf
+#endif
+1 continue
+  if(present(ierr)) then
+    ierr = ierr_loc
+  else
+    if(ierr_loc/=0) call ptk_error_handler(ierr_loc)
+  end if
+end subroutine ptk_allreduce_ip_${type}${kind}_${rank}
+
+> if (( $rank + 1 <= $maxrank )) ; then
+subroutine ptk_gather_${type}${kind}_${rank}(sendbuf,recvbuf,root,comm,ierr)
+  use ptk_interface
+  use ptk_base
+  use ptk_mpi_module
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(in)  :: sendbuf ${SHAPE[$rank]}
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(out) :: recvbuf ${SHAPE[$rank + 1]}
+  integer,        intent(in),  optional :: root
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+  integer :: root_loc,size_loc,ierr_loc
+  type(ptk_comm) :: comm_loc
+  ierr_loc = 0
+  root_loc = 0
+  if(present(root)) root_loc = root
+  comm_loc = ptk_comm_world
+  if(present(comm)) comm_loc = comm
+  call ptk_comm_size(comm_loc,size_loc,ierr_loc)
+  if(ierr_loc/=0) goto 1
+  if($(SIZE sendbuf) * size_loc /= $(SIZEP1 recvbuf)) ierr_loc = __LINE__
+  if(ierr_loc/=0) goto 1
+#ifdef __PTK_MPI
+  call MPI_Gather(sendbuf,$(SIZE sendbuf),__PTK_MPI_${type}${kind}, &
+                  recvbuf,$(SIZE sendbuf),__PTK_MPI_${type}${kind}, &
+                  root_loc,comm_loc%comm,ierr_loc)
+#else
+>if [ $rank -eq 0 ] ; then
+  recvbuf(1) = sendbuf
+>else
+  recvbuf = reshape(sendbuf,shape(recvbuf))
+>fi
+#endif
+1 continue
+  if(present(ierr)) then
+    ierr = ierr_loc
+  else
+    if(ierr_loc/=0) call ptk_error_handler(ierr_loc)
+  end if
+end subroutine ptk_gather_${type}${kind}_${rank}
+
+subroutine ptk_allgather_${type}${kind}_${rank}(sendbuf,recvbuf,comm,ierr)
+  use ptk_interface
+  use ptk_base
+  use ptk_mpi_module
+  implicit none
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(in)  :: sendbuf ${SHAPE[$rank]}
+  $type (kind=__PTK_${type}${kind}$LENSTAR), intent(out) :: recvbuf ${SHAPE[$rank + 1]}
+  type(ptk_comm), intent(in),  optional :: comm
+  integer,        intent(out), optional :: ierr
+  integer :: size_loc,ierr_loc
+  type(ptk_comm) :: comm_loc
+  ierr_loc = 0
+  comm_loc = ptk_comm_world
+  if(present(comm)) comm_loc = comm
+  call ptk_comm_size(comm_loc,size_loc,ierr_loc)
+  if(ierr_loc/=0) goto 1
+  if($(SIZE sendbuf) * size_loc /= $(SIZEP1 recvbuf)) ierr_loc = __LINE__
+  if(ierr_loc/=0) goto 1
+#ifdef __PTK_MPI
+  call MPI_Allgather(sendbuf,$(SIZE sendbuf),__PTK_MPI_${type}${kind}, &
+                     recvbuf,$(SIZE sendbuf),__PTK_MPI_${type}${kind}, &
+                     comm_loc%comm,ierr_loc)
+#else
+>if [ $rank -eq 0 ] ; then
+  recvbuf(1) = sendbuf
+>else
+  recvbuf = reshape (sendbuf,shape(recvbuf))
+>fi
+#endif
+1 continue
+  if(present(ierr)) then
+    ierr = ierr_loc
+  else
+    if(ierr_loc/=0) call ptk_error_handler(ierr_loc)
+  end if
+end subroutine ptk_allgather_${type}${kind}_${rank}
+
+> fi
+
+#endif
+#endif
+
+subroutine ptk_dummy_${type}${kind}_${rank}
+write(0,*)
+end subroutine ptk_dummy_${type}${kind}_${rank}
+
+> done
+> fi
+> done
+> done
+
+

@@ -1,0 +1,11 @@
+PACKAGE Linear Algebra PACKage
+VERSION 3.0.0p0
+AUTHORS 
+LICENSE 
+
+begin DESCRIPTION
+  The source files have been copied into src/ and an appropriate
+  OPTIONS files (with NOOPT) has been written.
+  Full package can be downloaded at http://www.netlib.org/lapack/
+end DESCRIPTION
+

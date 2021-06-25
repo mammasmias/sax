@@ -1,0 +1,46 @@
+SaX is an open-source GNU General Public License package for the calculation of
+electronic and optical properties, originally developed at the national Research Center on nanoStructures and bioSystems at Surfaces (S3)
+of the Italian INFM-CNR (http://www.s3.infm.it) under the coordination
+of Layla Martin-Samos and Giovanni Bussi. 
+
+SaX works in the framework of many-body perturbation theory
+in the GW approximation. This is the state-of-the-art method to describe
+electronic band structures and excitonic effects beyond the 
+density-functional theory (DFT), and in the last years
+it has proved to be a successful approach for a wide range of materials.
+SaX implements the GW approximation and the Bethe-Salpeter Equation using periodic cells, plane-waves and
+pseudopotentials, and the various matrix elements are calculated on
+real-space grids through fast-Fourier transforms. Depending on the
+available computational resources, SaX can be used to study
+systems with large cells (up to 1000 A^3) and large number of atoms
+(up to 100).
+
+The SaX package is written in Fortran90 and designed in a modern way,
+taking advantage of an object-oriented structure.
+The low-level operations are hidden inside object-libraries
+which defines plane-waves grids, wavefunctions, etc.
+The modularity of the code simplifies greatly the higher level implementation.
+For this reason, SaX is a perfect tool
+for methodological research. On the other side, the efficiency
+of the code is tight to the efficiency of the low-level 
+routines, which can be optimized (and are already fairly optimized)
+independently.
+
+The SaX package operates, in principles, as a post-processing of
+any DFT electronic structure code. In the present version, the user will
+find a wrapper to run SaX from the results of DFT calculations
+done using PWSCF code included in the quantum-espresso 
+distribution (www.quantum-espresso.org).
+
+SaX calculations will provide the user with:
+
+* Full dynamical structure of the random-phase-approximation polarizability.
+* Quasiparticle energies and wavefunctions.
+* Different implementations of GW scheme.
+* Different degrees of self-consistency in the GW scheme.
+* Excitonic effects with the Bethe-Salpeter equation.
+
+Current limitations (and planned developments):
+
+* Metallic systems can not be treated properly.
+* Symmetries are not taken into account.

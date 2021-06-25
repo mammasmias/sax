@@ -1,0 +1,139 @@
+##################################################
+Today is 19/04/2010
+    
+          *            @@@@      @@     @@
+         * *o         @@          @@   @@
+        *** *o         @@          @@ @@
+       **  * *o         @@  @@@@   @@ @@
+       v    * *o        @@ @@  @  @@   @@
+             * *     @@@@  @@@@@ @@     @@
+              * *
+               * *
+               * *  *******
+               * *  *    *
+               * * *    *
+               *  *    *
+               *      *
+               *     *
+                *   *
+                 ***
+     
+FOLLOW THE WHITE RABBIT ...and try to catch it!
+18:58:42.914:  www.sax-project.org, version 0.1.0
+18:58:42.915:  Program bse.x starts
+18:58:42.915:  This is log from pe 000 of 001
+18:58:42.915:  Writing here initial mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+18:58:42.916:  ... done
+18:58:42.916:  Writing here initial PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 0
+ Pw library end statistics
+18:58:42.917:  ... done
+18:58:42.918:  Pasting input file /Users/marsamos/S3DE/sax/examples/example3/bse.in ...
+
+<input>
+<sax_options
+  calculation_kind = "FULL"
+  start_from = "GW"
+  convert_from_pwscf = "F"
+  nbandmin = "1"
+  nbandmax = "10"
+  cutoff_polarizability="8.0"
+  cutoff_fock = "15.0"
+  system_kind = "3D"
+  bse_emax = "0.4"
+  bse_emin = "0.0"
+  bse_spin = "0"  
+/>
+
+<structure>
+  <direct
+    a1 = " -5.1 ,  0.0 ,  5.1"
+    a2 = "  0.0 ,  5.1 , 5.1"
+    a3 = "  -5.1 , 5.1 ,  0.0" />
+</structure>
+
+<atoms>
+<types ntypes="1">
+Si  "/Users/marsamos/S3DE/sax/examples/pseudos/Si.vbc.UPF" 15.0
+</types>
+<positions natoms="2" units="bohr" alat="1.0">
+Si      0.000000000     0.000000000     0.0000000000
+Si      -2.55           2.55            2.55
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="3 3 3" shift="0.0 0.0 0.0"/>
+</kmesh>
+
+</input>
+
+18:58:42.919:  ... done
+18:58:42.919:  Opening input file /Users/marsamos/S3DE/sax/examples/example3/bse.in ... done
+18:58:42.921:  Reading options ... done
+18:58:42.923:  BSE calculated with the full W within the static approximation
+18:58:42.923:  3D system
+18:58:42.924:  Reading structure ... done
+18:58:42.925:  Reading atoms ... done
+18:58:43.045:  Symmetries are not implemented
+18:58:43.046:  Reading kmesh ... done
+18:58:43.053:  Closing input file /Users/marsamos/S3DE/sax/examples/example3/bse.in ... done
+18:58:43.054:  Writing here the kmesh for PWSCF code ...
+K_POINTS crystal
+   27
+    0.000000000    0.000000000    0.000000000    0.037037037
+    0.333333333    0.000000000    0.000000000    0.037037037
+    0.666666667    0.000000000    0.000000000    0.037037037
+    0.000000000    0.333333333    0.000000000    0.037037037
+    0.333333333    0.333333333    0.000000000    0.037037037
+    0.666666667    0.333333333    0.000000000    0.037037037
+    0.000000000    0.666666667    0.000000000    0.037037037
+    0.333333333    0.666666667    0.000000000    0.037037037
+    0.666666667    0.666666667    0.000000000    0.037037037
+    0.000000000    0.000000000    0.333333333    0.037037037
+    0.333333333    0.000000000    0.333333333    0.037037037
+    0.666666667    0.000000000    0.333333333    0.037037037
+    0.000000000    0.333333333    0.333333333    0.037037037
+    0.333333333    0.333333333    0.333333333    0.037037037
+    0.666666667    0.333333333    0.333333333    0.037037037
+    0.000000000    0.666666667    0.333333333    0.037037037
+    0.333333333    0.666666667    0.333333333    0.037037037
+    0.666666667    0.666666667    0.333333333    0.037037037
+    0.000000000    0.000000000    0.666666667    0.037037037
+    0.333333333    0.000000000    0.666666667    0.037037037
+    0.666666667    0.000000000    0.666666667    0.037037037
+    0.000000000    0.333333333    0.666666667    0.037037037
+    0.333333333    0.333333333    0.666666667    0.037037037
+    0.666666667    0.333333333    0.666666667    0.037037037
+    0.000000000    0.666666667    0.666666667    0.037037037
+    0.333333333    0.666666667    0.666666667    0.037037037
+    0.666666667    0.666666667    0.666666667    0.037037037
+18:58:43.055:  ... done
+18:58:43.056:  Initializing states ... done
+18:58:43.057:  Reading states from file 'GW_states'...done
+18:58:43.155:  Initializing bse ...done
+18:58:43.157:  Initializing w ...done
+18:58:43.268:  Reading w.smooth ... done
+18:58:43.341:  The cutoff for single particle wfc is:   14.967361111 Ry
+18:58:43.342:  Solving Bethe-Salpeter Equation ...done
+19:43:25.458:  Calculating transpose ... done
+19:43:25.460:  Writing eigenvalues and eigenstates on file bse ...done
+19:43:25.495:  Writing here final mallinfo ...
+  0           0           0           0           0           0           0MALLINFO
+19:43:25.501:  ... done
+19:43:25.501:  Writing here final PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 16782735
+ Pw library end statistics
+19:43:25.502:  ... done
+19:43:25.502:  Program BSE ends

@@ -1,0 +1,8 @@
+cd example1
+./jrun
+cd ../example2
+./jrun
+cd ../example3
+./jrun
+cd ../example4
+./jrun

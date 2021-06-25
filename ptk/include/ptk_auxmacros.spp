@@ -1,0 +1,25 @@
+>(
+#ifndef __PTK_AUXMACROS
+#define __PTK_AUXMACROS
+! The macros are defined with -D option or inside ptk_config.h
+! The default values are set here
+! Maximum rank of an array
+#ifndef __PTK_MAXRANK
+#  define __PTK_MAXRANK 7
+#endif
+
+#define __PTK_CHARACTER1 kind("a")
+#define __PTK_MPI_CHARACTER1 MPI_CHARACTER
+
+! Some check
+#if __PTK_MAXRANK > $maxrank
+#  error
+#endif
+#if __PTK_MAXRANK < 1
+#  error
+#endif
+
+#endif
+
+>)
+

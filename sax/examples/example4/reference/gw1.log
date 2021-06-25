@@ -1,0 +1,169 @@
+##################################################
+Today is 19/01/2011
+    
+          *            @@@@      @@     @@
+         * *o         @@          @@   @@
+        *** *o         @@          @@ @@
+       **  * *o         @@  @@@@   @@ @@
+       v    * *o        @@ @@  @  @@   @@
+             * *     @@@@  @@@@@ @@     @@
+              * *
+               * *
+               * *  *******
+               * *  *    *
+               * * *    *
+               *  *    *
+               *      *
+               *     *
+                *   *
+                 ***
+     
+FOLLOW THE WHITE RABBIT ...and try to catch it!
+16:10:29.063:  www.sax-project.org, version 0.1.0
+16:10:29.063:  Program gw.x starts
+16:10:29.064:  This is log from pe 000 of 001
+16:10:29.064:  Writing here initial mallinfo ...
+  0************  4294967300  8589934592  8589934600  8589934592           0MALLINFO
+16:10:29.066:  ... done
+16:10:29.066:  Writing here initial PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 0
+ basis integer : 0
+ real          : 0
+ complex       : 0
+ Pw library end statistics
+16:10:29.075:  ... done
+16:10:29.075:  Pasting input file /Users/marsamos/SaX/sax/examples/example4/gw1.in ...
+
+<input>
+<sax_options
+  calculation_kind = "GW"
+  start_from = "DFT"
+  gw_integration_method = "plasmon_pole"
+  calc_plasmon_pole_parameters = "T"
+  lorentzian_broadening = "0.007"
+  plasmon_energy = "1.0"
+  nbandmin = "1"
+  nbandmax = "32"
+  nelec    = "10.0"
+  convert_from_pwscf="T"
+  coulomb_div_treatment="vcut_ws"
+  ecutvcut="0.7"
+  convert_from_pwscf_file="chain.export/index.xml"
+  system_kind="3D"
+  calc_polarizability="T"
+  cutoff_polarizability="6.0"
+  calc_w="T"
+  cutoff_fock="45.0"
+/>
+<structure>
+  <direct
+    a1 = " 20.00000 , 0.000000000 , 0.000000000"
+    a2 = "  0.00000000 , 20.000000 , 0.000000000"
+    a3 = "  0.00000000 , 0.00000000 , 4.66698" />
+</structure>
+
+<atoms>
+<types ntypes="2">
+C "/Users/marsamos/SaX/sax/examples/pseudos/C.pz-vbc.UPF" 45.0
+H "/Users/marsamos/SaX/sax/examples/pseudos/H.pz-vbc.UPF" 45.0
+</types>
+<positions natoms="4" units="bohr" alat="1.00">
+C      0.000000000     0.000000000    -1.106970000
+C      1.225187328     0.000000000     1.106976303
+H     -2.035217982     0.000000000    -1.115497550
+H      3.260405310     0.000000000     1.115503853
+</positions>
+</atoms>
+
+<kmesh>
+<mesh nk="1 1 30" shift="0.0 0.0 0.5"/>
+</kmesh>
+
+</input>
+
+16:10:29.077:  ... done
+16:10:29.077:  Opening input file /Users/marsamos/SaX/sax/examples/example4/gw1.in ... done
+16:10:29.079:  Reading options ... done
+16:10:29.105:  Self_Energy calculated within GW approximation
+16:10:29.105:  3D system kind
+16:10:29.106:  Reading structure ... done
+16:10:29.121:  Reading atoms ... done
+16:10:29.209:  Symmetries are not implemented
+16:10:29.210:  Reading kmesh ... done
+16:10:29.223:  Closing input file /Users/marsamos/SaX/sax/examples/example4/gw1.in ... done
+16:10:29.224:  Writing here the kmesh for PWSCF code ...
+K_POINTS crystal
+   30
+    0.000000000    0.000000000    0.016666667    0.033333333
+    0.000000000    0.000000000    0.050000000    0.033333333
+    0.000000000    0.000000000    0.083333333    0.033333333
+    0.000000000    0.000000000    0.116666667    0.033333333
+    0.000000000    0.000000000    0.150000000    0.033333333
+    0.000000000    0.000000000    0.183333333    0.033333333
+    0.000000000    0.000000000    0.216666667    0.033333333
+    0.000000000    0.000000000    0.250000000    0.033333333
+    0.000000000    0.000000000    0.283333333    0.033333333
+    0.000000000    0.000000000    0.316666667    0.033333333
+    0.000000000    0.000000000    0.350000000    0.033333333
+    0.000000000    0.000000000    0.383333333    0.033333333
+    0.000000000    0.000000000    0.416666667    0.033333333
+    0.000000000    0.000000000    0.450000000    0.033333333
+    0.000000000    0.000000000    0.483333333    0.033333333
+    0.000000000    0.000000000    0.516666667    0.033333333
+    0.000000000    0.000000000    0.550000000    0.033333333
+    0.000000000    0.000000000    0.583333333    0.033333333
+    0.000000000    0.000000000    0.616666667    0.033333333
+    0.000000000    0.000000000    0.650000000    0.033333333
+    0.000000000    0.000000000    0.683333333    0.033333333
+    0.000000000    0.000000000    0.716666667    0.033333333
+    0.000000000    0.000000000    0.750000000    0.033333333
+    0.000000000    0.000000000    0.783333333    0.033333333
+    0.000000000    0.000000000    0.816666667    0.033333333
+    0.000000000    0.000000000    0.850000000    0.033333333
+    0.000000000    0.000000000    0.883333333    0.033333333
+    0.000000000    0.000000000    0.916666667    0.033333333
+    0.000000000    0.000000000    0.950000000    0.033333333
+    0.000000000    0.000000000    0.983333333    0.033333333
+16:10:29.227:  ... done
+16:10:29.227:  Initializing smearing for fermi energy and occupations... done
+16:10:29.229:  Smearing parameters should be coherent with the previous calculation
+16:10:29.230:  The system is treated as a semi-conductor/insulator
+16:10:29.231:  Initializing states ... done
+16:10:29.232:  Converting states from pwscf format to file 'states' ... done
+16:10:34.375:  Start from a DFT calculation
+16:10:34.401:  Initializing states ... done
+16:10:34.403:  Reading states from file 'states' ... done
+16:10:36.701:  The cutoff for single particle wfc is:   44.995525081 Ry
+16:10:36.702:  Integration method is plasmon pole
+16:10:36.703:  Plasmon energy:   13.605691720 eV
+16:10:36.704:  Initializing polarizability... done
+16:10:37.505:  Calculating polarizability... done
+16:45:46.850:  Writing polar on file 'polar'...
+16:45:50.608:   done
+16:45:50.633:  Initializing w ...done
+16:45:51.009:  Calculating w ...done
+16:46:36.431:  Initilazing static macroscopic dielectric constant...done
+16:46:36.865:  Writing static macroscopic dielectric constant...done
+16:46:36.867:  Smoothing w ...
+16:46:56.974:  ... done
+16:46:56.975:  Writing w on file '.smooth' ...
+16:47:00.948:  ... done
+16:47:00.948:  Initializing plasmon pole parameters ...done
+16:47:01.739:  Calculating plasmon pole parameters ...done
+16:47:04.667:  Writing pp_parameters on file 'pp_parameters' ...
+16:47:08.519:  ... done
+16:47:08.566:  Writing here final mallinfo ...
+  0************  4294967300  8589934592  8589934600  8589934592           0MALLINFO
+16:47:08.566:  ... done
+16:47:08.567:  Writing here final PW statistics ...
+ Pw library statistics
+ rank          : 0
+ integer       : 128
+ basis integer : 0
+ real          : 0
+ complex       : 476836767
+ Pw library end statistics
+16:47:08.568:  ... done
+16:47:08.568:  Program GW ends

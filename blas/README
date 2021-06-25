@@ -1,0 +1,10 @@
+PACKAGE Basic Linear Algebra Subprograms
+VERSION 1.0.0p0
+AUTHORS 
+LICENSE 
+
+begin DESCRIPTION
+  Package can be downloaded at http://www.netlib.org/blas/
+end DESCRIPTION 
+
+

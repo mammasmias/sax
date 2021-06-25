@@ -1,0 +1,11 @@
+begin BEFORE_MAKEMAKE
+cd src/
+../../IDE/bin/sprep --autodep *.spp -I../include
+end BEFORE_MAKEMAKE
+
+begin DEFINITION
+  PRECISION=
+end DEFINITION
+
+
+
