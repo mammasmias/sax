@@ -1,6 +1,5 @@
-# README
 
-## INSTALLATION OF SAX
+# INSTALLATION OF SAX
 
 Instructions for the impatient:
 
